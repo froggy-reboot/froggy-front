@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  @apply max-w-[768px] my-0 mx-auto bg-[#f2f2f2];
+}
