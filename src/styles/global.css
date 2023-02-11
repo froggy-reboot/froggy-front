@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  @apply text-[62.5%];
+}
 body {
-  @apply max-w-[768px] my-0 mx-auto bg-[#f2f2f2];
+  @apply max-w-[76.8rem] my-0 mx-auto bg-[#f2f2f2];
 }
