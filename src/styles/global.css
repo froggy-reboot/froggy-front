@@ -2,9 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  @apply text-[62.5%];
+@layer base {
+  html {
+    @apply text-[62.5%];
+  }
+  body {
+    @apply max-w-[76.8rem] my-0 mx-auto bg-[#f2f2f2];
+  }
 }
-body {
-  @apply max-w-[76.8rem] my-0 mx-auto bg-[#f2f2f2];
+
+@layer components {
+  .container {
+    @apply flex h-[100vh] flex-col items-center bg-white;
+  }
+  .submit_btn {
+    @apply mt-[1rem] h-[5rem] w-[100%] rounded-[1rem] text-Body text-white md:mt-[2rem];
+  }
+  .input {
+    @apply h-[4.8rem] w-[100%] rounded-[0.8rem] bg-black-10 px-[1.6rem] text-Body focus:outline-green-50;
+  }
+  .error_message {
+    @apply ml-[1.2rem] text-red;
+  }
 }

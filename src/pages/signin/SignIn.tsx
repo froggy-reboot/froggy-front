@@ -27,7 +27,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className="flex h-[100vh] flex-col items-center bg-white">
+    <div className="container">
       <Logo className="mt-[18.4rem] h-[10rem] w-[20rem] md:mt-[22rem] md:h-[10rem] md:w-[28rem]" />
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -41,10 +41,10 @@ export default function SignIn() {
                 message: ERROR_MESSAGE.EMAIL,
               },
             })}
-            className="h-[4.8rem] w-[100%] rounded-[0.8rem] bg-black-10 px-[1.6rem] text-Body focus:outline-green-50"
+            className="input"
             placeholder="이메일"
           />
-          <span className="ml-[1.2rem] text-red">{errors?.email?.message}</span>
+          <span className="error_message">{errors?.email?.message}</span>
           <input
             {...register('password', {
               required: true,
@@ -53,20 +53,16 @@ export default function SignIn() {
                 message: ERROR_MESSAGE.PASSWORD,
               },
             })}
-            className="h-[4.8rem] w-[100%] rounded-[0.8rem] bg-black-10 px-[1.6rem] text-Body focus:outline-green-50"
+            className="input"
             placeholder="비밀번호"
           />
-          <span className="ml-[1.2rem] text-red">
-            {errors?.password?.message}
-          </span>
+          <span className="error_message">{errors?.password?.message}</span>
           <button
             type="submit"
-            className={`mt-[1rem] h-[5rem] w-[100%] rounded-[1rem] text-Body text-white md:mt-[2rem] ${
-              isValid ? 'bg-green-50' : 'bg-black-30'
-            }`}>
+            className={`submit_btn ${isValid ? 'bg-green-50' : 'bg-black-30'}`}>
             {LOGIN}
           </button>
-          <hr className=" mt-[3.5rem] w-[100%] overflow-visible border-black-50 text-center text-Callout font-normal text-black-50 after:relative after:bottom-4 after:bg-white after:px-5 after:content-['sns_로그인'] md:mt-[5rem] md:after:text-Tag" />
+          <hr className="mt-[3.5rem] w-[100%] overflow-visible border-black-50 text-center text-Callout font-normal text-black-50 after:relative after:bottom-4 after:bg-white after:px-5 after:content-['sns_로그인'] md:mt-[5rem] md:after:text-Tag" />
         </div>
       </form>
       <ul className="mt-[3rem] flex gap-[2rem] md:mt-[4rem] md:gap-[6rem]">
