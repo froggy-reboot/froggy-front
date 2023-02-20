@@ -28,11 +28,11 @@ export default function SignIn() {
 
   return (
     <div className="container">
-      <Logo className="mt-[18.4rem] h-[10rem] w-[20rem] md:mt-[22rem] md:h-[10rem] md:w-[28rem]" />
+      <Logo className="mt-[20rem] h-[4.5rem] w-[16rem] md:mt-[22rem] md:h-[10rem] md:w-[28rem]" />
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="mt-[4rem] flex w-[100%] flex-col md:mt-[7rem]">
-        <div className="mx-[3.5rem] flex flex-col gap-[0.8rem] md:gap-[1.5rem]">
+        className="mt-[6.5rem] flex w-[100%] flex-col md:mt-[7rem]">
+        <div className="mx-[2.5rem] flex flex-col gap-[0.5rem] px-[1rem] md:gap-[1.5rem]">
           <input
             {...register('email', {
               required: true,
@@ -62,7 +62,7 @@ export default function SignIn() {
             className={`submit_btn ${isValid ? 'bg-green-50' : 'bg-black-30'}`}>
             {LOGIN}
           </button>
-          <hr className="mt-[3.5rem] w-[100%] overflow-visible border-black-50 text-center text-Callout font-normal text-black-50 after:relative after:bottom-4 after:bg-white after:px-5 after:content-['sns_로그인'] md:mt-[5rem] md:after:text-Tag" />
+          <hr className="mt-[5rem] w-[100%] overflow-visible border-black-50 text-center text-Callout font-normal text-black-50 after:relative after:bottom-4 after:bg-white after:px-5 after:content-['sns_로그인'] md:mt-[5rem] md:after:text-Tag" />
         </div>
       </form>
       <ul className="mt-[3rem] flex gap-[2rem] md:mt-[4rem] md:gap-[6rem]">
