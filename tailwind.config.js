@@ -5,7 +5,7 @@ module.exports = {
     extend: {},
     colors: {
       green: {
-        100: '00A688',
+        100: '#00A688',
         50: '#65D4A5',
         30: '#A2E0AF',
         10: '#D8FFE3',
@@ -20,7 +20,7 @@ module.exports = {
         30: '#E7E7E7',
         10: '#F5F5F5',
       },
-      red: 'F8746B',
+      red: '#F8746B',
       white: '#FFFFFF',
     },
     fontSize: {
