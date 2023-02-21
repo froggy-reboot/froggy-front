@@ -14,9 +14,21 @@ export default function Header() {
     return pageTitle;
   };
 
+  const showBackBtn = () => {
+    let result = true;
+    HEADER_TITLE.map((el) => {
+      if (el.route === location.pathname && el.isMain) result = false;
+    });
+    if (location.pathname === '/sign-in') result = false;
+
+    return result;
+  };
+
   return (
     <header className="fixed flex h-[6rem] w-[100%] items-center">
-      <BackIcon className="m-4 h-[2.4rem] w-[2.4rem]" />
+      {showBackBtn() ? (
+        <BackIcon className="m-4 h-[2.4rem] w-[2.4rem]" />
+      ) : null}
       <h1 className="ml-[0.8rem] text-Navbar">{setPageTitle()}</h1>
     </header>
   );
