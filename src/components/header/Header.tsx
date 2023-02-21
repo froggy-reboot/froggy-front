@@ -11,7 +11,6 @@ export default function Header() {
     HEADER_TITLE.forEach((el) => {
       if (el.route === location.pathname && el.isMain) result = true;
     });
-
     return result;
   };
 
@@ -25,25 +24,30 @@ export default function Header() {
 
   const showBackBtn = () => {
     let result = true;
-
     result = isMain() ? false : true;
-
-    if (location.pathname === '/sign-in' || location.pathname === '/feed') {
+    if (location.pathname === '/feed') {
       result = false;
     }
+    return result;
+  };
 
+  const showHeader = () => {
+    let result = true;
+    if (location.pathname === '/sign-in') result = false;
     return result;
   };
 
   return (
-    <header
-      className={`fixed flex h-[6rem] w-[100%] items-center bg-white shadow-[0_1px_3px_rgba(0,0,0,0.20)] ${
-        isMain() ? 'justify-center' : null
-      }`}>
-      {showBackBtn() ? (
-        <BackIcon className="m-4 h-[2.4rem] w-[2.4rem]" />
-      ) : null}
-      <h1 className="ml-[0.8rem] text-Navbar">{setPageTitle()}</h1>
-    </header>
+    showHeader() && (
+      <header
+        className={`fixed flex h-[6rem] w-[100%] items-center bg-white shadow-[0_1px_3px_rgba(0,0,0,0.20)] ${
+          isMain() ? 'justify-center' : null
+        }`}>
+        {showBackBtn() ? (
+          <BackIcon className="m-4 h-[2.4rem] w-[2.4rem]" />
+        ) : null}
+        <h1 className="ml-[0.8rem] text-Navbar">{setPageTitle()}</h1>
+      </header>
+    )
   );
 }
