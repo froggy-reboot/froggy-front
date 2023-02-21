@@ -6,9 +6,18 @@ import { useLocation } from 'react-router-dom';
 export default function Header() {
   const location = useLocation();
 
+  const isMain = () => {
+    let result = false;
+    HEADER_TITLE.forEach((el) => {
+      if (el.route === location.pathname && el.isMain) result = true;
+    });
+
+    return result;
+  };
+
   const setPageTitle = () => {
     let pageTitle;
-    HEADER_TITLE.map((el) => {
+    HEADER_TITLE.forEach((el) => {
       if (el.route === location.pathname) pageTitle = el.title;
     });
     return pageTitle;
@@ -16,16 +25,21 @@ export default function Header() {
 
   const showBackBtn = () => {
     let result = true;
-    HEADER_TITLE.map((el) => {
-      if (el.route === location.pathname && el.isMain) result = false;
-    });
-    if (location.pathname === '/sign-in') result = false;
+
+    result = isMain() ? false : true;
+
+    if (location.pathname === '/sign-in' || location.pathname === '/feed') {
+      result = false;
+    }
 
     return result;
   };
 
   return (
-    <header className="fixed flex h-[6rem] w-[100%] items-center">
+    <header
+      className={`fixed flex h-[6rem] w-[100%] items-center ${
+        isMain() ? 'justify-center' : null
+      }`}>
       {showBackBtn() ? (
         <BackIcon className="m-4 h-[2.4rem] w-[2.4rem]" />
       ) : null}

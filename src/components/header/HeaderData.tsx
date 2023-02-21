@@ -41,7 +41,7 @@ const HEADER_TITLE = [
   {
     route: '/feed',
     title: PAGE_TITLE.FEED.MAIN,
-    isMain: true,
+    isMain: false,
   },
   {
     route: '/feed/create',
