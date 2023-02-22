@@ -1,14 +1,16 @@
 import React from 'react';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import SignIn from './pages/signin/SignIn';
-import SignUp from './pages/signup/SignUp';
+import { BrowserRouter } from 'react-router-dom';
+import RoutePage from 'src/routes/RoutePage';
+import Header from 'src/components/header/Header';
 
 function App() {
   return (
     <>
-      <div className="flex h-[100vh] items-center justify-center text-Body text-green-100">
-        hello froggy
-      </div>
+      <BrowserRouter>
+        <Header />
+        <RoutePage />
+      </BrowserRouter>
       <ReactQueryDevtools />
       <SignIn />
       <SignUp />
