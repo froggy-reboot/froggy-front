@@ -19,6 +19,7 @@ function SignUp() {
     handleSubmit,
     formState: { errors, isValid },
     watch,
+    clearErrors
   } = useForm<IFormInput>({ mode: 'all' });
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
@@ -85,7 +86,14 @@ function SignUp() {
                 <input
                   {...register('passwordConfirm', {
                     required: true,
-                    validate: (val: string) => watch('password') === val || ERROR_MESSAGE.PASSWORDCONFIRM,
+                    validate: (val: string) => {
+                      if (watch('password') != val) {
+                        return ERROR_MESSAGE.PASSWORDCONFIRM
+                      }
+                      else {
+                        clearErrors('passwordConfirm')
+                      }
+                    },
                   })}
                   className="input"
                   placeholder="비밀번호 확인"
@@ -93,7 +101,6 @@ function SignUp() {
                 />
               </label>
               <span className="error_message">{errors?.passwordConfirm?.message}</span>
-              {/* <span className="ml-[1.2rem] text-green-50">{ }</span> */}
             </div>
             <button
               type="submit"
