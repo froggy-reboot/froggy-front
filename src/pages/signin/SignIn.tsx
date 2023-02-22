@@ -28,7 +28,7 @@ export default function SignIn() {
 
   return (
     <div className="container">
-      <Logo className="mt-[20rem] h-[4.5rem] w-[16rem] md:mt-[22rem] md:h-[10rem] md:w-[28rem]" />
+      <Logo className="mt-[20rem] h-[4.5rem] w-[16rem] fill-green-50 md:mt-[22rem] md:h-[10rem] md:w-[28rem]" />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="mt-[6.5rem] flex w-[100%] flex-col md:mt-[7rem]">
