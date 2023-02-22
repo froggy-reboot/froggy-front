@@ -20,6 +20,7 @@ const SOCIAL_LOGIN = [
 const ERROR_MESSAGE = {
   EMAIL: '이메일 형식이 올바르지 않습니다.',
   PASSWORD: '비밀번호는 6글자 이상 입력해주세요.',
+  PASSWORDCONFIRM: '비밀번호가 일치하지 않습니다.',
 } as const;
 
 const LOGIN = '로그인' as const;
