@@ -28,17 +28,14 @@ function SignUp() {
   };
   return (
     <div className="container">
-      <div className="ml-5 flex w-full items-center justify-start">
-        <Back />
-        <p className="text-Navbar">회원가입</p>
-      </div>
+
       <hr className="mt-[1rem] w-[100%] overflow-visible border-black-50" />
       <div className="mt-[2.5rem]  w-[100%]">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="mt-[6.5rem] flex w-[100%] flex-col md:mt-[7rem]">
           <div className="mx-[2.5rem] flex flex-col px-[1rem] md:gap-[1.5rem]">
-            <p className="text-Body">기본정보</p>
+            <p className="mb-2 text-Body">기본정보</p>
             {/* 이메일 */}
             <input
               {...register('email', {

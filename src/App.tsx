@@ -12,8 +12,6 @@ function App() {
         <RoutePage />
       </BrowserRouter>
       <ReactQueryDevtools />
-      <SignIn />
-      <SignUp />
     </>
   );
 }
