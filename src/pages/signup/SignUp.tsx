@@ -13,16 +13,17 @@ interface IFormInput {
 
 function SignUp() {
   const [showPassword, setshowPassword] = useState(false);
+  const [showPasswordConfirm, setshowPasswordConfirm] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
     watch,
-    getValues,
   } = useForm<IFormInput>({ mode: 'all' });
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     console.log(data);
+
   };
   return (
     <div className="container">
@@ -37,6 +38,7 @@ function SignUp() {
           className="mt-[6.5rem] flex w-[100%] flex-col md:mt-[7rem]">
           <div className="mx-[2.5rem] flex flex-col px-[1rem] md:gap-[1.5rem]">
             <p className="text-Body">기본정보</p>
+            {/* 이메일 */}
             <input
               {...register('email', {
                 required: true,
@@ -51,10 +53,12 @@ function SignUp() {
               id="email"
             />
             <span className="error_message">{errors?.email?.message}</span>
-            <div className="flex flex-col mt-[3rem] gap-[0.5rem]">
+
+            {/* 비밀번호 */}
+            <div className="mt-[3rem] flex flex-col gap-[0.5rem]">
               <label className="relative ">
                 <Eye
-                  className="w-8 h-8 absolute top-1/2 transform -translate-y-1/2 right-3"
+                  className="absolute top-1/2 right-3 h-8 w-8 -translate-y-1/2"
                   onClick={() => setshowPassword(!showPassword)}
                 />
                 <input
@@ -71,28 +75,30 @@ function SignUp() {
                 />
               </label>
               <span className="error_message">{errors?.password?.message}</span>
-              <input
-                {...register('passwordConfirm', {
-                  required: true,
-                  validate: {
-                    messages: (val: string) =>
-                      watch('password') !== watch('passwordConfirm') &&
-                      getValues('passwordConfirm') &&
-                      ERROR_MESSAGE.PASSWORDCONFIRM,
-                  },
-                })}
-                className="input"
-                placeholder="비밀번호 확인"
-              />
-              <span className="error_message">
-                {errors?.passwordConfirm?.message}
-              </span>
+
+              {/* 비밀번호 확인 */}
+              <label className="relative">
+                <Eye
+                  className="absolute top-1/2 right-3 h-8 w-8 -translate-y-1/2"
+                  onClick={() => setshowPasswordConfirm(!showPasswordConfirm)}
+                />
+                <input
+                  {...register('passwordConfirm', {
+                    required: true,
+                    validate: (val: string) => watch('password') === val || ERROR_MESSAGE.PASSWORDCONFIRM,
+                  })}
+                  className="input"
+                  placeholder="비밀번호 확인"
+                  type={showPasswordConfirm ? 'text' : 'password'}
+                />
+              </label>
+              <span className="error_message">{errors?.passwordConfirm?.message}</span>
+              {/* <span className="ml-[1.2rem] text-green-50">{ }</span> */}
             </div>
             <button
               type="submit"
-              className={`submit_btn ${
-                isValid ? 'bg-green-50' : 'bg-black-30'
-              }`}>
+              className={`submit_btn ${isValid ? 'bg-green-50' : 'bg-black-30'
+                }`}>
               {NEXT}
             </button>
           </div>
