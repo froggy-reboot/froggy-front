@@ -19,11 +19,12 @@ function Navbar() {
         {
           ({ isActive }) => (
             isActive ?
-              <div className="flex flex-col content-center justify-center">
+              <div className="flex h-[2.875rem] w-[2.25rem] flex-col items-center gap-[0.35rem]">
                 <img src={icon.fill} alt="" />
-                <p>{icon.id}</p>
+                <p className='text-[0.625rem] font-semibold text-green-50'>{icon.id}</p>
               </div>
               :
+
               <img src={icon.empty} alt="" />
           )
         }
@@ -33,7 +34,7 @@ function Navbar() {
 
 
   return (
-    <div className="fixed inset-x-0 bottom-0 flex h-[7.5rem] w-screen justify-evenly border-t-[0.0313rem] bg-white">
+    <div className="fixed inset-x-0 bottom-0 flex h-[7.5rem] w-screen items-center justify-evenly border-t-[0.0313rem] bg-white align-middle">
       {navbarBtns}
     </div>
 
