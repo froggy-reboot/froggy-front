@@ -9,8 +9,9 @@ import {
   REG_EXP,
 } from 'src/pages/signin/SignInConstants';
 import SocialLogin from 'src/pages/signin/SocialLogin';
-
-interface IFormInput {
+import { postEmailLogin } from 'src/apis/signInApi';
+import { useMutation } from '@tanstack/react-query';
+export interface IFormInput {
   email: string;
   password: string;
 }
@@ -22,8 +23,17 @@ export default function SignIn() {
     formState: { errors, isValid },
   } = useForm<IFormInput>({ mode: 'all' });
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data);
+  const { mutate } = useMutation(postEmailLogin, {
+    onSuccess: ({ data }) => {
+      if (data.code === 200) {
+        console.log('success');
+      }
+    },
+    onError: () => console.log('ㅂㄷㅂㄷ'),
+  });
+
+  const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
+    mutate(data);
   };
 
   return (
