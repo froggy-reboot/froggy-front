@@ -3,12 +3,12 @@ import { ReactComponent as Logo } from 'src/assets/logo.svg';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import {
-  SOCIAL_LOGIN,
   ERROR_MESSAGE,
   LOGIN,
   SIGNUP,
   REG_EXP,
 } from 'src/pages/signin/SignInConstants';
+import SocialLogin from 'src/pages/signin/SocialLogin';
 
 interface IFormInput {
   email: string;
@@ -65,17 +65,7 @@ export default function SignIn() {
           <hr className="mt-[5rem] w-[100%] overflow-visible border-black-50 text-center text-Callout font-normal text-black-50 after:relative after:bottom-4 after:bg-white after:px-5 after:content-['sns_로그인'] md:mt-[5rem] md:after:text-Tag" />
         </div>
       </form>
-      <ul className="mt-[3rem] flex gap-[2rem] md:mt-[4rem] md:gap-[6rem]">
-        {SOCIAL_LOGIN.map((social) => {
-          return (
-            <li
-              key={social.id}
-              className="h-[5rem] w-[5rem] rounded-full bg-black-10 md:h-[7rem] md:w-[7rem]">
-              <img src="" alt={social.type} />
-            </li>
-          );
-        })}
-      </ul>
+      <SocialLogin />
       <p className="absolute bottom-[4rem] my-0 mx-auto text-Callout font-normal text-black-50 md:bottom-[6rem] md:text-Tag">
         {SIGNUP.MESSAGE}
         <Link to={'/'} className="ml-2 text-green-100 md:ml-3">
