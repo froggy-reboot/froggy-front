@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { ReactComponent as Back } from 'src/assets/back.svg';
 import { ReactComponent as Eye } from 'src/assets/hideeye.svg';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { ERROR_MESSAGE, REG_EXP } from 'src/pages/signin/SignInConstants';
