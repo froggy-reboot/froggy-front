@@ -1,7 +1,7 @@
 const SOCIAL_LOGIN = [
   {
     id: 1,
-    type: 'raverlry',
+    type: 'ravelry',
   },
   {
     id: 2,
