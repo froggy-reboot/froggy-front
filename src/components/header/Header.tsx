@@ -1,10 +1,11 @@
 import React from 'react';
 import { HEADER_TITLE } from 'src/components/header/HeaderData';
 import { ReactComponent as BackIcon } from 'src/assets/back.svg';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function Header() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isMain = () => {
     let result = false;
@@ -41,11 +42,14 @@ export default function Header() {
     <>
       {showHeader() && (
         <header
-          className={`fixed flex h-[6rem] w-[100%] items-center bg-white shadow-[0_1px_3px_rgba(0,0,0,0.20)] ${
+          className={`fixed top-0 right-0 flex h-[6rem] w-[100%] items-center bg-white shadow-[0_1px_3px_rgba(0,0,0,0.20)] ${
             isMain() ? 'justify-center' : null
           }`}>
           {showBackBtn() ? (
-            <BackIcon className="m-4 h-[2.4rem] w-[2.4rem]" />
+            <BackIcon
+              className="m-4 h-[2.4rem] w-[2.4rem]"
+              onClick={() => navigate(-1)}
+            />
           ) : null}
           <h1 className="ml-[0.8rem] text-Navbar">{setPageTitle()}</h1>
         </header>
