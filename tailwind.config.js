@@ -34,6 +34,8 @@ module.exports = {
       Tag: ['14px', { fontWeight: '500' }],
       Callout: ['13px', { fontWeight: '400', letterSpacing: '-0.3px' }],
       Caption: ['13px', { fontWeight: '300' }],
+      Board: ['11px', { fontWeight: '400' }],
+      BoardSub: ['10px', { fontWeight: '400' }],
     },
   },
   plugins: [],
