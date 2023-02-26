@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ReactComponent as SearchIcon } from 'src/assets/search.svg';
 import { ReactComponent as AlarmIcon } from 'src/assets/alarm.svg';
 import { ReactComponent as LikeIcon } from 'src/assets/empty_like.svg';
 import { ReactComponent as ChatIcon } from 'src/assets/chat.svg';
+import { ReactComponent as PlusIcon } from 'src/assets/plus.svg';
 
 interface IFormInput {
   search: string;
@@ -83,6 +84,8 @@ const Dummy = [
 ];
 
 export default function BoardMain() {
+  const [showModal, setShowModal] = useState(false);
+
   const { register, handleSubmit, reset, formState } = useForm<IFormInput>({
     mode: 'all',
   });
@@ -98,7 +101,7 @@ export default function BoardMain() {
   }, [formState]);
 
   return (
-    <div className="container w-[100%]">
+    <div className="container">
       <nav className="fixed h-[11.9rem] w-[100%] bg-white px-[1.6rem]">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mt-[2rem] flex items-center">
@@ -154,6 +157,22 @@ export default function BoardMain() {
           ))}
         </ul>
       </main>
+      <button
+        className={`fixed bottom-[11rem] right-[2.1rem] flex h-[5.5rem] w-[5.5rem] items-center justify-center rounded-full shadow-[1px_2px_5px_1px_rgba(0,0,0,0.20)] ${
+          showModal ? 'bg-white' : 'bg-green-50 '
+        }`}
+        onClick={() => setShowModal((isShow) => !isShow)}>
+        <PlusIcon
+          className={`${showModal ? 'rotate-45 fill-green-50' : ' fill-white'}`}
+        />
+      </button>
+      {showModal && (
+        <div className="fixed bottom-[17.3rem] right-[2.1rem] flex h-[8.5rem] w-[7.5rem] flex-col items-center justify-center gap-[0.9rem] rounded-[1.5rem] bg-green-50 shadow-[1px_2px_5px_1px_rgba(0,0,0,0.20)]">
+          <p className="text-Body font-medium text-white">질문글</p>
+          <hr className="w-[5.5rem] border-white" />
+          <p className="text-Body font-medium text-white">자유글</p>
+        </div>
+      )}
     </div>
   );
 }
