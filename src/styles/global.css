@@ -13,7 +13,7 @@
 
 @layer components {
   .container {
-    @apply flex h-[100vh] flex-col items-center bg-white pt-[6rem] overflow-scroll;
+    @apply flex h-[100vh] flex-col items-center bg-white pt-[6rem] overflow-auto no-scrollbar;
   }
   .submit_btn {
     @apply mt-[1rem] h-[5rem] w-[100%] rounded-[1rem] text-Body text-white md:mt-[2rem];
@@ -26,5 +26,17 @@
   }
   .mini_btn {
     @apply h-[3rem] w-[6.5rem] rounded-[1.5rem] bg-green-30 text-Tag text-white;
+  }
+}
+
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 }
