@@ -42,7 +42,7 @@ export default function Header() {
     <>
       {showHeader() && (
         <header
-          className={`fixed top-0 right-0 flex h-[6rem] w-[100%] items-center bg-white shadow-[0_1px_3px_rgba(0,0,0,0.20)] ${
+          className={`fixed top-0 right-0 z-[1] flex h-[6rem] w-[100%] items-center bg-white shadow-[0_1px_3px_rgba(0,0,0,0.20)] ${
             isMain() ? 'justify-center' : null
           }`}>
           {showBackBtn() ? (
