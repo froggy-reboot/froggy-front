@@ -23,12 +23,11 @@ export async function getNaverRegister() {
 
 //cors
 export async function getRavelryRegister() {
-  try {
-    await publicApi.get('/api/v1/auth/ravelry/register');
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      window.open(error.response?.data);
-    }
+  const response = await publicApi.get('/api/v1/auth/ravelry/register');
+  if (response.status === 201) {
+    window.open(response?.data);
+  } else {
+    alert('error');
   }
 }
 
