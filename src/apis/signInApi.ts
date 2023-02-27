@@ -2,6 +2,7 @@ import { IFormInput } from 'src/pages/signin/SignIn';
 import { publicApi } from 'src/apis/authApi';
 import axios from 'axios';
 
+//301
 export async function getGoogleRegister() {
   try {
     await publicApi.get('api/v1/auth/google/register');
@@ -12,16 +13,15 @@ export async function getGoogleRegister() {
   }
 }
 
+//201
 export async function getNaverRegister() {
-  try {
-    await publicApi.get('/api/v1/auth/naver/register');
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      window.open(error.response?.data);
-    }
+  const response = await publicApi.get('/api/v1/auth/naver/register');
+  if (response.status === 201) {
+    window.open(response?.data);
   }
 }
 
+//cors
 export async function getRavelryRegister() {
   try {
     await publicApi.get('/api/v1/auth/ravelry/register');
