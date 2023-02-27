@@ -9,8 +9,10 @@ import {
   REG_EXP,
 } from 'src/pages/signin/SignInConstants';
 import SocialLogin from 'src/pages/signin/SocialLogin';
-
-interface IFormInput {
+import { postEmailLogin } from 'src/apis/signInApi';
+import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+export interface IFormInput {
   email: string;
   password: string;
 }
@@ -22,8 +24,24 @@ export default function SignIn() {
     formState: { errors, isValid },
   } = useForm<IFormInput>({ mode: 'all' });
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data);
+  const { mutate } = useMutation(postEmailLogin, {
+    onSuccess: ({ data }) => {
+      if (data.code === 200) {
+        console.log('success');
+      }
+    },
+    onError: (error: AxiosError) => {
+      if (error.response?.status === 422) {
+        alert('가입되지 않은 이메일이거나 비밀번호를 잘못 입력했습니다.');
+      }
+      if (error.response?.status === 401) {
+        alert('이메일 인증이 완료되지 않은 이메일입니다.');
+      }
+    },
+  });
+
+  const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
+    mutate(data);
   };
 
   return (
