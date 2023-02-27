@@ -11,6 +11,7 @@ import {
 import SocialLogin from 'src/pages/signin/SocialLogin';
 import { postEmailLogin } from 'src/apis/signInApi';
 import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 export interface IFormInput {
   email: string;
   password: string;
@@ -29,7 +30,14 @@ export default function SignIn() {
         console.log('success');
       }
     },
-    onError: () => console.log('ㅂㄷㅂㄷ'),
+    onError: (error: AxiosError) => {
+      if (error.response?.status === 422) {
+        alert('가입되지 않은 이메일이거나 비밀번호를 잘못 입력했습니다.');
+      }
+      if (error.response?.status === 401) {
+        alert('이메일 인증이 완료되지 않은 이메일입니다.');
+      }
+    },
   });
 
   const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
