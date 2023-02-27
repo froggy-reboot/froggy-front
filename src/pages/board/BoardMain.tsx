@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ReactComponent as SearchIcon } from 'src/assets/search.svg';
 import { ReactComponent as AlarmIcon } from 'src/assets/alarm.svg';
@@ -84,6 +84,7 @@ const Dummy = [
 ];
 
 export default function BoardMain() {
+  const modalRef = useRef<HTMLDivElement>(null);
   const [showModal, setShowModal] = useState(false);
 
   const { register, handleSubmit, reset, formState } = useForm<IFormInput>({
@@ -99,6 +100,18 @@ export default function BoardMain() {
       reset({ search: '' });
     }
   }, [formState]);
+
+  const showModalHandler = () => {
+    setShowModal((isShow) => !isShow);
+  };
+
+  const closeModalHandler = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
+    if (!modalRef.current?.contains(event.target as HTMLButtonElement)) {
+      setShowModal((isShow) => !isShow);
+    }
+  };
 
   return (
     <div className="container">
@@ -158,19 +171,25 @@ export default function BoardMain() {
         </ul>
       </main>
       <button
-        className={`fixed bottom-[11rem] right-[2.1rem] flex h-[5.5rem] w-[5.5rem] items-center justify-center rounded-full shadow-[1px_2px_5px_1px_rgba(0,0,0,0.20)] ${
+        className={`fixed bottom-[11rem] right-[2.1rem] z-[1] flex h-[5.5rem] w-[5.5rem] items-center justify-center rounded-full shadow-[1px_2px_5px_1px_rgba(0,0,0,0.25)] ${
           showModal ? 'bg-white' : 'bg-green-50 '
         }`}
-        onClick={() => setShowModal((isShow) => !isShow)}>
+        onClick={showModalHandler}>
         <PlusIcon
           className={`${showModal ? 'rotate-45 fill-green-50' : ' fill-white'}`}
         />
       </button>
       {showModal && (
-        <div className="fixed bottom-[17.3rem] right-[2.1rem] flex h-[8.5rem] w-[7.5rem] flex-col items-center justify-center gap-[0.9rem] rounded-[1.5rem] bg-green-50 shadow-[1px_2px_5px_1px_rgba(0,0,0,0.20)]">
-          <p className="text-Body font-medium text-white">질문글</p>
-          <hr className="w-[5.5rem] border-white" />
-          <p className="text-Body font-medium text-white">자유글</p>
+        <div
+          className="fixed top-0 h-[100vh] w-[100vw] bg-[rgba(0,0,0,0.2)]"
+          onClick={closeModalHandler}>
+          <div
+            ref={modalRef}
+            className="fixed bottom-[17.3rem] right-[2.1rem] flex h-[8.5rem] w-[7.5rem] flex-col items-center justify-center gap-[0.9rem] rounded-[1.5rem] bg-green-50 shadow-[1px_2px_5px_1px_rgba(0,0,0,0.20)]">
+            <p className="text-Body font-medium text-white">질문글</p>
+            <hr className="w-[5.5rem] border-white" />
+            <p className="text-Body font-medium text-white">자유글</p>
+          </div>
         </div>
       )}
     </div>
