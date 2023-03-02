@@ -40,14 +40,12 @@ export default function SignIn() {
     },
     onError: (error: AxiosError) => {
       if (error.response?.status === 422) {
-        alert('가입되지 않은 이메일이거나 비밀번호를 잘못 입력했습니다.');
+        alert(LOGIN.MESSAGE[422]);
       }
       if (error.response?.status === 401) {
-        alert(
-          '이메일 인증이 완료되지 않은 이메일입니다. 이메일 인증 후 다시 시도해주세요.',
-        );
+        alert(LOGIN.MESSAGE[401]);
       } else {
-        alert('예상치 못한 문제가 발생했습니다. 잠시 후 다시 시도해주세요.');
+        alert(LOGIN.MESSAGE.ETC);
       }
     },
     onSettled: () => {
@@ -109,7 +107,7 @@ export default function SignIn() {
               className={`submit_btn ${
                 isValid ? 'bg-green-50' : 'bg-black-30'
               }`}>
-              {LOGIN}
+              {LOGIN.LOGIN}
             </button>
             <hr className="mt-[5rem] w-[100%] overflow-visible border-black-50 text-center text-Callout font-normal text-black-50 after:relative after:bottom-4 after:bg-white after:px-5 after:content-['sns_로그인'] md:mt-[5rem] md:after:text-Tag" />
           </div>
