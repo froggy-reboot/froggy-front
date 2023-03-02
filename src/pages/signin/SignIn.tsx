@@ -115,7 +115,7 @@ export default function SignIn() {
         <SocialLogin />
         <p className="absolute bottom-[4rem] my-0 mx-auto text-Callout font-normal text-black-50 md:bottom-[6rem] md:text-Tag">
           {SIGNUP.MESSAGE}
-          <Link to={'/'} className="ml-2 text-green-100 md:ml-3">
+          <Link to={'/sign-up'} className="ml-2 text-green-100 md:ml-3">
             {SIGNUP.SIGNUP}
           </Link>
         </p>
