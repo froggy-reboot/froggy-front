@@ -24,4 +24,7 @@
   .error_message {
     @apply ml-[1.2rem] text-red;
   }
+  .input_eye {
+    @apply absolute top-1/2 right-[1.6rem] h-[2.4rem] w-[2.4rem] -translate-y-1/2;
+  }
 }

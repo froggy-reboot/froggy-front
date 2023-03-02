@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ReactComponent as Logo } from 'src/assets/logo.svg';
+import { ReactComponent as CloseEye } from 'src/assets/hideeye.svg';
+import { ReactComponent as OpenEye } from 'src/assets/open_eye.svg';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import {
@@ -18,6 +20,7 @@ export interface IFormInput {
 }
 
 export default function SignIn() {
+  const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     handleSubmit,
@@ -44,6 +47,10 @@ export default function SignIn() {
     mutate(data);
   };
 
+  const onClickHandler = () => {
+    setShowPassword((showPassword) => !showPassword);
+  };
+
   return (
     <div className="container">
       <Logo className="mt-[20rem] h-[4.5rem] w-[16rem] fill-green-50 md:mt-[22rem] md:h-[10rem] md:w-[28rem]" />
@@ -63,17 +70,25 @@ export default function SignIn() {
             placeholder="이메일"
           />
           <span className="error_message">{errors?.email?.message}</span>
-          <input
-            {...register('password', {
-              required: true,
-              pattern: {
-                value: REG_EXP.PASSWORD,
-                message: ERROR_MESSAGE.PASSWORD,
-              },
-            })}
-            className="input"
-            placeholder="비밀번호"
-          />
+          <div className="relative">
+            {showPassword ? (
+              <OpenEye className="input_eye" onClick={onClickHandler} />
+            ) : (
+              <CloseEye className="input_eye" onClick={onClickHandler} />
+            )}
+            <input
+              {...register('password', {
+                required: true,
+                pattern: {
+                  value: REG_EXP.PASSWORD,
+                  message: ERROR_MESSAGE.PASSWORD,
+                },
+              })}
+              className="input"
+              placeholder="비밀번호"
+              type={showPassword ? 'text' : 'password'}
+            />
+          </div>
           <span className="error_message">{errors?.password?.message}</span>
           <button
             type="submit"
