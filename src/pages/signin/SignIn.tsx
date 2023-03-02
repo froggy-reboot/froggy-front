@@ -22,7 +22,6 @@ export interface IFormInput {
 
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -30,10 +29,7 @@ export default function SignIn() {
     formState: { errors, isValid },
   } = useForm<IFormInput>({ mode: 'all' });
 
-  const { mutate } = useMutation(postEmailLogin, {
-    onMutate: () => {
-      setIsLoading(true);
-    },
+  const { mutate, isLoading } = useMutation(postEmailLogin, {
     onSuccess: ({ data }) => {
       localStorage.setItem('token', data.token);
       navigate('/');
@@ -47,9 +43,6 @@ export default function SignIn() {
       } else {
         alert(LOGIN.MESSAGE.ETC);
       }
-    },
-    onSettled: () => {
-      setIsLoading(false);
     },
   });
 
