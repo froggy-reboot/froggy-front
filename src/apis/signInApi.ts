@@ -1,5 +1,5 @@
 import { IFormInput } from 'src/pages/signin/SignIn';
-import { publicApi } from 'src/apis/authApi';
+import { publicApi, publicHttpsApi } from 'src/apis/authApi';
 import axios from 'axios';
 
 export async function getGoogleRegister() {
@@ -27,11 +27,9 @@ export async function getNaverRegister() {
 }
 
 export async function getRavelryRegister() {
-  const response = await publicApi.get('/api/v1/auth/ravelry/register');
+  const response = await publicHttpsApi.get('/api/v1/auth/ravelry/register');
   if (response.status === 201) {
     window.open(response?.data);
-  } else {
-    alert('error');
   }
 }
 
