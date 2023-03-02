@@ -2,6 +2,7 @@ import React from 'react';
 import { SOCIAL_LOGIN } from 'src/pages/signin/SignInConstants';
 import {
   getGoogleRegister,
+  getKakaoRegister,
   getNaverRegister,
   getRavelryRegister,
 } from 'src/apis/signInApi';
@@ -14,6 +15,9 @@ export default function SocialLogin() {
         break;
       case 'google':
         getGoogleRegister();
+        break;
+      case 'kakao':
+        getKakaoRegister();
         break;
       case 'naver':
         getNaverRegister();
