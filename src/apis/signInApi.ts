@@ -21,6 +21,13 @@ export async function getRavelryRegister() {
   return response;
 }
 
+export async function postSocialLogin(userId) {
+  const response = await publicApi.post('/api/v1/auth/social/login', {
+    userId: userId,
+  });
+  return response;
+}
+
 export async function postEmailLogin(data: IFormInput) {
   const response = await publicApi.post('/api/v1/auth/email/login', {
     email: data.email,

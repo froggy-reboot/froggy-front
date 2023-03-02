@@ -5,6 +5,7 @@ import {
   getKakaoRegister,
   getNaverRegister,
   getRavelryRegister,
+  postSocialLogin,
 } from 'src/apis/signInApi';
 import axios from 'axios';
 
@@ -28,6 +29,8 @@ export default function SocialLogin() {
       }
       if (response?.status === 201) {
         window.open(response.data);
+        //글로벌에 있는 userId 갖고오기
+        postSocialLogin(userId);
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
