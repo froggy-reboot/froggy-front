@@ -12,8 +12,7 @@ import {
 } from 'src/pages/signin/SignInConstants';
 import SocialLogin from 'src/pages/signin/SocialLogin';
 import { postEmailLogin } from 'src/apis/signInApi';
-import { useMutation } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
+import axios from 'axios';
 import Loader from 'src/components/loader/Loader';
 export interface IFormInput {
   email: string;
@@ -22,6 +21,7 @@ export interface IFormInput {
 
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -29,25 +29,28 @@ export default function SignIn() {
     formState: { errors, isValid },
   } = useForm<IFormInput>({ mode: 'all' });
 
-  const { mutate, isLoading } = useMutation(postEmailLogin, {
-    onSuccess: ({ data }) => {
-      localStorage.setItem('token', data.token);
-      navigate('/');
-    },
-    onError: (error: AxiosError) => {
-      if (error.response?.status === 422) {
-        alert(LOGIN.MESSAGE[422]);
+  const onSubmit: SubmitHandler<IFormInput> = async (data: IFormInput) => {
+    try {
+      setIsLoading(true);
+      const response = await postEmailLogin(data);
+      if (response.status === 200) {
+        localStorage.setItem('token', response.data.token);
+        navigate('/');
       }
-      if (error.response?.status === 401) {
-        alert(LOGIN.MESSAGE[401]);
-      } else {
-        alert(LOGIN.MESSAGE.ETC);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 422) {
+          alert(LOGIN.MESSAGE[422]);
+        }
+        if (error.response?.status === 401) {
+          alert(LOGIN.MESSAGE[401]);
+        } else {
+          alert(LOGIN.MESSAGE.ETC);
+        }
       }
-    },
-  });
-
-  const onSubmit: SubmitHandler<IFormInput> = (data: IFormInput) => {
-    mutate(data);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const onClickHandler = () => {
