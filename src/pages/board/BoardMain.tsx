@@ -3,8 +3,10 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { ReactComponent as SearchIcon } from 'src/assets/search.svg';
 import { ReactComponent as AlarmIcon } from 'src/assets/alarm.svg';
 import { ReactComponent as PlusIcon } from 'src/assets/plus.svg';
+import { ReactComponent as FilterIcon } from 'src/assets/filter.svg';
 import PostList from 'src/components/board/PostList';
 import SearchView from 'src/components/board/SearchView';
+import { articleTypeList } from 'src/pages/board/BoardConstants';
 
 interface IFormInput {
   search: string;
@@ -14,6 +16,9 @@ export default function BoardMain() {
   const modalRef = useRef<HTMLDivElement>(null);
   const [showModal, setShowModal] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
+  const [isRecent, setIsRecent] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [ariticleType, setArticleType] = useState('전체');
 
   const { register, handleSubmit, reset, formState } = useForm<IFormInput>({
     mode: 'all',
@@ -31,6 +36,18 @@ export default function BoardMain() {
 
   const showModalHandler = () => {
     setShowModal((isShow) => !isShow);
+  };
+
+  const sortToggleHandler = () => {
+    setIsRecent((isRecent) => !isRecent);
+  };
+
+  const articleBtnExpandHandler = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const articleTypeHandler = (type: string) => {
+    setArticleType(type);
   };
 
   const closeModalHandler = (
@@ -59,8 +76,33 @@ export default function BoardMain() {
         </form>
         {!showSearch && (
           <div className="mt-[1.8rem] flex justify-between">
-            <button className="mini_btn">인기글</button>
-            <button className="mini_btn">전체</button>
+            <button onClick={sortToggleHandler} className="mini_btn">
+              {isRecent ? '최신글' : '인기글'}
+            </button>
+            <div>
+              {!isExpanded && (
+                <button
+                  onClick={articleBtnExpandHandler}
+                  className="mini_btn flex items-center justify-center">
+                  {ariticleType}
+                  <FilterIcon className="ml-[5px]" />
+                </button>
+              )}
+              {isExpanded && (
+                <div
+                  onClick={articleBtnExpandHandler}
+                  className="mini_btn flex h-[9rem] w-[6.5rem] flex-col items-center justify-center gap-[0.3rem]">
+                  {articleTypeList.map((type, idx) => (
+                    <button key={type} onClick={() => articleTypeHandler(type)}>
+                      {type}
+                      {idx !== articleTypeList.length - 1 && (
+                        <hr className="mt-[0.3rem] w-[4.5rem] border-white" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         )}
       </nav>
