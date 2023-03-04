@@ -1,20 +1,20 @@
-import Board_active from './Board_active.svg';
-import Board from './Board.svg';
-import Home_active from './Home_active.svg';
-import Home from './Home.svg';
-import Knit_active from './Knit_active.svg';
-import Knit from './Knit.svg';
-import MyPage_active from './MyPage_active.svg';
-import MyPage from './MyPage.svg';
+import boardActive from './boardActive.svg';
+import board from './board.svg';
+import homeActive from './homeActive.svg';
+import home from './home.svg';
+import knitActive from './knitActive.svg';
+import knit from './knit.svg';
+import myPageActive from './myPageActive.svg';
+import myPage from './myPage.svg';
 
 export const icons = {
-  Board_active,
-  Board,
-  Home_active,
-  Home,
-  Knit_active,
-  Knit,
-  MyPage_active,
-  MyPage,
+  boardActive,
+  board,
+  homeActive,
+  home,
+  knitActive,
+  knit,
+  myPageActive,
+  myPage,
 };
 
