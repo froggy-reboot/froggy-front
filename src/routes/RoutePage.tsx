@@ -3,10 +3,12 @@ import { Route, Routes } from 'react-router-dom';
 import Main from 'src/pages/main/Main';
 import SignIn from 'src/pages/signin/SignIn';
 import SignUp from 'src/pages/signup/SignUp';
+import OauthRedirectHandler from 'src/pages/signin/OauthRedirectHandler';
 
 export default function RoutePage() {
   return (
     <Routes>
+      <Route path="/:userId" element={<OauthRedirectHandler />} />
       <Route path="/" element={<Main />} />
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/sign-up" element={<SignUp />} />

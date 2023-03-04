@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { ReactComponent as Eye } from 'src/assets/hideeye.svg';
+
+import { ReactComponent as CloseEye } from 'src/assets/hideeye.svg';
+import { ReactComponent as OpenEye } from 'src/assets/open_eye.svg';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { ERROR_MESSAGE, REG_EXP } from 'src/pages/signin/SignInConstants';
 import { NEXT } from 'src/pages/signup/SignUpConstants';
@@ -11,23 +13,30 @@ interface IFormInput {
 }
 
 function SignUp() {
-  const [showPassword, setshowPassword] = useState(false);
-  const [showPasswordConfirm, setshowPasswordConfirm] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+
+  const onClickHandler = () => {
+    setShowPassword((showPassword) => !showPassword);
+  };
+
+  const onClickConfirmHandler = () => {
+    setShowPasswordConfirm((showPasswordConfirm) => !showPasswordConfirm);
+  };
+
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
     watch,
-    clearErrors
+    clearErrors,
   } = useForm<IFormInput>({ mode: 'all' });
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     console.log(data);
-
   };
   return (
     <div className="container">
-
       <hr className="mt-[1rem] w-[100%] overflow-visible border-black-50" />
       <div className="mt-[2.5rem]  w-[100%]">
         <form
@@ -54,10 +63,11 @@ function SignUp() {
             {/* 비밀번호 */}
             <div className="mt-[3rem] flex flex-col gap-[0.5rem]">
               <label className="relative ">
-                <Eye
-                  className="absolute top-1/2 right-3 h-8 w-8 -translate-y-1/2"
-                  onClick={() => setshowPassword(!showPassword)}
-                />
+                {showPassword ? (
+                  <OpenEye className="input_eye" onClick={onClickHandler} />
+                ) : (
+                  <CloseEye className="input_eye" onClick={onClickHandler} />
+                )}
                 <input
                   {...register('password', {
                     required: true,
@@ -75,19 +85,25 @@ function SignUp() {
 
               {/* 비밀번호 확인 */}
               <label className="relative">
-                <Eye
-                  className="absolute top-1/2 right-3 h-8 w-8 -translate-y-1/2"
-                  onClick={() => setshowPasswordConfirm(!showPasswordConfirm)}
-                />
+                {showPasswordConfirm ? (
+                  <OpenEye
+                    className="input_eye"
+                    onClick={onClickConfirmHandler}
+                  />
+                ) : (
+                  <CloseEye
+                    className="input_eye"
+                    onClick={onClickConfirmHandler}
+                  />
+                )}
                 <input
                   {...register('passwordConfirm', {
                     required: true,
                     validate: (val: string) => {
                       if (watch('password') != val) {
-                        return ERROR_MESSAGE.PASSWORDCONFIRM
-                      }
-                      else {
-                        clearErrors('passwordConfirm')
+                        return ERROR_MESSAGE.PASSWORDCONFIRM;
+                      } else {
+                        clearErrors('passwordConfirm');
                       }
                     },
                   })}
@@ -96,12 +112,15 @@ function SignUp() {
                   type={showPasswordConfirm ? 'text' : 'password'}
                 />
               </label>
-              <span className="error_message">{errors?.passwordConfirm?.message}</span>
+              <span className="error_message">
+                {errors?.passwordConfirm?.message}
+              </span>
             </div>
             <button
               type="submit"
-              className={`submit_btn ${isValid ? 'bg-green-50' : 'bg-black-30'
-                }`}>
+              className={`submit_btn ${
+                isValid ? 'bg-green-50' : 'bg-black-30'
+              }`}>
               {NEXT}
             </button>
           </div>
