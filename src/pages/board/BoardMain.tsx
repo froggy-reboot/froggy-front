@@ -43,7 +43,7 @@ export default function BoardMain() {
 
   return (
     <div className="container">
-      <nav className="fixed h-[11.9rem] w-[100%] bg-white px-[1.6rem]">
+      <nav className="fixed h-[11.9rem] bg-white px-[1.6rem] md:w-[76.8rem]">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mt-[2rem] flex items-center">
             <input
@@ -51,14 +51,14 @@ export default function BoardMain() {
               onFocus={() => setShowSearch(true)}
               onBlur={() => setShowSearch(false)}
               placeholder="검색"
-              className="input h-[3.5rem] w-[31rem] pl-[3rem] placeholder:text-black-50 focus:outline-none"
+              className="input h-[3.5rem] w-[31rem] pl-[3rem] placeholder:text-black-50 focus:outline-none md:w-[100%]"
             />
             <SearchIcon className="absolute ml-[0.7rem] h-[2rem] w-[2rem]" />
             <AlarmIcon className="ml-[1.3rem] h-[3.5rem] w-[3.5rem] fill-white" />
           </div>
         </form>
         {!showSearch && (
-          <div className="mt-[1.8rem] flex w-[100%] justify-between">
+          <div className="mt-[1.8rem] flex justify-between">
             <button className="mini_btn">인기글</button>
             <button className="mini_btn">전체</button>
           </div>
