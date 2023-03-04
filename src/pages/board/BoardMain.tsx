@@ -37,7 +37,7 @@ export default function BoardMain() {
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => {
     if (!modalRef.current?.contains(event.target as HTMLButtonElement)) {
-      setShowModal((isShow) => !isShow);
+      setShowModal((isShow) => !isShow); 
     }
   };
 
