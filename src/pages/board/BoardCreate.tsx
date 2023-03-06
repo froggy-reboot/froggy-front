@@ -13,14 +13,29 @@ function BoardCreate() {
     mode: 'all',
   });
 
-  const [imagePreview, setImagePreview] = useState("")
-  const image = watch("image");
-  useEffect(() => {
-    if (image && image.length > 0) {
-      const file = image[0];
-      setImagePreview(URL.createObjectURL(file));
+  const [imagePreview, setImagePreview] = useState([""])
+  const handleAddImages = (event: any) => {
+    const imageLists = event.target.files;
+    let imageUrlLists = [...imagePreview];
+
+    for (let i = 0; i < imageLists.length; i++) {
+      const currentImageUrl = URL.createObjectURL(imageLists[i]);
+      imageUrlLists.push(currentImageUrl);
     }
-  }, [image]);
+
+    if (imageUrlLists.length > 10) {
+      imageUrlLists = imageUrlLists.slice(0, 10);
+    }
+
+    setImagePreview(imageUrlLists);
+  };
+  // const image = watch("image");
+  // useEffect(() => {
+  //   if (image && image.length > 0) {
+  //     const file = image[0];
+  //     setImagePreview(URL.createObjectURL(file));
+  //   }
+  // }, [image]);
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     console.log(data);
@@ -47,13 +62,14 @@ function BoardCreate() {
           {/* 이미지 & 게시물 */}
           <div className="mt-[1.5rem]">
             {/* 이미지 input */}
-            <input {...register("image")}
-              id="picture"
-              type="file"
-              multiple
-              className="hidden" />
             {/* 이미지 추가 버튼 */}
             <label htmlFor="picture">
+              <input {...register("image")}
+                id="picture"
+                type="file"
+                multiple
+                className="hidden"
+                onChange={handleAddImages} />
               <div className="flex h-[8rem] w-[8rem] items-center justify-center rounded-[0.5rem] bg-black-30">
                 <PlusIcon className=" fill-white" />
               </div>
@@ -66,7 +82,17 @@ function BoardCreate() {
               placeholder="글 작성란"
               className="input min-h-[20rem] w-full resize-none pl-[1rem] pt-[1rem] placeholder:text-black-50 focus:outline-none"
             />
-            <img src={imagePreview} className="w-[10rem]" />
+            {/* 이미지 preview */}
+            <div className="flex">
+              {
+                imagePreview.map((image, id) => (
+                  <div key={id}>
+                    <img src={image} className="w-[10rem]" />
+                  </div>
+                ))
+              }
+            </div>
+
           </div>
         </form>
       </div>
