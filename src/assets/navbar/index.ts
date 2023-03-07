@@ -17,3 +17,4 @@ export const icons = {
   MyPage_active,
   MyPage,
 };
+
