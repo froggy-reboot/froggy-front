@@ -6,6 +6,7 @@ import SignUp from 'src/pages/signup/SignUp';
 import OauthRedirectHandler from 'src/pages/signin/OauthRedirectHandler';
 import PrivateRoute from 'src/routes/PrivateRoute';
 
+
 export default function RoutePage() {
   return (
     <Routes>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { LOGIN, SOCIAL_LOGIN } from 'src/pages/signin/SignInConstants';
+import { SOCIAL_LOGIN, LOGIN } from 'src/pages/signin/SignInConstants';
 import {
   getGoogleRegister,
   getKakaoRegister,
