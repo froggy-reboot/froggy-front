@@ -68,7 +68,7 @@ export default function BoardDetail() {
         </p>
         <hr className="mt-[1.4rem] w-[100%] border-black-30" />
       </main>
-      <div className="mt-[1rem] w-[100%] overflow-scroll px-[3.5rem]">
+      <div className="mt-[1rem] mb-[3rem] w-[100%] overflow-scroll px-[3.5rem] ">
         <Comment />
       </div>
     </div>
