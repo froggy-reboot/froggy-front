@@ -1,19 +1,28 @@
+import Google from 'src/assets/social/google_icon.svg';
+import Ravelry from 'src/assets/social/ravelry_icon.svg';
+import Kakao from 'src/assets/social/kakao_icon.svg';
+import Naver from 'src/assets/social/naver_icon.svg';
+
 const SOCIAL_LOGIN = [
   {
     id: 1,
-    type: 'ravelry',
+    type: 'kakao',
+    icon: Kakao,
   },
   {
     id: 2,
-    type: 'google',
+    type: 'naver',
+    icon: Naver,
   },
   {
     id: 3,
-    type: 'kakao',
+    type: 'google',
+    icon: Google,
   },
   {
     id: 4,
-    type: 'naver',
+    type: 'ravelry',
+    icon: Ravelry,
   },
 ] as const;
 

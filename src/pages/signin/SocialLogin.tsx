@@ -46,9 +46,9 @@ export default function SocialLogin() {
         return (
           <li
             key={social.id}
-            className="h-[5rem] w-[5rem] rounded-full bg-black-10 md:h-[7rem] md:w-[7rem]"
+            className="h-[5rem] w-[5rem] rounded-full bg-black-10 drop-shadow-[0px_1px_3px_rgba(0,0,0,0.2)] md:h-[7rem] md:w-[7rem]"
             onClick={() => onClickHandler(social.type)}>
-            <img src="" alt={social.type} />
+            <img src={social.icon} alt={social.type} />
           </li>
         );
       })}
