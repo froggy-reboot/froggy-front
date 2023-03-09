@@ -30,6 +30,9 @@
   .tag {
     @apply mini_btn inline-block h-[2rem] w-[4rem] text-center text-Callout leading-[2rem];
   }
+  .modal_bg {
+    @apply fixed top-0 right-0 flex h-[100vh] w-[100vw] items-center justify-center bg-[rgba(0,0,0,0.2)];
+  }
 }
 
 @layer utilities {
