@@ -5,16 +5,14 @@ import RoutePage from 'src/routes/RoutePage';
 import Header from 'src/components/header/Header';
 
 //모달 종류별로 렌더링하는 모달 컴포넌트 필요
-import UpdateDeleteModal from './components/modals/UpdateDeleteModal';
-import { useModal } from 'src/hooks/useModal';
+import Modals from 'src/components/modals/Modals';
 
 function App() {
-  const { showModal } = useModal();
   return (
     <>
       <BrowserRouter>
         <Header />
-        {showModal && <UpdateDeleteModal />}
+        <Modals />
         <RoutePage />
       </BrowserRouter>
       <ReactQueryDevtools />
