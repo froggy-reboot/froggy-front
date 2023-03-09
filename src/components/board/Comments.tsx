@@ -1,6 +1,7 @@
 import React from 'react';
 import { ReactComponent as MenuIcon } from 'src/assets/menu.svg';
 import { useModal } from 'src/hooks/useModal';
+import { modals } from '../modals/Modals';
 
 const dummy = [
   {
@@ -69,7 +70,11 @@ export default function Comment() {
                 <p className="mr-auto text-Tag font-bold">{comment.nickname}</p>
                 <p className="text-Board text-black-50">{comment.date}</p>
                 <MenuIcon
-                  onClick={openModal}
+                  onClick={() =>
+                    openModal(modals.UpdateDeleteModal, {
+                      commentId: comment.id,
+                    })
+                  }
                   className="h-[1.6rem] w-[1.6rem] fill-black-50"
                 />
               </div>
