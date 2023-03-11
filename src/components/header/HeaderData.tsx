@@ -5,7 +5,7 @@ import { ReactComponent as Logo } from 'src/assets/logo.svg';
 const HEADER_TITLE = [
   {
     route: '/',
-    title: <Logo className="h-[2.2rem] w-[8rem]" />,
+    title: <Logo className="h-[2.2rem] w-[8rem] fill-green-50" />,
     isMain: true,
   },
   {
@@ -15,7 +15,7 @@ const HEADER_TITLE = [
   },
   {
     route: '/board',
-    title: <Logo className="h-[2.2rem] w-[8rem]" />,
+    title: <Logo className="h-[2.2rem] w-[8rem] fill-green-50" />,
     isMain: true,
   },
   {

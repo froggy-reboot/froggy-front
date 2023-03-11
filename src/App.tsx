@@ -3,6 +3,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { BrowserRouter } from 'react-router-dom';
 import RoutePage from 'src/routes/RoutePage';
 import Header from 'src/components/header/Header';
+import Navbar from 'src/components/navbar/Navbar';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <BrowserRouter>
         <Header />
         <RoutePage />
+        <Navbar />
       </BrowserRouter>
       <ReactQueryDevtools />
     </>
