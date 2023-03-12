@@ -3,6 +3,8 @@ import { ReactComponent as MenuIcon } from 'src/assets/menu.svg';
 import { ReactComponent as LikeIcon } from 'src/assets/empty_like.svg';
 import { ReactComponent as ChatIcon } from 'src/assets/chat.svg';
 import Comment from 'src/components/board/Comments';
+import { useModal } from 'src/hooks/useModal';
+import { modals } from 'src/components/modals/Modals';
 
 const dummy = {
   id: 11,
@@ -25,6 +27,7 @@ const dummy = {
 };
 
 export default function BoardDetail() {
+  const { openModal } = useModal();
   return (
     <div className="container">
       <main className="w-[100%] px-[2rem]">
@@ -34,7 +37,14 @@ export default function BoardDetail() {
             <p className="text-Body font-bold">{dummy.nickname}</p>
             <p className="text-Board text-black-50">{dummy.created_at}</p>
           </div>
-          <MenuIcon className="h-[2rem] w-[2rem] justify-self-end fill-black-100" />
+          <MenuIcon
+            onClick={() =>
+              openModal(modals.UpdateDeleteModal, {
+                postId: dummy.id,
+              })
+            }
+            className="h-[2rem] w-[2rem] justify-self-end fill-black-100"
+          />
         </div>
         <article className="mt-[1.3rem]">
           <h1 className="h-[3.6rem] text-Body font-bold leading-[3.6rem]">
