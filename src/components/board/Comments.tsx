@@ -4,73 +4,33 @@ import { useModal } from 'src/hooks/useModal';
 import { modals } from '../modals/Modals';
 import timeConverter from 'src/utils/timeConverter/timeConverter';
 
-const dummy = [
-  {
-    id: 0,
-    profile:
-      'https://cdn.pixabay.com/photo/2018/05/31/15/06/see-no-evil-3444212_960_720.jpg',
-    nickname: '뿅뿅뿅뿅뿅',
-    content: '네니요? 처음보는데요.....',
-    date: '2023.02.27',
-  },
-  {
-    id: 1,
-    profile:
-      'https://cdn.pixabay.com/photo/2018/05/31/15/06/see-no-evil-3444212_960_720.jpg',
-    nickname: '뿅뿅뿅뿅뿅',
-    content: '네니요? 처음보는데요.....',
-    date: '2023-02-27T15:15:49.695Z',
-  },
-  {
-    id: 2,
-    profile:
-      'https://cdn.pixabay.com/photo/2018/05/31/15/06/see-no-evil-3444212_960_720.jpg',
-    nickname: '뿅뿅뿅뿅뿅',
-    content: '네니요? 처음보는데요.....',
-    date: '2023-02-27T15:15:49.695Z',
-  },
-  {
-    id: 3,
-    profile:
-      'https://cdn.pixabay.com/photo/2018/05/31/15/06/see-no-evil-3444212_960_720.jpg',
-    nickname: '뿅뿅뿅뿅뿅',
-    content: '네니요? 처음보는데요.....',
-    date: '2023-02-27T15:15:49.695Z',
-  },
-  {
-    id: 4,
-    profile:
-      'https://cdn.pixabay.com/photo/2018/05/31/15/06/see-no-evil-3444212_960_720.jpg',
-    nickname: '뿅뿅뿅뿅뿅',
-    content: '네니요? 처음보는데요.....',
-    date: '2023-02-27T15:15:49.695Z',
-  },
-  {
-    id: 5,
-    profile:
-      'https://cdn.pixabay.com/photo/2018/05/31/15/06/see-no-evil-3444212_960_720.jpg',
-    nickname: '뿅뿅뿅뿅뿅',
-    content: '네니요? 처음보는데요.....',
-    date: '2023-02-27T15:15:49.695Z',
-  },
-];
+export interface ICommentData {
+  id: number;
+  article_id: number;
+  writer_id: number;
+  content: string;
+  created_at: string;
+  deleted_at: string;
+}
 
-export default function Comment() {
+export default function Comment({ comments }: { comments: ICommentData[] }) {
   const { openModal } = useModal();
   return (
     <ul className="flex h-[100%] flex-col gap-[0.2rem]">
-      {dummy.map((comment, idx) => (
+      {comments.map((comment, idx) => (
         <>
           <li key={comment.id} className="flex">
             <img
-              src={comment.profile}
+              src={/* comment.profile */ ''}
               className="mt-[0.5rem] h-[3.2rem] w-[3.2rem] rounded-full"
             />
             <div className="ml-[0.9rem] mt-[0.9rem] flex flex-1 flex-col">
               <div className="flex h-[1.6rem] items-center">
-                <p className="mr-auto text-Tag font-bold">{comment.nickname}</p>
+                <p className="mr-auto text-Tag font-bold">
+                  {/* comment.nickname */ '닉네임'}
+                </p>
                 <p className="text-Board text-black-50">
-                  {timeConverter(comment.date)}
+                  {timeConverter(comment.created_at)}
                 </p>
                 <MenuIcon
                   onClick={() =>
@@ -86,7 +46,7 @@ export default function Comment() {
               </p>
             </div>
           </li>
-          {idx !== dummy.length - 1 && (
+          {idx !== comments.length - 1 && (
             <hr className="w-[100%] border-black-30" />
           )}
         </>
