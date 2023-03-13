@@ -5,6 +5,7 @@ import { ReactComponent as ChatIcon } from 'src/assets/chat.svg';
 import Comment from 'src/components/board/Comments';
 import { useModal } from 'src/hooks/useModal';
 import { modals } from 'src/components/modals/Modals';
+import timeConverter from 'src/utils/timeConverter/timeConverter';
 
 const dummy = {
   id: 11,
@@ -35,7 +36,9 @@ export default function BoardDetail() {
           <img src="" className="h-[5rem] w-[5rem] rounded-full bg-green-30" />
           <div className="ml-[15px]">
             <p className="text-Body font-bold">{dummy.nickname}</p>
-            <p className="text-Board text-black-50">{dummy.created_at}</p>
+            <p className="text-Board text-black-50">
+              {`${timeConverter(dummy.created_at)} 작성`}
+            </p>
           </div>
           <MenuIcon
             onClick={() =>

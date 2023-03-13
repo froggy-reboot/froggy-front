@@ -2,6 +2,7 @@ import React from 'react';
 import { ReactComponent as MenuIcon } from 'src/assets/menu.svg';
 import { useModal } from 'src/hooks/useModal';
 import { modals } from '../modals/Modals';
+import timeConverter from 'src/utils/timeConverter/timeConverter';
 
 const dummy = [
   {
@@ -68,7 +69,9 @@ export default function Comment() {
             <div className="ml-[0.9rem] mt-[0.9rem] flex flex-1 flex-col">
               <div className="flex h-[1.6rem] items-center">
                 <p className="mr-auto text-Tag font-bold">{comment.nickname}</p>
-                <p className="text-Board text-black-50">{comment.date}</p>
+                <p className="text-Board text-black-50">
+                  {timeConverter(comment.date)}
+                </p>
                 <MenuIcon
                   onClick={() =>
                     openModal(modals.UpdateDeleteModal, {
