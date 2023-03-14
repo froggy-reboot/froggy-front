@@ -7,6 +7,7 @@ import { ReactComponent as FilterIcon } from 'src/assets/filter.svg';
 import PostList from 'src/components/board/PostList';
 import SearchView from 'src/components/board/SearchView';
 import { articleTypeList } from 'src/pages/board/BoardConstants';
+import { useToggle } from 'src/hooks/useToggle';
 
 interface IFormInput {
   search: string;
@@ -16,8 +17,8 @@ export default function BoardMain() {
   const modalRef = useRef<HTMLDivElement>(null);
   const [showModal, setShowModal] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
-  const [isRecent, setIsRecent] = useState(true);
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isRecent, sortToggleHandler] = useToggle(true);
+  const [isExpanded, articleBtnExpandHandler] = useToggle(false);
   const [ariticleType, setArticleType] = useState('전체');
 
   const { register, handleSubmit, reset, formState } = useForm<IFormInput>({
@@ -38,14 +39,6 @@ export default function BoardMain() {
     setShowModal((isShow) => !isShow);
   };
 
-  const sortToggleHandler = () => {
-    setIsRecent((isRecent) => !isRecent);
-  };
-
-  const articleBtnExpandHandler = () => {
-    setIsExpanded(!isExpanded);
-  };
-
   const articleTypeHandler = (type: string) => {
     setArticleType(type);
   };
@@ -54,7 +47,7 @@ export default function BoardMain() {
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => {
     if (!modalRef.current?.contains(event.target as HTMLButtonElement)) {
-      setShowModal((isShow) => !isShow); 
+      setShowModal((isShow) => !isShow);
     }
   };
 
