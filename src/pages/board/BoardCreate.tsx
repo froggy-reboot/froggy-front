@@ -100,8 +100,8 @@ function BoardCreate() {
               <div className="mt-[1rem] flex gap-[1rem]">
                 {imagePreview && imagePreview.map((image, id) => (
                   <div key={id}>
+                    <Close className="ml-[6rem]" onClick={() => handleDeleteImage(id)} />
                     <img src={image} className="thumbnail_img" />
-                    <Close className="" onClick={() => handleDeleteImage(id)} />
                   </div>
                 ))}
               </div>
