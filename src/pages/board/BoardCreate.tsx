@@ -1,6 +1,7 @@
 import React, { useState, ChangeEvent } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ReactComponent as PlusIcon } from 'src/assets/plus.svg';
+import { ReactComponent as Close } from 'src/assets/close.svg';
 
 interface IFormInput {
   title: string;
@@ -35,9 +36,9 @@ function BoardCreate() {
     }
   };
 
-  // const handleDeleteImage = (id: number) => {
-  //   setImagePreview(imagePreview.filter((_, index) => index !== id));
-  // };
+  const handleDeleteImage = (id: number) => {
+    setImagePreview(imagePreview.filter((_, index) => index !== id));
+  };
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     console.log(data);
@@ -100,6 +101,7 @@ function BoardCreate() {
                 {imagePreview && imagePreview.map((image, id) => (
                   <div key={id}>
                     <img src={image} className="thumbnail_img" />
+                    <Close className="" onClick={() => handleDeleteImage(id)} />
                   </div>
                 ))}
               </div>
