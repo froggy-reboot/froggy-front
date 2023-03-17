@@ -27,4 +27,11 @@
   .input_eye {
     @apply absolute top-1/2 right-[1.6rem] h-[2.4rem] w-[2.4rem] -translate-y-1/2;
   }
+  .mini_btn {
+    @apply h-[3rem] w-[6.5rem] rounded-[1.5rem] bg-green-30 text-Tag text-white;
+  }
+  .thumbnail_img{
+    @apply h-[7rem] w-[7rem] rounded-[1rem];
+    aspect-ratio: 1 / 1;
+  }
 }
