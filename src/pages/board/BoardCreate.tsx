@@ -1,7 +1,9 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ReactComponent as PlusIcon } from 'src/assets/plus.svg';
 import { ReactComponent as Close } from 'src/assets/close.svg';
+import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
+
 
 interface IFormInput {
   title: string;
@@ -9,25 +11,43 @@ interface IFormInput {
   image: FileList;
 }
 
+
+const reorder = (list: string[], startIndex: number, endIndex: number) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
+}
+
 function BoardCreate() {
+
+  // form
   const { register, handleSubmit, watch } =
     useForm<IFormInput>({
       mode: 'all',
     });
 
-  const image = watch("image")
   const [imagePreview, setImagePreview] = useState<string[]>([]);
-  const formData = new FormData();
+  // dnd
+  const onDragEnd = (result: DropResult) => {
+    const { source, destination } = result;
+
+    // 드롭이 droppable 밖에서 일어났을 경우 바로 return
+    if (!destination) return;
+    // 드래그가 발생한 위치와 드롭이 발생한 위치가 같을 경우 바로 return
+    if (source.droppableId === destination.droppableId && source.index === destination.index) return;
+    setImagePreview(items => reorder(items, source.index, destination.index))
+
+  }
+
   const handleAddImages = (event: any) => {
-
     const imageLists = event.target.files;
-
     if (imageLists) {
       let imageUrlLists = [...imagePreview];
       for (let i = 0; i < imageLists.length; i++) {
         const currentImageUrl = URL.createObjectURL(imageLists[i]);
         imageUrlLists.push(currentImageUrl);
-
       }
       if (imageUrlLists.length > 10) {
         imageUrlLists = imageUrlLists.slice(0, 10);
@@ -44,6 +64,27 @@ function BoardCreate() {
     console.log(data);
 
   };
+
+  //   const imagePreviewList: any = () => {
+  //     return imagePreview ? imagePreview.map((image, id)) => {
+  //     return (
+  //       <Draggable key={id} draggableId={id.toString()} index={id}>
+  //         {(provided) => {
+  //           <div
+  //             ref={provided.innerRef}
+  //             {...provided.draggableProps}
+  //             {...provided.dragHandleProps}>
+  //             <div>
+  //               <Close className="ml-[6rem]" onClick={() => handleDeleteImage(id)} />
+  //               <img src={image} className="thumbnail_img" />
+
+  //             </div>
+  //           </div>
+  //         }}
+  //       </Draggable>
+  //     )
+  //   }
+  // }
 
   return (
     <div className="mt-[6rem]">
@@ -97,14 +138,44 @@ function BoardCreate() {
                 className="input min-h-[17.5rem] w-full resize-none pl-[1rem] pt-[1rem] placeholder:text-black-50 focus:outline-none"
               />
               {/* 이미지 preview */}
-              <div className="mt-[1rem] flex gap-[1rem]">
+              {/* <div className="mt-[1rem] flex gap-[1rem]">
                 {imagePreview && imagePreview.map((image, id) => (
                   <div key={id}>
                     <Close className="ml-[6rem]" onClick={() => handleDeleteImage(id)} />
                     <img src={image} className="thumbnail_img" />
                   </div>
                 ))}
-              </div>
+              </div> */}
+
+              {/* drag and drop을 위한 눈물의 똥꼬쇼 start */}
+              <DragDropContext onDragEnd={onDragEnd}>
+                <div className="mt-[1rem] flex gap-[1rem]">
+                  <Droppable droppableId="hello">
+                    {provided => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                      >
+                        {imagePreview && imagePreview.map(
+                          (image, id) => (
+                            <Draggable key={id} draggableId={id.toString()} index={id}>
+                              {(provided) => (
+                                <div
+                                  ref={provided.innerRef}
+                                  {...provided.dragHandleProps}
+                                  {...provided.draggableProps}>
+                                  <Close className="ml-[6rem]" onClick={() => handleDeleteImage(id)} />
+                                  <img src={image} className="thumbnail_img" />
+                                </div>
+                              )}
+                            </Draggable>
+                          ))}
+
+                      </div>
+                    )}
+                  </Droppable>
+                </div>
+              </DragDropContext>
             </div>
           </form>
         </div>
