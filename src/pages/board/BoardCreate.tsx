@@ -20,10 +20,18 @@ const reorder = (list: string[], startIndex: number, endIndex: number) => {
   return result;
 }
 
+const listStyle: React.CSSProperties = {
+  display: 'flex',
+  gap: '2rem',
+  margin: '1rem',
+}
+
+
+
 function BoardCreate() {
 
   // form
-  const { register, handleSubmit, watch } =
+  const { register, handleSubmit } =
     useForm<IFormInput>({
       mode: 'all',
     });
@@ -65,26 +73,6 @@ function BoardCreate() {
 
   };
 
-  //   const imagePreviewList: any = () => {
-  //     return imagePreview ? imagePreview.map((image, id)) => {
-  //     return (
-  //       <Draggable key={id} draggableId={id.toString()} index={id}>
-  //         {(provided) => {
-  //           <div
-  //             ref={provided.innerRef}
-  //             {...provided.draggableProps}
-  //             {...provided.dragHandleProps}>
-  //             <div>
-  //               <Close className="ml-[6rem]" onClick={() => handleDeleteImage(id)} />
-  //               <img src={image} className="thumbnail_img" />
-
-  //             </div>
-  //           </div>
-  //         }}
-  //       </Draggable>
-  //     )
-  //   }
-  // }
 
   return (
     <div className="mt-[6rem]">
@@ -137,24 +125,17 @@ function BoardCreate() {
                 placeholder="글 작성란"
                 className="input min-h-[17.5rem] w-full resize-none pl-[1rem] pt-[1rem] placeholder:text-black-50 focus:outline-none"
               />
-              {/* 이미지 preview */}
-              {/* <div className="mt-[1rem] flex gap-[1rem]">
-                {imagePreview && imagePreview.map((image, id) => (
-                  <div key={id}>
-                    <Close className="ml-[6rem]" onClick={() => handleDeleteImage(id)} />
-                    <img src={image} className="thumbnail_img" />
-                  </div>
-                ))}
-              </div> */}
 
-              {/* drag and drop을 위한 눈물의 똥꼬쇼 start */}
+
+              {/* drag and drop 이미지 preview */}
               <DragDropContext onDragEnd={onDragEnd}>
                 <div className="mt-[1rem] flex gap-[1rem]">
-                  <Droppable droppableId="hello">
-                    {provided => (
+                  <Droppable droppableId="hello" direction='horizontal'>
+                    {droppableProvided => (
                       <div
-                        ref={provided.innerRef}
-                        {...provided.droppableProps}
+                        ref={droppableProvided.innerRef}
+                        {...droppableProvided.droppableProps}
+                        style={listStyle}
                       >
                         {imagePreview && imagePreview.map(
                           (image, id) => (
@@ -166,6 +147,7 @@ function BoardCreate() {
                                   {...provided.draggableProps}>
                                   <Close className="ml-[6rem]" onClick={() => handleDeleteImage(id)} />
                                   <img src={image} className="thumbnail_img" />
+                                  {droppableProvided.placeholder}
                                 </div>
                               )}
                             </Draggable>
@@ -179,8 +161,8 @@ function BoardCreate() {
             </div>
           </form>
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }
 
