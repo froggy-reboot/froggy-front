@@ -5,6 +5,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { getArticles } from 'src/apis/boardApi';
 import Loader from 'src/components/loader/Loader';
 import timeConverter from 'src/utils/timeConverter/timeConverter';
+import { Link } from 'react-router-dom';
 
 interface IArticleData {
   id: number;
@@ -30,7 +31,7 @@ export default function PostList() {
       onSuccess: (data) => {
         setPostList(() => data?.pages.flatMap((page) => page.data));
       },
-      getNextPageParam: (lastPage, allPages) => {},
+      /* getNextPageParam: (lastPage, allPages) => {}, */
     },
   );
 
@@ -43,6 +44,7 @@ export default function PostList() {
       {postList.length &&
         postList.map((page) => (
           <li key={page.id} className="mb-[0.7rem] h-[9rem] pl-[0.4rem]">
+            <Link to={`/board/${page.id}`} />
             <hr className="border-black-30" />
             <p className="mt-[0.6rem] text-BoardSub font-medium text-black-50">
               {page.user?.nickname}
