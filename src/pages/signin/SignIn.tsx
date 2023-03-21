@@ -35,7 +35,8 @@ export default function SignIn() {
       const response = await postEmailLogin(data);
       if (response.status === 200) {
         localStorage.setItem('userId', JSON.stringify(response.data.user.id));
-        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('accessToken', response.data.token);
+        localStorage.setItem('refreshToken', response.data.refreshToken);
         navigate('/');
       }
     } catch (error) {
