@@ -7,7 +7,7 @@ export const publicApi = axios.create({
 export const privateApi = axios.create({
   baseURL: `${process.env.REACT_APP_SERVER_IP}`,
   headers: {
-    Authorization: `Bearer ${localStorage.getItem('token')}`,
+    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
   },
 });
 
