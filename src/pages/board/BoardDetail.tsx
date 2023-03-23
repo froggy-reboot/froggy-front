@@ -47,8 +47,6 @@ export default function BoardDetail() {
     return <Loader />;
   }
 
-  console.log(data);
-
   return (
     <>
       {data && (
