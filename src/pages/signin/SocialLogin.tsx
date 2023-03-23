@@ -26,7 +26,7 @@ export default function SocialLogin() {
           response = await getNaverRegister();
           break;
       }
-      if (response?.status === 201) {
+      if (response?.status === (201 || 200)) {
         window.location.replace(response.data);
       }
     } catch (error) {

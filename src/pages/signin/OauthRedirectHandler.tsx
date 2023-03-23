@@ -16,7 +16,8 @@ export default function OauthRedirectHandler() {
         try {
           const response = await postSocialLogin(userId);
           if (response.status === 201) {
-            localStorage.setItem('token', response.data.jwtToken);
+            localStorage.setItem('accessToken', response.data.jwtToken);
+            localStorage.setItem('refreshToken', response.data.refreshToken);
             navigate('/');
           }
         } catch (error) {
