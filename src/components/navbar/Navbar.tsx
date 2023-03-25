@@ -1,8 +1,10 @@
 import React from 'react';
 import { icons } from 'src/assets/navbar';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
+import CommandNavBar from './CommandNavbar';
 
 function Navbar() {
+  const location = useLocation();
   const navbarIcon = [
     { id: 'Home', link: '/', fill: icons.homeActive, empty: icons.home },
     { id: 'Knit', link: '/feed', fill: icons.knitActive, empty: icons.knit },
@@ -41,7 +43,7 @@ function Navbar() {
 
   return (
     <div className="fixed bottom-0 flex h-[8.3rem] w-screen items-center justify-evenly rounded-[15px_15px_0px_0px] bg-white pb-[2rem] align-middle shadow-[0px_-1px_3px_rgba(0,0,0,0.15)]">
-      {navbarBtns}
+      {location.pathname === '/board/:postId' ? <CommandNavBar /> : navbarBtns}
     </div>
   );
 }
