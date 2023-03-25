@@ -2,7 +2,7 @@ import React from 'react';
 import { ReactComponent as MenuIcon } from 'src/assets/menu.svg';
 import { ReactComponent as LikeIcon } from 'src/assets/empty_like.svg';
 import { ReactComponent as ChatIcon } from 'src/assets/chat.svg';
-import Comment, { ICommentData } from 'src/components/board/Comments';
+import Comment from 'src/components/board/Comments';
 import { useModal } from 'src/hooks/useModal';
 import { modals } from 'src/components/modals/Modals';
 import timeConverter from 'src/utils/timeConverter/timeConverter';
@@ -23,19 +23,15 @@ const dummy = {
 export interface IArticleDetail {
   data: {
     id: number;
-    writer_id: number;
-    article_type: string;
+    writerId: number;
+    articleType: string;
     liked: number;
     title: string;
     content: string;
-    created_at: string;
-    deleted_at: string | null;
-    comments: ICommentData[];
-    comment_count: number;
-    user: {
-      writer_nickname: string;
-    };
-    __entity: string;
+    createdAt: string;
+    deletedAt: null | string;
+    images: [];
+    commentCount: number;
   };
 }
 
@@ -62,11 +58,9 @@ export default function BoardDetail() {
                 className="h-[5rem] w-[5rem] rounded-full bg-green-30"
               />
               <div className="ml-[15px]">
-                <p className="text-Body font-bold">
-                  {data?.data.user.writer_nickname}
-                </p>
+                <p className="text-Body font-bold">{'닉네임'}</p>
                 <p className="text-Board text-black-50">
-                  {`${timeConverter(data?.data.created_at)} 작성`}
+                  {`${timeConverter(data?.data.createdAt)} 작성`}
                 </p>
               </div>
               <MenuIcon
@@ -80,7 +74,7 @@ export default function BoardDetail() {
             </div>
             <article className="mt-[1.3rem]">
               <h1 className="h-[3.6rem] text-Body font-bold leading-[3.6rem]">
-                <span className="tag mr-[7px]">{data?.data.article_type}</span>
+                <span className="tag mr-[7px]">{data?.data.articleType}</span>
                 {data?.data.title}
               </h1>
               <p className="my-[0.5rem] text-Tag font-normal">
@@ -108,12 +102,12 @@ export default function BoardDetail() {
               <LikeIcon className="mr-[0.3rem] inline-block h-[1.5rem] w-[1.5rem] fill-black-50" />
               <span>{data?.data.liked}</span>
               <ChatIcon className="mr-[0.3rem] ml-[0.4rem] inline-block h-[1.5rem] w-[1.5rem] fill-black-50" />
-              <span>{data?.data.comment_count}</span>
+              <span>{data?.data.commentCount}</span>
             </p>
             <hr className="mt-[1.4rem] w-[100%] border-black-30" />
           </main>
           <div className="mt-[1rem] mb-[3rem] w-[100%] overflow-scroll px-[3.5rem] ">
-            <Comment comments={data.data.comments} />
+            <Comment articleId={data.data.id} />
           </div>
         </div>
       )}

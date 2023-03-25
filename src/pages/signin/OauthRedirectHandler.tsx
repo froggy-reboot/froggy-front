@@ -14,7 +14,7 @@ export default function OauthRedirectHandler() {
     (async function () {
       if (userId) {
         try {
-          const response = await postSocialLogin(userId);
+          const response = await postSocialLogin(Number(userId));
           if (response.status === 201) {
             localStorage.setItem('accessToken', response.data.jwtToken);
             localStorage.setItem('refreshToken', response.data.refreshToken);

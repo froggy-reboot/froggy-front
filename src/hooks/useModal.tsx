@@ -8,7 +8,7 @@ export const useModal = () => {
   const openModal = useCallback(
     <T extends FunctionComponent<any>>(
       Component: T,
-      props: Omit<ComponentProps<T>, 'open'>,
+      props?: Omit<ComponentProps<T>, 'open'>,
     ) => {
       setShowModal((modals) => {
         return [...modals, { Component, props: { ...props } }];

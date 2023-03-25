@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ReactComponent as SearchIcon } from 'src/assets/search.svg';
 import { ReactComponent as AlarmIcon } from 'src/assets/alarm.svg';
@@ -7,18 +7,20 @@ import { ReactComponent as FilterIcon } from 'src/assets/filter.svg';
 import PostList from 'src/components/board/PostList';
 import SearchView from 'src/components/board/SearchView';
 import { articleTypeList } from 'src/pages/board/BoardConstants';
+import { useToggle } from 'src/hooks/useToggle';
+import { useModal } from 'src/hooks/useModal';
+import { modals } from 'src/components/modals/Modals';
 
 interface IFormInput {
   search: string;
 }
 
 export default function BoardMain() {
-  const modalRef = useRef<HTMLDivElement>(null);
-  const [showModal, setShowModal] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
-  const [isRecent, setIsRecent] = useState(true);
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isRecent, sortToggleHandler] = useToggle(true);
+  const [isExpanded, articleBtnExpandHandler] = useToggle(false);
   const [ariticleType, setArticleType] = useState('전체');
+  const { openModal, closeModal, showModal } = useModal();
 
   const { register, handleSubmit, reset, formState } = useForm<IFormInput>({
     mode: 'all',
@@ -34,28 +36,8 @@ export default function BoardMain() {
     }
   }, [formState]);
 
-  const showModalHandler = () => {
-    setShowModal((isShow) => !isShow);
-  };
-
-  const sortToggleHandler = () => {
-    setIsRecent((isRecent) => !isRecent);
-  };
-
-  const articleBtnExpandHandler = () => {
-    setIsExpanded(!isExpanded);
-  };
-
   const articleTypeHandler = (type: string) => {
     setArticleType(type);
-  };
-
-  const closeModalHandler = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-  ) => {
-    if (!modalRef.current?.contains(event.target as HTMLButtonElement)) {
-      setShowModal((isShow) => !isShow); 
-    }
   };
 
   return (
@@ -112,28 +94,19 @@ export default function BoardMain() {
       {!showSearch && (
         <button
           className={`fixed bottom-[11rem] right-[2.1rem] z-[1] flex h-[5.5rem] w-[5.5rem] items-center justify-center rounded-full shadow-[1px_2px_5px_1px_rgba(0,0,0,0.25)] ${
-            showModal ? 'bg-white' : 'bg-green-50 '
+            showModal.length ? 'bg-white' : 'bg-green-50 '
           }`}
-          onClick={showModalHandler}>
+          onClick={
+            showModal.length
+              ? () => closeModal(modals.CreatePostModal)
+              : () => openModal(modals.CreatePostModal)
+          }>
           <PlusIcon
             className={`${
-              showModal ? 'rotate-45 fill-green-50' : ' fill-white'
+              showModal.length ? 'rotate-45 fill-green-50' : ' fill-white'
             }`}
           />
         </button>
-      )}
-      {showModal && (
-        <div
-          className="fixed top-0 h-[100vh] w-[100vw] bg-[rgba(0,0,0,0.2)]"
-          onClick={closeModalHandler}>
-          <div
-            ref={modalRef}
-            className="fixed bottom-[17.3rem] right-[2.1rem] flex h-[8.5rem] w-[7.5rem] flex-col items-center justify-center gap-[0.9rem] rounded-[1.5rem] bg-green-50 shadow-[1px_2px_5px_1px_rgba(0,0,0,0.20)]">
-            <p className="text-Body font-medium text-white">질문글</p>
-            <hr className="w-[5.5rem] border-white" />
-            <p className="text-Body font-medium text-white">자유글</p>
-          </div>
-        </div>
       )}
     </div>
   );
