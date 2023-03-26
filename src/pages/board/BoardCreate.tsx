@@ -69,7 +69,19 @@ function BoardCreate() {
   };
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data);
+    const file = data.image[0]
+    const formData = new FormData()
+    formData.append('title', new Blob([JSON.stringify(data.title)], {
+      type: "application/json"
+      }));
+
+    
+    formData.append('multipartFile', file)
+    // formData.append("articleType", "질문")
+    // formData.append("liked", "0")
+    // formData.append("title", data.title)
+    // formData.append("content", data.content)
+    console.log(formData);
 
   };
 

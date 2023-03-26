@@ -5,7 +5,7 @@ import home from './home.svg';
 import knitActive from './knitActive.svg';
 import knit from './knit.svg';
 import myPageActive from './myPageActive.svg';
-import myPage from './mypage.svg';
+import myPage from './myPage.svg';
 
 export const icons = {
   boardActive,

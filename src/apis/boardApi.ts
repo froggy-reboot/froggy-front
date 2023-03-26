@@ -16,3 +16,8 @@ export async function getCommets(articleId: number, { pageParam = 1 }) {
   );
   return response;
 }
+
+export async function postArticles() {
+  const response = await publicApi.post(`api/v1/articles/`);
+  return response;
+}
