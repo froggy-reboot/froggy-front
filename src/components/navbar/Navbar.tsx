@@ -42,7 +42,7 @@ function Navbar() {
   });
 
   return (
-    <div className="fixed bottom-0 flex h-[8.3rem] w-screen items-center justify-evenly rounded-[15px_15px_0px_0px] bg-white pb-[2rem] align-middle shadow-[0px_-1px_3px_rgba(0,0,0,0.15)]">
+    <div className="fixed left-0 bottom-0 flex h-[8.3rem] w-screen items-center justify-evenly rounded-[15px_15px_0px_0px] bg-white pb-[2rem] align-middle shadow-[0px_-1px_3px_rgba(0,0,0,0.15)]">
       {location.pathname === '/board/:postId' ? <CommandNavBar /> : navbarBtns}
     </div>
   );
