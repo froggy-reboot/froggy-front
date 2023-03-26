@@ -42,6 +42,7 @@
   .modal_bg {
     @apply fixed top-0 right-0 flex h-[100vh] w-[100vw] items-center justify-center bg-[rgba(0,0,0,0.2)] z-10;
   }
+}
 
 @layer utilities {
   /* Chrome, Safari and Opera */
@@ -52,6 +53,5 @@
   .no-scrollbar {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
->>>>>>> develop
   }
 }

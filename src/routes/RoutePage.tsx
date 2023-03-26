@@ -8,7 +8,6 @@ import BoardDetail from 'src/pages/board/BoardDetail';
 import SignUp from 'src/pages/signup/SignUp';
 import OauthRedirectHandler from 'src/pages/signin/OauthRedirectHandler';
 import PrivateRoute from 'src/routes/PrivateRoute';
-import BoardCreate from 'src/pages/board/BoardCreate';
 
 export default function RoutePage() {
   return (
