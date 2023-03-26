@@ -13,7 +13,7 @@
 
 @layer components {
   .container {
-    @apply flex h-[100vh] flex-col items-center bg-white;
+    @apply flex h-[100vh] flex-col items-center bg-white pt-[6rem] overflow-auto no-scrollbar;
   }
   .submit_btn {
     @apply mt-[1rem] h-[5rem] w-[100%] rounded-[1rem] text-Body text-white md:mt-[2rem];
@@ -30,8 +30,28 @@
   .mini_btn {
     @apply h-[3rem] w-[6.5rem] rounded-[1.5rem] bg-green-30 text-Tag text-white;
   }
+
   .thumbnail_img{
     @apply h-[7rem] w-[7rem] rounded-[1rem];
     aspect-ratio: 1 / 1;
+  }
+
+  .tag {
+    @apply mini_btn inline-block h-[2rem] w-[4rem] text-center text-Callout leading-[2rem];
+  }
+  .modal_bg {
+    @apply fixed top-0 right-0 flex h-[100vh] w-[100vw] items-center justify-center bg-[rgba(0,0,0,0.2)] z-10;
+  }
+
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+>>>>>>> develop
   }
 }

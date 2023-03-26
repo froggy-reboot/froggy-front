@@ -1,5 +1,5 @@
 import { IFormInput } from 'src/pages/signin/SignIn';
-import { publicApi, publicHttpsApi } from 'src/apis/authApi';
+import { publicApi } from 'src/apis/authApi';
 
 export async function getGoogleRegister() {
   const response = await publicApi.get('api/v1/auth/google/register');
@@ -17,11 +17,11 @@ export async function getNaverRegister() {
 }
 
 export async function getRavelryRegister() {
-  const response = await publicHttpsApi.get('/api/v1/auth/ravelry/register');
+  const response = await publicApi.get('/api/v1/auth/ravelry/register');
   return response;
 }
 
-export async function postSocialLogin(userId: string) {
+export async function postSocialLogin(userId: number) {
   const response = await publicApi.post('/api/v1/auth/social/login', {
     userId: userId,
   });
