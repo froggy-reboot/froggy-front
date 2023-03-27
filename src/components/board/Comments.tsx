@@ -13,8 +13,9 @@ export interface ICommentData {
   user: {
     id: number;
     nickname: string;
+    profileImg: string;
   };
-  images: [];
+  images: string[];
 }
 
 export default function Comment({ articleId }: { articleId: number }) {
@@ -41,12 +42,14 @@ export default function Comment({ articleId }: { articleId: number }) {
           <Fragment key={comment.id}>
             <li className="flex">
               <img
-                src={''}
+                src={comment.user.profileImg}
                 className="mt-[0.5rem] h-[3.2rem] w-[3.2rem] rounded-full"
               />
               <div className="ml-[0.9rem] mt-[0.9rem] flex flex-1 flex-col">
                 <div className="flex h-[1.6rem] items-center">
-                  <p className="mr-auto text-Tag font-bold">{'닉네임'}</p>
+                  <p className="mr-auto text-Tag font-bold">
+                    {comment.user.nickname}
+                  </p>
                   <p className="text-Board text-black-50">
                     {/* timeConverter(comment.createdAt) */ '1시간 전'}
                   </p>
