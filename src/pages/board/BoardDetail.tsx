@@ -10,6 +10,8 @@ import { useQuery } from '@tanstack/react-query';
 import { getArticleDetail } from 'src/apis/boardApi';
 import { useParams } from 'react-router-dom';
 import Loader from 'src/components/loader/Loader';
+import { useSetRecoilState } from 'recoil';
+import { currentArticleId } from 'src/atoms/atom';
 
 export interface IArticleDetail {
   data: {
@@ -37,9 +39,11 @@ export interface IArticleDetail {
 export default function BoardDetail() {
   const { openModal } = useModal();
   const { postId } = useParams() as { postId: string };
+  const setPostId = useSetRecoilState(currentArticleId);
   const { isLoading, data } = useQuery<IArticleDetail>(
     ['article', postId],
     () => getArticleDetail(postId),
+    { onSuccess: (data) => setPostId(data.data.id) },
   );
 
   if (isLoading) {

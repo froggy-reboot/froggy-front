@@ -10,3 +10,8 @@ export const modalStateAtom = atom<
   key: 'modalAtom',
   default: [],
 });
+
+export const currentArticleId = atom({
+  key: 'postId',
+  default: 0,
+});
