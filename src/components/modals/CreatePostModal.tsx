@@ -1,13 +1,14 @@
 import { useModal } from 'src/hooks/useModal';
 import React from 'react';
 import { modals } from 'src/components/modals/Modals';
+import { useNavigate } from 'react-router-dom';
 
 export default function CreatPostModal() {
   const { closeModal } = useModal();
+  const navigate = useNavigate();
 
   const onClickHandler = (type: string) => {
-    //타입이랑 글작성페이지로 보내기
-    console.log(type);
+    navigate('/board/create', { state: type });
     closeModal(modals.CreatePostModal);
   };
 
