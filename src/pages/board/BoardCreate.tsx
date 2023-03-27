@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ReactComponent as PlusIcon } from 'src/assets/plus.svg';
 import { ReactComponent as Close } from 'src/assets/close.svg';
+import { ReactComponent as Delete } from 'src/assets/delete.svg';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
 
 
@@ -71,18 +72,14 @@ function BoardCreate() {
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     const file = data.image[0]
     const formData = new FormData()
-    formData.append('title', new Blob([JSON.stringify(data.title)], {
-      type: "application/json"
-      }));
+
+    formData.append('multipartFile', file)
+    formData.append("articleType", "질문")
+    formData.append("liked", "0")
+    formData.append("title", data.title)
+    formData.append("content", data.content)
 
     
-    formData.append('multipartFile', file)
-    // formData.append("articleType", "질문")
-    // formData.append("liked", "0")
-    // formData.append("title", data.title)
-    // formData.append("content", data.content)
-    console.log(formData);
-
   };
 
 
@@ -156,8 +153,9 @@ function BoardCreate() {
                                 <div
                                   ref={provided.innerRef}
                                   {...provided.dragHandleProps}
-                                  {...provided.draggableProps}>
-                                  <Close className="ml-[6rem]" onClick={() => handleDeleteImage(id)} />
+                                  {...provided.draggableProps}
+                                  className="relative">
+                                  <Delete className="absolute -top-4 -right-4" onClick={() => handleDeleteImage(id)} />
                                   <img src={image} className="thumbnail_img" />
                                   {droppableProvided.placeholder}
                                 </div>
