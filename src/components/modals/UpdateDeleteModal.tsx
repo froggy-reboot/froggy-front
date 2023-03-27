@@ -1,22 +1,21 @@
 import React from 'react';
 import { useModal } from 'src/hooks/useModal';
+import ConfirmModal from './ConfirmModal';
 import { modals } from './Modals';
 
 export default function UpdateDeleteModal() {
-  const { closeModal, showModal } = useModal();
-
-  /*   //commentId 호출할때 보내기
-  console.log(showModal[0].props.commentId); */
+  const { openModal, closeModal, showModal } = useModal();
 
   const updateHandler = () => {
-    //수정 api호출
     closeModal(modals.UpdateDeleteModal);
   };
 
   const deleteHandler = () => {
-    //삭제 api호출
     closeModal(modals.UpdateDeleteModal);
-    console.log(showModal);
+    openModal(ConfirmModal, {
+      postId: showModal[0].props.postId,
+      commentId: showModal[0].props.commentId,
+    });
   };
 
   return (

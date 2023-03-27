@@ -24,3 +24,15 @@ export async function postComment(postId: number, content: string) {
   );
   return response;
 }
+
+export async function deleteComment(postId: number, commentId: number) {
+  const response = await privateApi.delete(
+    `/api/v1/articles/${postId}/comments/${commentId}`,
+  );
+  return response;
+}
+
+export async function deleteArticle(postId: number) {
+  const response = await privateApi.delete(`/api/v1/articles/${postId}`);
+  return response;
+}

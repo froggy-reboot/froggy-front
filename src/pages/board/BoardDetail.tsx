@@ -71,7 +71,7 @@ export default function BoardDetail() {
               <MenuIcon
                 onClick={() =>
                   openModal(modals.UpdateDeleteModal, {
-                    postId: postId,
+                    postId: Number(postId),
                   })
                 }
                 className="h-[2rem] w-[2rem] justify-self-end fill-black-100"

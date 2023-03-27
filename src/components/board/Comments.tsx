@@ -6,6 +6,8 @@ import timeConverter from 'src/utils/timeConverter/timeConverter';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getCommets } from 'src/apis/boardApi';
 import { useIntersectionObserver } from 'src/hooks/useIntersectionObserver';
+import { useRecoilValue } from 'recoil';
+import { currentArticleId } from 'src/atoms/atom';
 
 export interface ICommentData {
   id: number;
@@ -21,6 +23,7 @@ export interface ICommentData {
 export default function Comment({ articleId }: { articleId: number }) {
   const [commentList, setCommentList] = useState<ICommentData[]>([]);
   const { openModal } = useModal();
+  const postId = useRecoilValue(currentArticleId);
   const { fetchNextPage, hasNextPage } = useInfiniteQuery(
     ['comments'],
     ({ pageParam = 1 }) => getCommets(articleId, { pageParam }),
@@ -56,6 +59,7 @@ export default function Comment({ articleId }: { articleId: number }) {
                   <MenuIcon
                     onClick={() =>
                       openModal(modals.UpdateDeleteModal, {
+                        postId: postId,
                         commentId: comment.id,
                       })
                     }
