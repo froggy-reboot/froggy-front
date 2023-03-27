@@ -1,7 +1,12 @@
 import React, { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useRecoilValue } from 'recoil';
+import { currentArticleId } from 'src/atoms/atom';
+import { postComment } from 'src/apis/boardApi';
+import axios from 'axios';
 
 export default function CommandNavBar() {
+  const postId = useRecoilValue(currentArticleId);
   const { register, handleSubmit, formState, reset } = useForm<{
     comment: string;
   }>();
@@ -12,8 +17,16 @@ export default function CommandNavBar() {
     }
   }, [formState]);
 
-  const onSubmit: SubmitHandler<{ comment: string }> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<{ comment: string }> = async (data) => {
+    try {
+      await postComment(postId, data.comment);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 422) {
+          alert('빈 댓글은 작성할 수 없습니다.');
+        }
+      }
+    }
   };
 
   return (
