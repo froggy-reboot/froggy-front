@@ -93,7 +93,7 @@ export default function BoardMain() {
       </main>
       {!showSearch && (
         <button
-          className={`fixed bottom-[11rem] right-[2.1rem] z-[1] flex h-[5.5rem] w-[5.5rem] items-center justify-center rounded-full shadow-[1px_2px_5px_1px_rgba(0,0,0,0.25)] ${
+          className={`fixed bottom-[11rem] right-[2.1rem] z-20 flex h-[5.5rem] w-[5.5rem] items-center justify-center rounded-full shadow-[1px_2px_5px_1px_rgba(0,0,0,0.25)] ${
             showModal.length ? 'bg-white' : 'bg-green-50 '
           }`}
           onClick={
