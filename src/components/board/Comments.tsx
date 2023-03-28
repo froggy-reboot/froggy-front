@@ -66,7 +66,7 @@ export default function Comment({ articleId }: { articleId: number }) {
                     className="h-[1.6rem] w-[1.6rem] fill-black-50"
                   />
                 </div>
-                <p className="mt-[1rem] mb-[0.6rem] text-Tag font-normal">
+                <p className="mt-[1rem] mb-[0.6rem] whitespace-pre-line text-Tag font-normal">
                   {comment.content}
                 </p>
               </div>
