@@ -15,3 +15,13 @@ export const currentArticleId = atom({
   key: 'postId',
   default: 0,
 });
+
+export const editCommentAtom = atom({
+  key: 'editComment',
+  default: { content: '', commentId: null },
+});
+
+export const userInfoAtom = atom({
+  key: 'userInfo',
+  default: {},
+});
