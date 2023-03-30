@@ -73,13 +73,13 @@ export default function CommandNavBar() {
       onKeyDown={enterSubmitController}
       className="flex w-[100%] px-[2.5rem] py-[1.5rem]">
       <img
-        src={''}
+        src={userInfo.profileImg}
         alt="프로필"
-        className="mr-[1rem] h-[3.2rem] w-[3.2rem] rounded-full bg-green-10"
+        className="mr-[1rem] h-[3.2rem] w-[3.2rem] rounded-full bg-green-10 object-cover"
       />
       <textarea
         {...register('comment', { required: true })}
-        className="h-[3rem] w-[100%] rounded-[15px] bg-black-30 pt-[0.5rem] pl-[1.3rem] text-Tag font-normal outline-none placeholder:text-black-50 focus:h-[10rem] focus:py-[1rem]"
+        className="h-[3rem] w-[100%] flex-1 rounded-[15px] bg-black-30 pt-[0.5rem] pl-[1.3rem] text-Tag font-normal outline-none placeholder:text-black-50 focus:h-[10rem] focus:py-[1rem]"
         placeholder="댓글을 입력해 주세요."
       />
     </form>
