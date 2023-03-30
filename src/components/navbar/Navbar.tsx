@@ -1,7 +1,7 @@
 import React from 'react';
 import { icons } from 'src/assets/navbar';
 import { NavLink, useMatch } from 'react-router-dom';
-import CommandNavBar from 'src/components/navbar/CommandNavbar';
+import CommandNavBar from 'src/components/board/CommandNavbar';
 
 function Navbar() {
   const postDetailPath = useMatch('/board/:postId');

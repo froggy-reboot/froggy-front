@@ -17,6 +17,30 @@ export async function getCommets(articleId: number, { pageParam = 1 }) {
   return response;
 }
 
+export async function getCommet(postId: number, commentId: number) {
+  const response = await publicApi.get(
+    `/api/v1/articles/${postId}/comments/${commentId}`,
+  );
+  return response;
+}
+
+export async function patchComment(
+  postId: number,
+  commentId: number,
+  writerId: number,
+  content: string,
+) {
+  const response = await privateApi.patch(
+    `/api/v1/articles/${postId}/comments/${commentId}`,
+    {
+      articleId: postId,
+      writerId: writerId,
+      content: content,
+    },
+  );
+  return response;
+}
+
 export async function postComment(postId: number, content: string) {
   const response = await privateApi.post(
     `/api/v1/articles/${postId}/comments`,

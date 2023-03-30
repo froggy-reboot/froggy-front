@@ -1,19 +1,50 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useRecoilValue } from 'recoil';
-import { currentArticleId } from 'src/atoms/atom';
-import { postComment } from 'src/apis/boardApi';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
+import {
+  currentArticleId,
+  editCommentAtom,
+  userInfoAtom,
+} from 'src/atoms/atom';
+import { patchComment, postComment } from 'src/apis/boardApi';
 import axios from 'axios';
 
 export default function CommandNavBar() {
   const postId = useRecoilValue(currentArticleId);
-  const { register, handleSubmit, reset } = useForm<{
+  const editComment = useRecoilValue(editCommentAtom);
+  const completeEditComment = useResetRecoilState(editCommentAtom);
+  const { register, handleSubmit, reset, setValue, setFocus } = useForm<{
     comment: string;
   }>();
+  const userInfo = useRecoilValue(userInfoAtom);
+
+  useEffect(() => {
+    setValue('comment', editComment.content);
+    setFocus('comment');
+  }, [editComment]);
 
   const onSubmit: SubmitHandler<{ comment: string }> = async (data) => {
     (document.activeElement as HTMLElement).blur();
     reset({ comment: '' });
+
+    //댓글 수정
+    if (editComment.commentId) {
+      try {
+        await patchComment(
+          postId,
+          editComment.commentId,
+          userInfo.id,
+          data.comment,
+        );
+      } catch (error) {
+        console.log(error);
+      } finally {
+        completeEditComment();
+      }
+      return;
+    }
+
+    //새로운 댓글 작성
     try {
       await postComment(postId, data.comment);
     } catch (error) {
