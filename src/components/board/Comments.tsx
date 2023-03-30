@@ -12,6 +12,7 @@ import { currentArticleId } from 'src/atoms/atom';
 export interface ICommentData {
   id: number;
   content: string;
+  createdAt: string;
   user: {
     id: number;
     nickname: string;
@@ -54,7 +55,7 @@ export default function Comment({ articleId }: { articleId: number }) {
                     {comment.user.nickname}
                   </p>
                   <p className="text-Board text-black-50">
-                    {/* timeConverter(comment.createdAt) */ '1시간 전'}
+                    {timeConverter(comment.createdAt)}
                   </p>
                   <MenuIcon
                     onClick={() =>
