@@ -12,6 +12,11 @@ export const privateApi = axios.create({
   },
 });
 
+export async function getUserInfo(userId: string | null) {
+  const response = await publicApi.get(`/api/v1/users/${userId}`);
+  return response;
+}
+
 function postRefreshToken() {
   const response = publicApi.post('/api/v1/auth/refresh', {
     refreshToken: localStorage.getItem('refreshToken'),
@@ -48,7 +53,10 @@ privateApi.interceptors.response.use(
           }
         } catch (error) {
           if (axios.isAxiosError(error)) {
-            if (error.response?.status === 404) {
+            if (
+              error.response?.status === 404 ||
+              error.response?.status === 422
+            ) {
               alert(LOGIN.MESSAGE.EXPIRED);
               window.location.replace('/sign-in');
             } else {
