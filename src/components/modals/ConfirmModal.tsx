@@ -3,35 +3,38 @@ import { deleteArticle, deleteComment } from 'src/apis/boardApi';
 import { useModal } from 'src/hooks/useModal';
 import { modals } from 'src/components/modals/Modals';
 import { useNavigate } from 'react-router-dom';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export default function ConfirmModal() {
+  const queryClient = useQueryClient();
   const { closeModal, showModal } = useModal();
   const navigate = useNavigate();
+
+  const { mutate: delCommentMutation } = useMutation(deleteComment, {
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['comments'] });
+    },
+  });
+
+  const { mutate: delArticleMutation } = useMutation(deleteArticle, {
+    onSuccess: () => {
+      alert('게시글을 삭제하였습니다.');
+      navigate('/board');
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['articles'] });
+    },
+  });
 
   const deleteConfirmHandler = async () => {
     closeModal(modals.ConfirmModal);
     if (showModal[0].props.commentId) {
-      try {
-        const response = await deleteComment(
-          showModal[0].props.postId,
-          showModal[0].props.commentId,
-        );
-        if (response.status === 200) {
-          alert('댓글을 삭제하였습니다.');
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    if (!showModal[0].props.commentId) {
-      try {
-        const response = await deleteArticle(showModal[0].props.postId);
-        if (response.status === 200) {
-          alert('게시글을 삭제하였습니다.');
-          navigate('/board');
-        }
-      } catch (error) {
-        console.log(error);
+      delCommentMutation({
+        postId: showModal[0].props.postId,
+        commentId: showModal[0].props.commentId,
+      });
+      if (!showModal[0].props.commentId) {
+        delArticleMutation(showModal[0].props.postId);
       }
     }
   };

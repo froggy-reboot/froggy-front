@@ -7,9 +7,10 @@ import {
   userInfoAtom,
 } from 'src/atoms/atom';
 import { patchComment, postComment } from 'src/apis/boardApi';
-import axios from 'axios';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export default function CommandNavBar() {
+  const queryClient = useQueryClient();
   const postId = useRecoilValue(currentArticleId);
   const editComment = useRecoilValue(editCommentAtom);
   const completeEditComment = useResetRecoilState(editCommentAtom);
@@ -17,6 +18,19 @@ export default function CommandNavBar() {
     comment: string;
   }>();
   const userInfo = useRecoilValue(userInfoAtom);
+
+  const { mutate: editMutation } = useMutation(patchComment, {
+    onSettled: () => {
+      completeEditComment();
+      queryClient.invalidateQueries({ queryKey: ['comments'] });
+    },
+  });
+
+  const { mutate: createMutation } = useMutation(postComment, {
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['comments'] });
+    },
+  });
 
   useEffect(() => {
     setValue('comment', editComment.content);
@@ -29,31 +43,19 @@ export default function CommandNavBar() {
 
     //댓글 수정
     if (editComment.commentId) {
-      try {
-        await patchComment(
-          postId,
-          editComment.commentId,
-          userInfo.id,
-          data.comment,
-        );
-      } catch (error) {
-        console.log(error);
-      } finally {
-        completeEditComment();
-      }
-      return;
+      return editMutation({
+        postId: postId,
+        commentId: editComment.commentId,
+        writerId: userInfo.id,
+        content: data.comment,
+      });
     }
 
     //새로운 댓글 작성
-    try {
-      await postComment(postId, data.comment);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error.response?.status === 422) {
-          alert('빈 댓글은 작성할 수 없습니다.');
-        }
-      }
-    }
+    createMutation({
+      postId: postId,
+      content: data.comment,
+    });
   };
 
   const enterSubmitController = (event: React.KeyboardEvent<HTMLElement>) => {

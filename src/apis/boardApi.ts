@@ -1,5 +1,22 @@
 import { privateApi, publicApi } from 'src/apis/authApi';
 
+interface IPatchCommentProps {
+  postId: number;
+  commentId: number;
+  writerId: number;
+  content: string;
+}
+
+interface IPostCommentProps {
+  postId: number;
+  content: string;
+}
+
+interface IDeleteCommentProps {
+  postId: number;
+  commentId: number;
+}
+
 export async function getArticles({ pageParam = 1 }) {
   const response = await publicApi.get(`api/v1/articles/pages/${pageParam}`);
   return response;
@@ -24,34 +41,29 @@ export async function getCommet(postId: number, commentId: number) {
   return response;
 }
 
-export async function patchComment(
-  postId: number,
-  commentId: number,
-  writerId: number,
-  content: string,
-) {
+export async function patchComment(mutationProps: IPatchCommentProps) {
   const response = await privateApi.patch(
-    `/api/v1/articles/${postId}/comments/${commentId}`,
+    `/api/v1/articles/${mutationProps.postId}/comments/${mutationProps.commentId}`,
     {
-      articleId: postId,
-      writerId: writerId,
-      content: content,
+      articleId: mutationProps.postId,
+      writerId: mutationProps.writerId,
+      content: mutationProps.content,
     },
   );
   return response;
 }
 
-export async function postComment(postId: number, content: string) {
+export async function postComment(mutationProps: IPostCommentProps) {
   const response = await privateApi.post(
-    `/api/v1/articles/${postId}/comments`,
-    { content: content },
+    `/api/v1/articles/${mutationProps.postId}/comments`,
+    { content: mutationProps.content },
   );
   return response;
 }
 
-export async function deleteComment(postId: number, commentId: number) {
+export async function deleteComment(mutationProps: IDeleteCommentProps) {
   const response = await privateApi.delete(
-    `/api/v1/articles/${postId}/comments/${commentId}`,
+    `/api/v1/articles/${mutationProps.postId}/comments/${mutationProps.commentId}`,
   );
   return response;
 }

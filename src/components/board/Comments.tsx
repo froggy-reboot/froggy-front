@@ -25,7 +25,7 @@ export default function Comment({ articleId }: { articleId: number }) {
   const { openModal } = useModal();
   const postId = useRecoilValue(currentArticleId);
   const { fetchNextPage, hasNextPage } = useInfiniteQuery(
-    ['comments'],
+    ['comments', postId],
     ({ pageParam = 1 }) => getCommets(articleId, { pageParam }),
     {
       onSuccess: (data) =>
