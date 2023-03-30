@@ -14,8 +14,6 @@ import SocialLogin from 'src/pages/signin/SocialLogin';
 import { postEmailLogin } from 'src/apis/signInApi';
 import axios from 'axios';
 import Loader from 'src/components/loader/Loader';
-import { useSetRecoilState } from 'recoil';
-import { userInfoAtom } from 'src/atoms/atom';
 export interface IFormInput {
   email: string;
   password: string;
@@ -24,7 +22,6 @@ export interface IFormInput {
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const setUserInfo = useSetRecoilState(userInfoAtom);
   const navigate = useNavigate();
   const {
     register,
@@ -40,7 +37,6 @@ export default function SignIn() {
         localStorage.setItem('userId', JSON.stringify(response.data.user.id));
         localStorage.setItem('accessToken', response.data.token);
         localStorage.setItem('refreshToken', response.data.refreshToken);
-        setUserInfo(response.data.user);
         navigate('/');
       }
     } catch (error) {
