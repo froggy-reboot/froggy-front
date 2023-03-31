@@ -32,7 +32,9 @@ export default function CommandNavBar() {
 
   useEffect(() => {
     setValue('comment', editComment.content);
-    setFocus('comment');
+    if (editComment.content) {
+      setFocus('comment');
+    }
   }, [editComment]);
 
   const onSubmit: SubmitHandler<{ comment: string }> = async (data) => {
