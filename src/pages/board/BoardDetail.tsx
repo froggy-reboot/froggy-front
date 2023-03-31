@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ReactComponent as MenuIcon } from 'src/assets/menu.svg';
 import { ReactComponent as LikeIcon } from 'src/assets/empty_like.svg';
 import { ReactComponent as ChatIcon } from 'src/assets/chat.svg';
@@ -43,8 +43,11 @@ export default function BoardDetail() {
   const { isLoading, data } = useQuery<IArticleDetail>(
     ['article', postId],
     () => getArticleDetail(postId),
-    { onSuccess: (data) => setPostId(data.data.id) },
   );
+
+  useEffect(() => {
+    setPostId(Number(postId));
+  }, [postId]);
 
   if (isLoading) {
     return <Loader />;

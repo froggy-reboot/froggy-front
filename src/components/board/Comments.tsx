@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import { ReactComponent as MenuIcon } from 'src/assets/menu.svg';
 import { useModal } from 'src/hooks/useModal';
 import { modals } from '../modals/Modals';
@@ -6,9 +6,8 @@ import timeConverter from 'src/utils/timeConverter/timeConverter';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getCommets } from 'src/apis/boardApi';
 import { useIntersectionObserver } from 'src/hooks/useIntersectionObserver';
-import { useRecoilValue } from 'recoil';
-import { currentArticleId } from 'src/atoms/atom';
 import { AxiosError, AxiosResponse } from 'axios';
+import { useParams } from 'react-router-dom';
 
 export interface ICommentData {
   id: number;
@@ -24,7 +23,7 @@ export interface ICommentData {
 
 export default function Comment({ articleId }: { articleId: number }) {
   const { openModal } = useModal();
-  const postId = useRecoilValue(currentArticleId);
+  const { postId } = useParams() as { postId: string };
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery<
     AxiosResponse,
     AxiosError,
