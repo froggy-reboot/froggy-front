@@ -1,22 +1,41 @@
 import React from 'react';
 import { useModal } from 'src/hooks/useModal';
-import { modals } from './Modals';
+import ConfirmModal from 'src/components/modals/ConfirmModal';
+import { modals } from 'src/components/modals/Modals';
+import { getCommet } from 'src/apis/boardApi';
+import { useSetRecoilState } from 'recoil';
+import { editCommentAtom } from 'src/atoms/atom';
 
 export default function UpdateDeleteModal() {
-  const { closeModal, showModal } = useModal();
+  const { openModal, closeModal, showModal } = useModal();
+  const setEditComment = useSetRecoilState(editCommentAtom);
 
-  /*   //commentId 호출할때 보내기
-  console.log(showModal[0].props.commentId); */
-
-  const updateHandler = () => {
-    //수정 api호출
+  const updateHandler = async () => {
     closeModal(modals.UpdateDeleteModal);
+    try {
+      if (showModal[0].props.commentId) {
+        const response = await getCommet(
+          showModal[0].props.postId,
+          showModal[0].props.commentId,
+        );
+        if (response.status === 200) {
+          setEditComment({
+            content: response.data.content,
+            commentId: showModal[0].props.commentId,
+          });
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const deleteHandler = () => {
-    //삭제 api호출
     closeModal(modals.UpdateDeleteModal);
-    console.log(showModal);
+    openModal(ConfirmModal, {
+      postId: showModal[0].props.postId,
+      commentId: showModal[0].props.commentId,
+    });
   };
 
   return (

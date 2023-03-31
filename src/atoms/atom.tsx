@@ -10,3 +10,13 @@ export const modalStateAtom = atom<
   key: 'modalAtom',
   default: [],
 });
+
+export const currentArticleId = atom({
+  key: 'postId',
+  default: 0,
+});
+
+export const editCommentAtom = atom({
+  key: 'editComment',
+  default: { content: '', commentId: undefined },
+});
