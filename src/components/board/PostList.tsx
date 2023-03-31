@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import { ReactComponent as LikeIcon } from 'src/assets/empty_like.svg';
 import { ReactComponent as ChatIcon } from 'src/assets/chat.svg';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -7,6 +7,7 @@ import Loader from 'src/components/loader/Loader';
 import timeConverter from 'src/utils/timeConverter/timeConverter';
 import { Link } from 'react-router-dom';
 import { useIntersectionObserver } from 'src/hooks/useIntersectionObserver';
+import { AxiosError, AxiosResponse } from 'axios';
 
 interface IArticleData {
   id: number;
@@ -24,20 +25,20 @@ interface IArticleData {
 }
 
 export default function PostList() {
-  const [postList, setPostList] = useState<IArticleData[]>([]);
-  const { isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery(
-    ['articles'],
-    ({ pageParam = 1 }) => getArticles({ pageParam }),
-    {
-      onSuccess: (data) => {
-        setPostList(() => data?.pages.flatMap((page) => page.data));
-      },
-      getNextPageParam: (lastPage, allPages) => {
-        const nextPage = allPages.length + 1;
-        return lastPage.data.length === 0 ? undefined : nextPage;
-      },
+  const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery<
+    AxiosResponse,
+    AxiosError,
+    IArticleData
+  >(['articles'], ({ pageParam = 1 }) => getArticles({ pageParam }), {
+    getNextPageParam: (lastPage, allPages) => {
+      const nextPage = allPages.length + 1;
+      return lastPage.data.length === 0 ? undefined : nextPage;
     },
-  );
+    select: (data) => ({
+      pages: data?.pages.flatMap((page) => page.data),
+      pageParams: data.pageParams,
+    }),
+  });
 
   const { setTarget } = useIntersectionObserver({
     hasNextPage,
@@ -51,7 +52,7 @@ export default function PostList() {
   return (
     <>
       <ul>
-        {postList.map((page) => (
+        {data?.pages.map((page) => (
           <li key={page.id} className="mb-[0.7rem] h-[9rem] pl-[0.4rem]">
             <Link to={`/board/${page.id}`}>
               <hr className="border-black-30" />

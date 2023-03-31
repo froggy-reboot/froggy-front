@@ -8,6 +8,7 @@ import { getCommets } from 'src/apis/boardApi';
 import { useIntersectionObserver } from 'src/hooks/useIntersectionObserver';
 import { useRecoilValue } from 'recoil';
 import { currentArticleId } from 'src/atoms/atom';
+import { AxiosError, AxiosResponse } from 'axios';
 
 export interface ICommentData {
   id: number;
@@ -22,27 +23,33 @@ export interface ICommentData {
 }
 
 export default function Comment({ articleId }: { articleId: number }) {
-  const [commentList, setCommentList] = useState<ICommentData[]>([]);
   const { openModal } = useModal();
   const postId = useRecoilValue(currentArticleId);
-  const { fetchNextPage, hasNextPage } = useInfiniteQuery(
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery<
+    AxiosResponse,
+    AxiosError,
+    ICommentData
+  >(
     ['comments', postId],
     ({ pageParam = 1 }) => getCommets(articleId, { pageParam }),
     {
-      onSuccess: (data) =>
-        setCommentList(() => data?.pages.flatMap((page) => page.data)),
       getNextPageParam: (lastPage, allPages) => {
         const nextPage = allPages.length + 1;
         return lastPage.data.length === 0 ? undefined : nextPage;
       },
+      select: (data) => ({
+        pages: data.pages.flatMap((page) => page.data),
+        pageParams: data.pageParams,
+      }),
     },
   );
+
   const { setTarget } = useIntersectionObserver({ hasNextPage, fetchNextPage });
 
   return (
     <>
       <ul className="flex h-[100%] flex-col gap-[0.2rem]">
-        {commentList.map((comment, idx) => (
+        {data?.pages.map((comment, idx) => (
           <Fragment key={comment.id}>
             <li className="flex">
               <img
@@ -72,7 +79,7 @@ export default function Comment({ articleId }: { articleId: number }) {
                 </p>
               </div>
             </li>
-            {idx !== commentList.length - 1 && (
+            {idx !== data?.pages.length - 1 && (
               <hr className="w-[100%] border-black-30" />
             )}
           </Fragment>
