@@ -34,7 +34,8 @@ export default function Header() {
 
   const showHeader = () => {
     let result = true;
-    if (location.pathname === '/sign-in') result = false;
+    if (location.pathname === '/sign-in' || location.pathname === '/my-page')
+      result = false;
     return result;
   };
 

@@ -34,11 +34,6 @@ const HEADER_TITLE = [
     isMain: false,
   },
   {
-    route: '/my-page',
-    title: PAGE_TITLE.MY_PAGE,
-    isMain: false,
-  },
-  {
     route: '/feed',
     title: PAGE_TITLE.FEED.MAIN,
     isMain: false,

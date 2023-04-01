@@ -7,6 +7,7 @@ import BoardDetail from 'src/pages/board/BoardDetail';
 import SignUp from 'src/pages/signup/SignUp';
 import OauthRedirectHandler from 'src/pages/signin/OauthRedirectHandler';
 import PrivateRoute from 'src/routes/PrivateRoute';
+import MyPage from 'src/pages/mypage/MyPage';
 
 export default function RoutePage() {
   return (
@@ -21,6 +22,7 @@ export default function RoutePage() {
       />
       <Route element={<PrivateRoute authentication={true} />}>
         {/* 비로그인이면 볼 수 없는 페이지 */}
+        <Route path="/my-page" element={<MyPage />} />
       </Route>
       <Route element={<PrivateRoute authentication={false} />}>
         {/* 로그인이면 볼 수 없는 페이지 */}

@@ -5,7 +5,6 @@ const PAGE_TITLE = {
     DETAIL: '게시판',
     COMMENT: '댓글',
   },
-  MY_PAGE: '마이페이지',
   FEED: {
     MAIN: '같이 뜰 타래 알아보기',
     CREATE: '스레드',
