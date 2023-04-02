@@ -3,10 +3,13 @@ import { ReactComponent as DownBtn } from 'src/assets/down_btn.svg';
 import { ReactComponent as AlarmIcon } from 'src/assets/alarm.svg';
 import { useQuery } from '@tanstack/react-query';
 import { getUserInfo } from 'src/apis/authApi';
+import { useModal } from 'src/hooks/useModal';
+import RavelryConnectModal from 'src/components/modals/RavelryConnectModal';
 
 export default function MypagePopUp() {
   const userId = JSON.parse(localStorage.getItem('userId') || '{}');
   const { data } = useQuery(['user'], () => getUserInfo(userId));
+  const { openModal } = useModal();
   const [isExpand, setIsExpand] = useState([false, false]);
 
   const openPopUPHandler = (index: number) => {
@@ -40,6 +43,10 @@ export default function MypagePopUp() {
               <div className="flex justify-between">
                 <p>레이블리 연동</p>
                 <p
+                  onClick={() =>
+                    data?.data.isRavelryIntegrated === 'N' &&
+                    openModal(RavelryConnectModal)
+                  }
                   className={`mini_btn inline-block h-[1.9rem] w-[3.8rem] text-center text-Board leading-[1.9rem] ${
                     data?.data.isRavelryIntegrated === 'N' && 'bg-black-30'
                   }`}>
