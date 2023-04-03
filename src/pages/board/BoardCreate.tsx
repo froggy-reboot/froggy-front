@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ReactComponent as PlusIcon } from 'src/assets/plus.svg';
 import { ReactComponent as Close } from 'src/assets/close.svg';
 import { ReactComponent as Delete } from 'src/assets/delete.svg';
-import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
-
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from 'react-beautiful-dnd';
 
 interface IFormInput {
   title: string;
@@ -12,30 +16,25 @@ interface IFormInput {
   image: FileList;
 }
 
-
 const reorder = (list: string[], startIndex: number, endIndex: number) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
 
   return result;
-}
+};
 
 const listStyle: React.CSSProperties = {
   display: 'flex',
   gap: '2rem',
   margin: '1rem',
-}
-
-
+};
 
 function BoardCreate() {
-
   // form
-  const { register, handleSubmit } =
-    useForm<IFormInput>({
-      mode: 'all',
-    });
+  const { register, handleSubmit } = useForm<IFormInput>({
+    mode: 'all',
+  });
 
   const [imagePreview, setImagePreview] = useState<string[]>([]);
   // dnd
@@ -45,10 +44,13 @@ function BoardCreate() {
     // 드롭이 droppable 밖에서 일어났을 경우 바로 return
     if (!destination) return;
     // 드래그가 발생한 위치와 드롭이 발생한 위치가 같을 경우 바로 return
-    if (source.droppableId === destination.droppableId && source.index === destination.index) return;
-    setImagePreview(items => reorder(items, source.index, destination.index))
-
-  }
+    if (
+      source.droppableId === destination.droppableId &&
+      source.index === destination.index
+    )
+      return;
+    setImagePreview((items) => reorder(items, source.index, destination.index));
+  };
 
   const handleAddImages = (event: any) => {
     const imageLists = event.target.files;
@@ -70,23 +72,19 @@ function BoardCreate() {
   };
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    const file = data.image[0]
-    const formData = new FormData()
+    const file = data.image[0];
+    const formData = new FormData();
 
-    formData.append('multipartFile', file)
-    formData.append("articleType", "질문")
-    formData.append("liked", "0")
-    formData.append("title", data.title)
-    formData.append("content", data.content)
-
-    
+    formData.append('multipartFile', file);
+    formData.append('articleType', '질문');
+    formData.append('liked', '0');
+    formData.append('title', data.title);
+    formData.append('content', data.content);
   };
-
 
   return (
     <div className="mt-[6rem]">
       <div className="container">
-
         <button className="mini_btn" onClick={handleSubmit(onSubmit)}>
           제출하기
         </button>
@@ -135,34 +133,37 @@ function BoardCreate() {
                 className="input min-h-[17.5rem] w-full resize-none pl-[1rem] pt-[1rem] placeholder:text-black-50 focus:outline-none"
               />
 
-
               {/* drag and drop 이미지 preview */}
               <DragDropContext onDragEnd={onDragEnd}>
                 <div className="mt-[1rem] flex gap-[1rem]">
-                  <Droppable droppableId="hello" direction='horizontal'>
-                    {droppableProvided => (
+                  <Droppable droppableId="hello" direction="horizontal">
+                    {(droppableProvided) => (
                       <div
                         ref={droppableProvided.innerRef}
                         {...droppableProvided.droppableProps}
-                        style={listStyle}
-                      >
-                        {imagePreview && imagePreview.map(
-                          (image, id) => (
-                            <Draggable key={id} draggableId={id.toString()} index={id}>
+                        style={listStyle}>
+                        {imagePreview &&
+                          imagePreview.map((image, id) => (
+                            <Draggable
+                              key={id}
+                              draggableId={id.toString()}
+                              index={id}>
                               {(provided) => (
                                 <div
                                   ref={provided.innerRef}
                                   {...provided.dragHandleProps}
                                   {...provided.draggableProps}
                                   className="relative">
-                                  <Delete className="absolute -top-4 -right-4" onClick={() => handleDeleteImage(id)} />
+                                  <Delete
+                                    className="absolute -top-4 -right-4"
+                                    onClick={() => handleDeleteImage(id)}
+                                  />
                                   <img src={image} className="thumbnail_img" />
                                   {droppableProvided.placeholder}
                                 </div>
                               )}
                             </Draggable>
                           ))}
-
                       </div>
                     )}
                   </Droppable>
@@ -171,8 +172,8 @@ function BoardCreate() {
             </div>
           </form>
         </div>
-      </div >
-    </div >
+      </div>
+    </div>
   );
 }
 

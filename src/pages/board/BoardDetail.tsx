@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ReactComponent as MenuIcon } from 'src/assets/menu.svg';
 import { ReactComponent as LikeIcon } from 'src/assets/empty_like.svg';
 import { ReactComponent as ChatIcon } from 'src/assets/chat.svg';
@@ -10,15 +10,8 @@ import { useQuery } from '@tanstack/react-query';
 import { getArticleDetail } from 'src/apis/boardApi';
 import { useParams } from 'react-router-dom';
 import Loader from 'src/components/loader/Loader';
-
-const dummy = {
-  fileList: [
-    'https://cdn.pixabay.com/photo/2016/08/23/13/12/knitting-1614283__340.jpg',
-    'https://cdn.pixabay.com/photo/2021/11/12/13/14/sweater-6788998_960_720.jpg',
-    'https://cdn.pixabay.com/photo/2016/08/23/13/12/knitting-1614283__340.jpg',
-    'https://cdn.pixabay.com/photo/2021/11/12/13/14/sweater-6788998_960_720.jpg',
-  ],
-};
+import { useSetRecoilState } from 'recoil';
+import { currentArticleId } from 'src/atoms/atom';
 
 export interface IArticleDetail {
   data: {
@@ -30,18 +23,31 @@ export interface IArticleDetail {
     content: string;
     createdAt: string;
     deletedAt: null | string;
-    images: [];
+    images: [
+      {
+        url: string;
+      },
+    ];
     commentCount: number;
+    user: {
+      writerNickname: string;
+      writerProfileImg: string;
+    };
   };
 }
 
 export default function BoardDetail() {
   const { openModal } = useModal();
   const { postId } = useParams() as { postId: string };
+  const setPostId = useSetRecoilState(currentArticleId);
   const { isLoading, data } = useQuery<IArticleDetail>(
     ['article', postId],
     () => getArticleDetail(postId),
   );
+
+  useEffect(() => {
+    setPostId(Number(postId));
+  }, [postId]);
 
   if (isLoading) {
     return <Loader />;
@@ -54,11 +60,13 @@ export default function BoardDetail() {
           <main className="w-[100%] px-[2rem]">
             <div className="mt-[2.2rem] grid grid-cols-[50px_3fr_1fr] items-center">
               <img
-                src=""
+                src={data.data.user.writerProfileImg}
                 className="h-[5rem] w-[5rem] rounded-full bg-green-30"
               />
               <div className="ml-[15px]">
-                <p className="text-Body font-bold">{'닉네임'}</p>
+                <p className="text-Body font-bold">
+                  {data.data.user.writerNickname}
+                </p>
                 <p className="text-Board text-black-50">
                   {`${timeConverter(data?.data.createdAt)} 작성`}
                 </p>
@@ -66,7 +74,7 @@ export default function BoardDetail() {
               <MenuIcon
                 onClick={() =>
                   openModal(modals.UpdateDeleteModal, {
-                    postId: postId,
+                    postId: Number(postId),
                   })
                 }
                 className="h-[2rem] w-[2rem] justify-self-end fill-black-100"
@@ -80,21 +88,21 @@ export default function BoardDetail() {
               <p className="my-[0.5rem] text-Tag font-normal">
                 {data?.data.content}
               </p>
-              {dummy.fileList.length > 1 && (
-                <div className="my-[1.2rem] flex gap-[1rem] overflow-y-scroll">
-                  {dummy.fileList.map((src, idx) => (
+              {data.data.images.length > 1 && (
+                <div className="no-scrollbar my-[1.2rem] flex gap-[1rem] overflow-y-scroll">
+                  {data.data.images.map((src, idx) => (
                     <img
                       key={idx}
-                      src={src}
+                      src={src.url}
                       className="h-[15rem] w-[15rem] rounded-[5px] object-cover"
                     />
                   ))}
                 </div>
               )}
-              {dummy.fileList.length === 1 && (
+              {data.data.images.length === 1 && (
                 <img
-                  src={dummy.fileList[0]}
-                  className="h-[19.6rem] w-[100%] rounded-[5px] object-cover"
+                  src={data.data.images[0].url}
+                  className="h-[19.6rem] w-[100%] rounded-[5px] object-cover md:h-[35rem]"
                 />
               )}
             </article>
@@ -106,7 +114,7 @@ export default function BoardDetail() {
             </p>
             <hr className="mt-[1.4rem] w-[100%] border-black-30" />
           </main>
-          <div className="mt-[1rem] mb-[3rem] w-[100%] overflow-scroll px-[3.5rem] ">
+          <div className="no-scrollbar mt-[1rem] mb-[3rem] w-[100%] overflow-scroll px-[3.5rem]">
             <Comment articleId={data.data.id} />
           </div>
         </div>

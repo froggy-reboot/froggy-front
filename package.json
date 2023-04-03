@@ -33,6 +33,7 @@
                "react-app",
                "react-app/jest",
                "plugin:node/recommended",
+               "plugin:react/recommended",
                "prettier"
           ]
      },

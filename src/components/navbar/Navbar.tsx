@@ -1,7 +1,7 @@
 import React from 'react';
 import { icons } from 'src/assets/navbar';
 import { NavLink, useMatch } from 'react-router-dom';
-import CommandNavBar from 'src/components/navbar/CommandNavbar';
+import CommandNavBar from 'src/components/board/CommandNavbar';
 
 function Navbar() {
   const postDetailPath = useMatch('/board/:postId');
@@ -42,7 +42,7 @@ function Navbar() {
   });
 
   return (
-    <div className="fixed left-0 bottom-0 flex h-[8.3rem] w-screen items-center justify-evenly rounded-[15px_15px_0px_0px] bg-white pb-[2rem] align-middle shadow-[0px_-1px_3px_rgba(0,0,0,0.15)]">
+    <div className="fixed left-0 bottom-0 flex h-auto min-h-[8.3rem] w-screen items-center justify-evenly rounded-[15px_15px_0px_0px] bg-white pb-[2rem] align-middle shadow-[0px_-1px_3px_rgba(0,0,0,0.15)]">
       {postDetailPath ? <CommandNavBar /> : navbarBtns}
     </div>
   );

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Main from 'src/pages/main/Main';
 import SignIn from 'src/pages/signin/SignIn';
 import BoardMain from 'src/pages/board/BoardMain';
 import BoardCreate from 'src/pages/board/BoardCreate';
@@ -12,7 +11,7 @@ import PrivateRoute from 'src/routes/PrivateRoute';
 export default function RoutePage() {
   return (
     <Routes>
-    {/* 인증과 관계없는 페이지 */}
+      {/* 인증과 관계없는 페이지 */}
       <Route path="/board" element={<BoardMain />} />
       <Route path="/board/:postId" element={<BoardDetail />} />
       <Route path="/board/create" element={<BoardCreate />} />

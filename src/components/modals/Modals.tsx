@@ -3,6 +3,7 @@ import { useModal } from 'src/hooks/useModal';
 import { ComponentProps, FunctionComponent } from 'react';
 import UpdateDeleteModal from 'src/components/modals/UpdateDeleteModal';
 import CreatePostModal from 'src/components/modals/CreatePostModal';
+import ConfirmModal from 'src/components/modals/ConfirmModal';
 
 export const modals = {
   UpdateDeleteModal: UpdateDeleteModal as FunctionComponent<
@@ -10,6 +11,9 @@ export const modals = {
   >,
   CreatePostModal: CreatePostModal as FunctionComponent<
     ComponentProps<typeof CreatePostModal>
+  >,
+  ConfirmModal: ConfirmModal as FunctionComponent<
+    ComponentProps<typeof ConfirmModal>
   >,
 };
 
