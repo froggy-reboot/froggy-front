@@ -30,12 +30,9 @@
   .mini_btn {
     @apply h-[3rem] w-[6.5rem] rounded-[1.5rem] bg-green-30 text-Tag text-white;
   }
-
-  .thumbnail_img{
-    @apply h-[7rem] w-[7rem] rounded-[1rem];
-    aspect-ratio: 1 / 1;
+  .thumbnail_img {
+    @apply h-[7rem] w-[7rem] rounded-[1rem] object-cover;
   }
-
   .tag {
     @apply mini_btn inline-block h-[2rem] w-[4rem] text-center text-Callout leading-[2rem];
   }
