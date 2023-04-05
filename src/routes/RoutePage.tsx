@@ -8,6 +8,7 @@ import SignUp from 'src/pages/signup/SignUp';
 import OauthRedirectHandler from 'src/pages/signin/OauthRedirectHandler';
 import PrivateRoute from 'src/routes/PrivateRoute';
 import MyPage from 'src/pages/mypage/MyPage';
+import ReportPage from 'src/pages/report/ReportPage';
 
 export default function RoutePage() {
   return (
@@ -21,6 +22,8 @@ export default function RoutePage() {
         element={<OauthRedirectHandler />}
       />
       <Route path="/board/create" element={<BoardCreate />} />
+      <Route path="/report" element={<ReportPage />} />
+
       <Route element={<PrivateRoute authentication={true} />}>
         {/* 비로그인이면 볼 수 없는 페이지 */}
         <Route path="/my-page" element={<MyPage />} />

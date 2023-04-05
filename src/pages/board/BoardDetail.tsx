@@ -40,6 +40,7 @@ export default function BoardDetail() {
   const { openModal } = useModal();
   const { postId } = useParams() as { postId: string };
   const setPostId = useSetRecoilState(currentArticleId);
+  const userId = localStorage.getItem('userId') as string;
   const { isLoading, data } = useQuery<IArticleDetail>(
     ['article', postId],
     () => getArticleDetail(postId),
@@ -73,9 +74,11 @@ export default function BoardDetail() {
               </div>
               <MenuIcon
                 onClick={() =>
-                  openModal(modals.UpdateDeleteModal, {
-                    postId: Number(postId),
-                  })
+                  Number(userId) === data.data.writerId
+                    ? openModal(modals.UpdateDeleteModal, {
+                        postId: Number(postId),
+                      })
+                    : openModal(modals.ReportModal)
                 }
                 className="h-[2rem] w-[2rem] justify-self-end fill-black-100"
               />
