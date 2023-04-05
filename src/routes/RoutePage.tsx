@@ -20,6 +20,7 @@ export default function RoutePage() {
         path="/sign-in/social/:userId"
         element={<OauthRedirectHandler />}
       />
+      <Route path="/board/create" element={<BoardCreate />} />
       <Route element={<PrivateRoute authentication={true} />}>
         {/* 비로그인이면 볼 수 없는 페이지 */}
         <Route path="/my-page" element={<MyPage />} />
