@@ -6,7 +6,7 @@ interface IPrivateRouteProps {
 }
 
 export default function PrivateRoute({ authentication }: IPrivateRouteProps) {
-  const isLogin = localStorage.getItem('token');
+  const isLogin = localStorage.getItem('accessToken');
 
   if (authentication) {
     return isLogin === null ? <Navigate to="/sign-in" /> : <Outlet />;

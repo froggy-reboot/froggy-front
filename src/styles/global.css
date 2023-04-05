@@ -36,6 +36,9 @@
   .modal_bg {
     @apply fixed top-0 right-0 flex h-[100vh] w-[100vw] items-center justify-center bg-[rgba(0,0,0,0.2)] z-10;
   }
+  .modal_normal {
+    @apply flex h-[12.5rem] w-[32rem] flex-col items-center justify-center gap-[15px] rounded-[10px] bg-white text-Link shadow-[1px_2px_5px_rgba(0,0,0,0.2)];
+  }
 }
 
 @layer utilities {

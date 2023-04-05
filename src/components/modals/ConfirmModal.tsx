@@ -45,7 +45,7 @@ export default function ConfirmModal() {
 
   return (
     <div className="modal_bg">
-      <div className="flex h-[12.5rem] w-[32rem] flex-col items-center justify-center gap-[15px] rounded-[10px] bg-white text-Link shadow-[1px_2px_5px_rgba(0,0,0,0.2)] ">
+      <div className="modal_normal">
         <p className="font-medium">정말로 삭제하시겠습니까?</p>
         <div className="flex gap-[25px] font-bold">
           <button
