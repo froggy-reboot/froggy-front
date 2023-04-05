@@ -22,14 +22,7 @@ const reorder = (list: string[], startIndex: number, endIndex: number) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
-
   return result;
-};
-
-const listStyle: React.CSSProperties = {
-  display: 'flex',
-  gap: '2rem',
-  margin: '1rem',
 };
 
 function BoardCreate() {
@@ -94,85 +87,82 @@ function BoardCreate() {
   };
 
   return (
-    <div className="mt-[6rem]">
-      <div className="container">
-        <button className="mini_btn" onClick={handleSubmit(onSubmit)}>
-          제출하기
-        </button>
+    <div className="container">
+      <button
+        className="mini_btn absolute right-[12px] top-[12.5px] z-[10] h-[3.5rem] w-[7.6rem] rounded-[2rem] text-Body"
+        onClick={handleSubmit(onSubmit)}>
+        업로드
+      </button>
 
-        <div className="w-full px-[1.6rem]">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="mt-[2rem] flex items-center gap-[1rem]">
-              <button className="mini_btn inline-block h-[4rem] w-[8.75rem] min-w-[6rem] rounded-[2rem] py-[0.5rem]">
-                {location.state}
-              </button>
-              <input
-                {...register('title')}
-                placeholder="제목 작성란"
-                className="input h-[4rem] w-full pl-[1rem] placeholder:text-black-50 focus:outline-none"
-              />
-            </div>
-            <div className="relative mt-[1.5rem]">
-              <label htmlFor="picture" className="absolute top-5 right-5">
-                <input
-                  {...register('image')}
-                  id="picture"
-                  type="file"
-                  multiple
-                  className="hidden"
-                  accept="image/*"
-                  onChange={handleAddImages}
-                />
-                <div className="flex h-[8rem] w-[8rem] items-center justify-center rounded-[0.5rem] bg-black-30">
-                  <PlusIcon className=" fill-white" />
-                </div>
-              </label>
-              <textarea
-                {...register('content', {
-                  maxLength: 15000,
-                })}
-                placeholder="글 작성란"
-                className="input min-h-[17.5rem] w-full resize-none pl-[1rem] pt-[1rem] placeholder:text-black-50 focus:outline-none"
-              />
-              <DragDropContext onDragEnd={onDragEnd}>
-                <div className="mt-[1rem] flex gap-[1rem]">
-                  <Droppable droppableId="hello" direction="horizontal">
-                    {(droppableProvided) => (
-                      <div
-                        ref={droppableProvided.innerRef}
-                        {...droppableProvided.droppableProps}
-                        style={listStyle}>
-                        {imagePreview &&
-                          imagePreview.map((image, id) => (
-                            <Draggable
-                              key={id}
-                              draggableId={id.toString()}
-                              index={id}>
-                              {(provided) => (
-                                <div
-                                  ref={provided.innerRef}
-                                  {...provided.dragHandleProps}
-                                  {...provided.draggableProps}
-                                  className="relative">
-                                  <Delete
-                                    className="absolute -top-4 -right-4"
-                                    onClick={() => handleDeleteImage(id)}
-                                  />
-                                  <img src={image} className="thumbnail_img" />
-                                  {droppableProvided.placeholder}
-                                </div>
-                              )}
-                            </Draggable>
-                          ))}
-                      </div>
-                    )}
-                  </Droppable>
-                </div>
-              </DragDropContext>
-            </div>
-          </form>
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full px-[2rem]">
+        <div className="mt-[2rem] flex items-center gap-[1rem]">
+          <button className="tag h-[3.6rem] w-[6rem] shrink-0 rounded-[2rem] py-[0.5rem] text-Tag">
+            {`${location.state}글`}
+          </button>
+          <input
+            {...register('title', { required: true })}
+            placeholder="게시글 제목"
+            className="input h-[3.6rem] w-full pl-[1rem] text-[15px] font-bold placeholder:text-black-50 focus:outline-none"
+          />
         </div>
-      </div>
+        <div className="relative mt-[1.5rem]">
+          <textarea
+            {...register('content', {
+              required: true,
+              maxLength: 15000,
+            })}
+            placeholder="최대 15000자까지 입력할 수 있습니다."
+            className="input min-h-[17.5rem] w-full resize-none pl-[1rem] pt-[1rem] text-[15px] font-medium placeholder:text-black-50 focus:outline-none"
+          />
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="imageList" direction="horizontal">
+              {(droppableProvided) => (
+                <div
+                  className="no-scrollbar mt-[1rem] flex w-auto gap-[2rem] overflow-auto"
+                  ref={droppableProvided.innerRef}
+                  {...droppableProvided.droppableProps}>
+                  {imagePreview &&
+                    imagePreview.map((image, id) => (
+                      <Draggable
+                        key={id}
+                        draggableId={id.toString()}
+                        index={id}>
+                        {(provided) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.dragHandleProps}
+                            {...provided.draggableProps}
+                            className="relative shrink-0">
+                            <Delete
+                              className="absolute -top-4 -right-4"
+                              onClick={() => handleDeleteImage(id)}
+                            />
+                            <img src={image} className="thumbnail_img" />
+                            {droppableProvided.placeholder}
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                  <label htmlFor="picture" className="">
+                    <input
+                      {...register('image')}
+                      id="picture"
+                      type="file"
+                      multiple
+                      className="hidden"
+                      accept="image/*"
+                      onChange={handleAddImages}
+                    />
+                    <div className="flex h-[7rem] w-[7rem] items-center justify-center rounded-[1rem] bg-black-10">
+                      <PlusIcon className=" fill-white" />
+                    </div>
+                  </label>
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </div>
+      </form>
     </div>
   );
 }
