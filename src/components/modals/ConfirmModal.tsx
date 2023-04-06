@@ -33,9 +33,9 @@ export default function ConfirmModal() {
         postId: showModal[0].props.postId,
         commentId: showModal[0].props.commentId,
       });
-      if (!showModal[0].props.commentId) {
-        delArticleMutation(showModal[0].props.postId);
-      }
+    }
+    if (!showModal[0].props.commentId) {
+      delArticleMutation(showModal[0].props.postId);
     }
   };
 
