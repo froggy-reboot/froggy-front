@@ -15,7 +15,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 interface IFormInput {
   title: string;
   content: string;
-  image: FileList;
 }
 
 const reorder = (list: string[], startIndex: number, endIndex: number) => {
@@ -32,10 +31,11 @@ function BoardCreate() {
   const { register, handleSubmit } = useForm<IFormInput>({
     mode: 'all',
   });
+  const [imageList, setImageList] = useState<File[]>([]);
   const [imagePreview, setImagePreview] = useState<string[]>([]);
   const { mutate: postArticleMutate } = useMutation(postArticles, {
     onSuccess: (data) => {
-      if (data.status === 200) navigate('/board');
+      if (data.status === 201) navigate(`/board/${data.data.id}`);
     },
     onSettled: () => queryClient.invalidateQueries({ queryKey: ['articles'] }),
   });
@@ -54,29 +54,34 @@ function BoardCreate() {
   };
 
   const handleAddImages = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const imageLists = event.target.files;
-    if (imageLists) {
+    const imageFileList = event.target.files;
+    if (imageFileList) {
+      const imageListArr = Array.from(imageFileList);
       let imageUrlLists = [...imagePreview];
-      for (let i = 0; i < imageLists.length; i++) {
-        const currentImageUrl = URL.createObjectURL(imageLists[i]);
+      const imageListCopy = [...imageList];
+      for (let i = 0; i < imageListArr.length; i++) {
+        const currentImageUrl = URL.createObjectURL(imageListArr[i]);
         imageUrlLists.push(currentImageUrl);
+        imageListCopy.push(imageListArr[i]);
       }
       if (imageUrlLists.length > 10) {
         imageUrlLists = imageUrlLists.slice(0, 10);
       }
       setImagePreview(imageUrlLists);
+      setImageList(imageListCopy);
     }
   };
 
   const handleDeleteImage = (id: number) => {
     setImagePreview(imagePreview.filter((_, index) => index !== id));
+    setImageList(imageList.filter((_, index) => index !== id));
   };
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     const formData = new FormData();
 
-    for (const key of Object.keys(imagePreview)) {
-      formData.append('files', data.image[Number(key)]);
+    for (const file of imageList) {
+      formData.append('files', file);
     }
     formData.append('articleType', location.state);
     formData.append('liked', '0');
@@ -143,12 +148,10 @@ function BoardCreate() {
                         )}
                       </Draggable>
                     ))}
-                  <label htmlFor="picture" className="">
+                  <label htmlFor="picture">
                     <input
-                      {...register('image')}
                       id="picture"
                       type="file"
-                      multiple
                       className="hidden"
                       accept="image/*"
                       onChange={handleAddImages}
