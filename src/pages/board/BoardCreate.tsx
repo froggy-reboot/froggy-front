@@ -17,7 +17,11 @@ interface IFormInput {
   content: string;
 }
 
-const reorder = (list: string[], startIndex: number, endIndex: number) => {
+interface IReorder {
+  <T>(list: T[], startIndex: number, endIndex: number): T[];
+}
+
+const reorder: IReorder = (list, startIndex, endIndex) => {
   const result = list;
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
@@ -31,7 +35,7 @@ function BoardCreate() {
   const { register, handleSubmit } = useForm<IFormInput>({
     mode: 'all',
   });
-  const [imageList, setImageList] = useState<any[]>([]);
+  const [imageList, setImageList] = useState<File[]>([]);
   const [imagePreview, setImagePreview] = useState<string[]>([]);
   const { mutate: postArticleMutate } = useMutation(postArticles, {
     onSuccess: (data) => {
