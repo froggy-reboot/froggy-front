@@ -18,7 +18,7 @@ interface IFormInput {
 }
 
 const reorder = (list: string[], startIndex: number, endIndex: number) => {
-  const result = Array.from(list);
+  const result = list;
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
   return result;
@@ -31,7 +31,7 @@ function BoardCreate() {
   const { register, handleSubmit } = useForm<IFormInput>({
     mode: 'all',
   });
-  const [imageList, setImageList] = useState<File[]>([]);
+  const [imageList, setImageList] = useState<any[]>([]);
   const [imagePreview, setImagePreview] = useState<string[]>([]);
   const { mutate: postArticleMutate } = useMutation(postArticles, {
     onSuccess: (data) => {
@@ -51,12 +51,14 @@ function BoardCreate() {
     )
       return;
     setImagePreview((items) => reorder(items, source.index, destination.index));
+    setImageList((items) => reorder(items, source.index, destination.index));
   };
 
   const handleAddImages = (event: React.ChangeEvent<HTMLInputElement>) => {
     const imageFileList = event.target.files;
     if (imageFileList) {
       const imageListArr = Array.from(imageFileList);
+
       let imageUrlLists = [...imagePreview];
       const imageListCopy = [...imageList];
       for (let i = 0; i < imageListArr.length; i++) {
