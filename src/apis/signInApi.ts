@@ -1,5 +1,5 @@
 import { IFormInput } from 'src/pages/signin/SignIn';
-import { publicApi } from 'src/apis/authApi';
+import { privateApi, publicApi } from 'src/apis/authApi';
 
 export async function getGoogleRegister() {
   const response = await publicApi.get('api/v1/auth/google/register');
@@ -32,6 +32,20 @@ export async function postEmailLogin(data: IFormInput) {
   const response = await publicApi.post('/api/v1/auth/email/login', {
     email: data.email,
     password: data.password,
+  });
+  return response;
+}
+
+export async function getRavelryConnect() {
+  const response = await publicApi.get(
+    '/api/v1/auth/ravelry/link/redirect-url',
+  );
+  return response;
+}
+
+export async function postRavelryConnect(ravelryUserId: number) {
+  const response = await privateApi.post(`/api/v1/auth/ravelry/link`, {
+    socialUserId: ravelryUserId,
   });
   return response;
 }
