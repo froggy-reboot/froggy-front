@@ -5,11 +5,11 @@ import Loader from 'src/components/loader/Loader';
 import { LOGIN } from 'src/pages/signin/SignInConstants';
 
 export default function OauthRedirectHandler() {
-  const { userId } = useParams();
+  const { userId } = useParams() as { userId: string };
   const navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.setItem('userId', JSON.stringify(userId));
+    localStorage.setItem('userId', userId);
 
     (async function () {
       if (userId) {

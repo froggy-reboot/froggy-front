@@ -28,7 +28,11 @@ export async function getArticleDetail(postId: string) {
 }
 
 export async function postArticles(formData: FormData) {
-  const response = await privateApi.post(`api/v1/articles/`, formData);
+  const response = await privateApi.post(`api/v1/articles/`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
   return response;
 }
 

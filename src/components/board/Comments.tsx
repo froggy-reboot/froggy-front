@@ -24,6 +24,7 @@ export interface ICommentData {
 export default function Comment({ articleId }: { articleId: number }) {
   const { openModal } = useModal();
   const { postId } = useParams() as { postId: string };
+  const userId = localStorage.getItem('userId') as string;
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery<
     AxiosResponse,
     AxiosError,
@@ -65,10 +66,12 @@ export default function Comment({ articleId }: { articleId: number }) {
                   </p>
                   <MenuIcon
                     onClick={() =>
-                      openModal(modals.UpdateDeleteModal, {
-                        postId: postId,
-                        commentId: comment.id,
-                      })
+                      Number(userId) === comment.user.id
+                        ? openModal(modals.UpdateDeleteModal, {
+                            postId: postId,
+                            commentId: comment.id,
+                          })
+                        : openModal(modals.ReportModal)
                     }
                     className="h-[1.6rem] w-[1.6rem] fill-black-50"
                   />
