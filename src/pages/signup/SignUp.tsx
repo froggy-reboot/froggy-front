@@ -37,95 +37,89 @@ function SignUp() {
   };
   return (
     <div className="container">
-      <hr className="mt-[1rem] w-[100%] overflow-visible border-black-50" />
-      <div className="mt-[2.5rem]  w-[100%]">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="mt-[6.5rem] flex w-[100%] flex-col md:mt-[7rem]">
-          <div className="mx-[2.5rem] flex flex-col px-[1rem] md:gap-[1.5rem]">
-            <p className="mb-2 text-Body">기본정보</p>
-            {/* 이메일 */}
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="mt-[4rem] flex h-[100vh] w-[100%] flex-col justify-between px-[3rem] md:gap-[1.5rem]">
+        <div className="flex flex-col gap-[3px]">
+          <p className="mb-[8px] pl-[4px] text-Body text-[#696969]">기본정보</p>
+          <input
+            {...register('email', {
+              required: true,
+              pattern: {
+                value: REG_EXP.EMAIL,
+                message: ERROR_MESSAGE.EMAIL,
+              },
+            })}
+            className="input"
+            placeholder="이메일"
+            name="email"
+            id="email"
+          />
+          <span className="error_message text-black-50">
+            인증가능한 이메일을 입력해주세요.
+          </span>
+          <span className="error_message">{errors?.email?.message}</span>
+
+          <label className="relative mt-[3rem]">
+            {showPassword ? (
+              <OpenEye className="input_eye" onClick={onClickHandler} />
+            ) : (
+              <CloseEye className="input_eye" onClick={onClickHandler} />
+            )}
             <input
-              {...register('email', {
+              {...register('password', {
                 required: true,
                 pattern: {
-                  value: REG_EXP.EMAIL,
-                  message: ERROR_MESSAGE.EMAIL,
+                  value: REG_EXP.PASSWORD,
+                  message: ERROR_MESSAGE.PASSWORD,
                 },
               })}
               className="input"
-              placeholder="이메일"
-              name="email"
-              id="email"
+              placeholder="비밀번호"
+              type={showPassword ? 'text' : 'password'}
             />
-            <span className="error_message">{errors?.email?.message}</span>
-
-            {/* 비밀번호 */}
-            <div className="mt-[3rem] flex flex-col gap-[0.5rem]">
-              <label className="relative ">
-                {showPassword ? (
-                  <OpenEye className="input_eye" onClick={onClickHandler} />
-                ) : (
-                  <CloseEye className="input_eye" onClick={onClickHandler} />
-                )}
-                <input
-                  {...register('password', {
-                    required: true,
-                    pattern: {
-                      value: REG_EXP.PASSWORD,
-                      message: ERROR_MESSAGE.PASSWORD,
-                    },
-                  })}
-                  className="input"
-                  placeholder="비밀번호"
-                  type={showPassword ? 'text' : 'password'}
-                />
-              </label>
-              <span className="error_message">{errors?.password?.message}</span>
-
-              {/* 비밀번호 확인 */}
-              <label className="relative">
-                {showPasswordConfirm ? (
-                  <OpenEye
-                    className="input_eye"
-                    onClick={onClickConfirmHandler}
-                  />
-                ) : (
-                  <CloseEye
-                    className="input_eye"
-                    onClick={onClickConfirmHandler}
-                  />
-                )}
-                <input
-                  {...register('passwordConfirm', {
-                    required: true,
-                    validate: (val: string) => {
-                      if (watch('password') != val) {
-                        return ERROR_MESSAGE.PASSWORDCONFIRM;
-                      } else {
-                        clearErrors('passwordConfirm');
-                      }
-                    },
-                  })}
-                  className="input"
-                  placeholder="비밀번호 확인"
-                  type={showPasswordConfirm ? 'text' : 'password'}
-                />
-              </label>
-              <span className="error_message">
-                {errors?.passwordConfirm?.message}
-              </span>
-            </div>
-            <button
-              type="submit"
-              className={`submit_btn ${
-                isValid ? 'bg-green-50' : 'bg-black-30'
-              }`}>
-              {NEXT}
-            </button>
-          </div>
-        </form>
-      </div>
+          </label>
+          <span className="error_message text-black-50">
+            비밀번호는 영문, 숫자를 포함하여 8자 이상으로 설정해주세요.
+          </span>
+          <span className="error_message">{errors?.password?.message}</span>
+          <label className="relative">
+            {showPasswordConfirm ? (
+              <OpenEye className="input_eye" onClick={onClickConfirmHandler} />
+            ) : (
+              <CloseEye className="input_eye" onClick={onClickConfirmHandler} />
+            )}
+            <input
+              {...register('passwordConfirm', {
+                required: true,
+                validate: (val: string) => {
+                  if (watch('password') != val) {
+                    return ERROR_MESSAGE.PASSWORDCONFIRM;
+                  } else {
+                    clearErrors('passwordConfirm');
+                  }
+                },
+              })}
+              className="input"
+              placeholder="비밀번호 확인"
+              type={showPasswordConfirm ? 'text' : 'password'}
+            />
+          </label>
+          <span className="error_message text-black-50">
+            비밀번호 확인을 위해 한번 더 입력해주세요.
+          </span>
+          <span className="error_message">
+            {errors?.passwordConfirm?.message}
+          </span>
+        </div>
+        <button
+          type="submit"
+          className={`submit_btn ${
+            isValid ? 'bg-green-50' : 'bg-black-30'
+          } mb-[2rem] `}>
+          {NEXT}
+        </button>
+      </form>
     </div>
   );
 }
