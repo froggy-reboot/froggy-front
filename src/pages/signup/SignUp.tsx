@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-
 import { ReactComponent as CloseEye } from 'src/assets/hideeye.svg';
 import { ReactComponent as OpenEye } from 'src/assets/open_eye.svg';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { ERROR_MESSAGE, REG_EXP } from 'src/pages/signin/SignInConstants';
-import { NEXT } from 'src/pages/signup/SignUpConstants';
+import {
+  ERROR_MESSAGE,
+  LOGIN,
+  REG_EXP,
+} from 'src/pages/signin/SignInConstants';
+import { postCheckEmail, postRegister } from 'src/apis/signUpApi';
+import { useNavigate } from 'react-router-dom';
 
-interface IFormInput {
+export interface ISignUpFormInput {
   email: string;
   password: string;
   passwordConfirm: string;
@@ -15,6 +19,14 @@ interface IFormInput {
 function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    watch,
+    clearErrors,
+  } = useForm<ISignUpFormInput>({ mode: 'all' });
+  const navigate = useNavigate();
 
   const onClickHandler = () => {
     setShowPassword((showPassword) => !showPassword);
@@ -24,17 +36,29 @@ function SignUp() {
     setShowPasswordConfirm((showPasswordConfirm) => !showPasswordConfirm);
   };
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-    watch,
-    clearErrors,
-  } = useForm<IFormInput>({ mode: 'all' });
-
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<ISignUpFormInput> = async (data) => {
+    try {
+      const response = await postCheckEmail(data);
+      if (response.status === 200) {
+        if (response.data.isExistEmail === 'N') {
+          const registerRes = await postRegister(data);
+          if (registerRes.status === 201) {
+            alert(
+              '이메일인증 후 회원가입이 완료됩니다! 이메일을 확인해주세요.',
+            );
+          } else {
+            alert(LOGIN.MESSAGE.ETC);
+          }
+        } else {
+          alert('이미 존재하는 이메일입니다. 로그인해주세요.');
+          navigate('/sign-in');
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   return (
     <div className="container">
       <form
@@ -59,7 +83,6 @@ function SignUp() {
             인증가능한 이메일을 입력해주세요.
           </span>
           <span className="error_message">{errors?.email?.message}</span>
-
           <label className="relative mt-[3rem]">
             {showPassword ? (
               <OpenEye className="input_eye" onClick={onClickHandler} />
@@ -116,8 +139,8 @@ function SignUp() {
           type="submit"
           className={`submit_btn ${
             isValid ? 'bg-green-50' : 'bg-black-30'
-          } mb-[2rem] `}>
-          {NEXT}
+          } mb-[2rem]`}>
+          회원가입
         </button>
       </form>
     </div>
