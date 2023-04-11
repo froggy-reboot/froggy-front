@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ReactComponent as PlusIcon } from 'src/assets/plus.svg';
 import { ReactComponent as Delete } from 'src/assets/delete.svg';
@@ -9,9 +9,8 @@ import {
   DropResult,
 } from 'react-beautiful-dnd';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { postArticles } from 'src/apis/boardApi';
-import { useLocation, useNavigate } from 'react-router-dom';
-
+import { patchArticles, postArticles } from 'src/apis/boardApi';
+import { useLocation, useMatch, useNavigate } from 'react-router-dom';
 interface IFormInput {
   title: string;
   content: string;
@@ -19,6 +18,13 @@ interface IFormInput {
 
 interface IReorder {
   <T>(list: T[], startIndex: number, endIndex: number): T[];
+}
+
+interface IEditImageList {
+  type: 'existing' | 'new';
+  id?: number;
+  imgUrl?: string;
+  file?: File;
 }
 
 const reorder: IReorder = (list, startIndex, endIndex) => {
@@ -32,17 +38,47 @@ function BoardCreate() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const location = useLocation();
-  const { register, handleSubmit } = useForm<IFormInput>({
+  const editPagePath = useMatch('/board/edit/:postId');
+  const { register, handleSubmit, setValue } = useForm<IFormInput>({
     mode: 'all',
   });
   const [imageList, setImageList] = useState<File[]>([]);
   const [imagePreview, setImagePreview] = useState<string[]>([]);
+  const [imageEdit, setImageEdit] = useState<IEditImageList[]>([]);
+  const deleteImageArr: Array<number> = [];
+
   const { mutate: postArticleMutate } = useMutation(postArticles, {
     onSuccess: (data) => {
       if (data.status === 201) navigate(`/board/${data.data.id}`);
     },
     onSettled: () => queryClient.invalidateQueries({ queryKey: ['articles'] }),
   });
+
+  const { mutate: patchArticleMutate } = useMutation(patchArticles, {
+    onSuccess: (data) => {
+      if (data.status === 200) console.log(data);
+    },
+  });
+
+  useEffect(() => {
+    console.log(location.state);
+    if (editPagePath) {
+      setImagePreview(() => {
+        return location.state.images.map((image: { url: string }) => image.url);
+      });
+      setImageEdit(() => {
+        return location.state.images.map(
+          (image: { url: string; id: number }) => ({
+            imgUrl: image.url,
+            id: image.id,
+            type: 'existing',
+          }),
+        );
+      });
+      setValue('title', location.state.title);
+      setValue('content', location.state.content);
+    }
+  }, []);
 
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
@@ -56,45 +92,80 @@ function BoardCreate() {
       return;
     setImagePreview((items) => reorder(items, source.index, destination.index));
     setImageList((items) => reorder(items, source.index, destination.index));
+    setImageEdit((items) => reorder(items, source.index, destination.index));
   };
 
   const handleAddImages = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //새로추가된 리스트
     const imageFileList = event.target.files;
     if (imageFileList) {
+      //추가된 파일을 배열로 변경
       const imageListArr = Array.from(imageFileList);
 
+      //프리뷰 리스트
       let imageUrlLists = [...imagePreview];
+      //이미지 리스트
       const imageListCopy = [...imageList];
+      //이미지 수정 리스트
+      const imageEditCopy = [...imageEdit];
+
+      //새로들어온 사진을 기존 리스트에 추가
       for (let i = 0; i < imageListArr.length; i++) {
         const currentImageUrl = URL.createObjectURL(imageListArr[i]);
         imageUrlLists.push(currentImageUrl);
         imageListCopy.push(imageListArr[i]);
+        imageEditCopy.push({ type: 'new', file: imageListArr[i] });
       }
+
+      //사진은 10개까지 추가가능
       if (imageUrlLists.length > 10) {
         imageUrlLists = imageUrlLists.slice(0, 10);
       }
       setImagePreview(imageUrlLists);
       setImageList(imageListCopy);
+      setImageEdit(imageEditCopy);
     }
   };
 
   const handleDeleteImage = (id: number) => {
     setImagePreview(imagePreview.filter((_, index) => index !== id));
     setImageList(imageList.filter((_, index) => index !== id));
+    setImageEdit(imageEdit.filter((_, index) => index !== id));
+
+    if (imageEdit[id].type === 'existing') {
+      deleteImageArr.push(imageEdit[id].id as number);
+    }
   };
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    const formData = new FormData();
+    if (!editPagePath) {
+      const formData = new FormData();
 
-    for (const file of imageList) {
-      formData.append('files', file);
+      for (const file of imageList) {
+        formData.append('files', file);
+      }
+      formData.append('articleType', location.state);
+      formData.append('liked', '0');
+      formData.append('title', data.title);
+      formData.append('content', data.content);
+
+      postArticleMutate(formData);
     }
-    formData.append('articleType', location.state);
-    formData.append('liked', '0');
-    formData.append('title', data.title);
-    formData.append('content', data.content);
 
-    postArticleMutate(formData);
+    if (editPagePath) {
+      const formData = new FormData();
+      for (const file of imageList) {
+        formData.append('files', file);
+      }
+      formData.append('articleType', location.state.articleType);
+      formData.append('liked', '0');
+      formData.append('title', data.title);
+      formData.append('content', data.content);
+      formData.append('photoOrderList', `${imageEdit}`);
+      formData.append('deleteImage', `${deleteImageArr}`);
+
+      patchArticleMutate({ formData: formData, postId: location.state.id });
+    }
   };
 
   return (
@@ -102,13 +173,15 @@ function BoardCreate() {
       <button
         className="mini_btn absolute right-[12px] top-[12.5px] z-[10] h-[3.5rem] w-[7.6rem] rounded-[2rem] text-Body"
         onClick={handleSubmit(onSubmit)}>
-        업로드
+        {editPagePath ? '수정하기' : '업로드'}
       </button>
 
       <form onSubmit={handleSubmit(onSubmit)} className="w-full px-[2rem]">
         <div className="mt-[2rem] flex items-center gap-[1rem]">
           <button className="tag h-[3.6rem] w-[6rem] shrink-0 rounded-[2rem] py-[0.5rem] text-Tag">
-            {`${location.state}글`}
+            {editPagePath
+              ? `${location.state.articleType}글`
+              : `${location.state}글`}
           </button>
           <input
             {...register('title', { required: true })}
