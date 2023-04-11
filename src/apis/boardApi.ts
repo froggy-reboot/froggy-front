@@ -17,6 +17,11 @@ interface IDeleteCommentProps {
   commentId: number;
 }
 
+interface IPatchArticleProps {
+  formData: FormData;
+  postId: number;
+}
+
 export async function getArticles({ pageParam = 1 }) {
   const response = await publicApi.get(`api/v1/articles/pages/${pageParam}`);
   return response;
@@ -33,6 +38,14 @@ export async function postArticles(formData: FormData) {
       'Content-Type': 'multipart/form-data',
     },
   });
+  return response;
+}
+
+export async function patchArticles(mutationProps: IPatchArticleProps) {
+  const response = await privateApi.patch(
+    `/api/v1/articles/${mutationProps.postId}`,
+    mutationProps.formData,
+  );
   return response;
 }
 

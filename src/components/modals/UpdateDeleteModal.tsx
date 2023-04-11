@@ -2,13 +2,15 @@ import React from 'react';
 import { useModal } from 'src/hooks/useModal';
 import ConfirmModal from 'src/components/modals/ConfirmModal';
 import { modals } from 'src/components/modals/Modals';
-import { getCommet } from 'src/apis/boardApi';
+import { getArticleDetail, getCommet } from 'src/apis/boardApi';
 import { useSetRecoilState } from 'recoil';
 import { editCommentAtom } from 'src/atoms/atom';
+import { useNavigate } from 'react-router-dom';
 
 export default function UpdateDeleteModal() {
   const { openModal, closeModal, showModal } = useModal();
   const setEditComment = useSetRecoilState(editCommentAtom);
+  const navigate = useNavigate();
 
   const updateHandler = async () => {
     closeModal(modals.UpdateDeleteModal);
@@ -22,6 +24,14 @@ export default function UpdateDeleteModal() {
           setEditComment({
             content: response.data.content,
             commentId: showModal[0].props.commentId,
+          });
+        }
+      }
+      if (!showModal[0].props.commentId) {
+        const response = await getArticleDetail(showModal[0].props.postId);
+        if (response.status === 200) {
+          navigate(`/board/edit/${showModal[0].props.postId}`, {
+            state: response.data,
           });
         }
       }
