@@ -1,15 +1,8 @@
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_270_54073)">
-<path d="M11.1763 20.52C16.4285 20.52 20.6863 16.2622 20.6863 11.01C20.6863 5.75777 16.4285 1.5 11.1763 1.5C5.92403 1.5 1.66626 5.75777 1.66626 11.01C1.66626 16.2622 5.92403 20.52 11.1763 20.52Z" stroke="#949494" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/>
-<path d="M2.24585 14.281C2.24585 14.281 5.37903 4.2258 16.1658 2.91455" stroke="#949494" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/>
-<path d="M6.20728 19.112C6.20728 19.112 8.4364 9.60206 19.3198 6.09619" stroke="#949494" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/>
-<path d="M13.4124 9.05713C15.5229 11.2205 17.4959 13.514 19.3199 15.9239" stroke="#949494" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/>
-<path d="M9.20239 13.1841L15.6275 19.4091" stroke="#949494" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/>
-<path d="M18.9196 16.6206C18.9196 16.6206 18.1743 20.5751 23.0052 21.4998" stroke="#949494" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="square"/>
-</g>
-<defs>
-<clipPath id="clip0_270_54073">
-<rect width="24" height="24" fill="white" transform="translate(-0.000244141)"/>
-</clipPath>
-</defs>
+<path d="M2.24609 15.2812C2.24609 15.2812 5.37928 5.22603 16.166 3.91478" stroke="#949494" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/>
+<path d="M6.20752 20.1121C6.20752 20.1121 8.43664 10.6021 19.32 7.09627" stroke="#949494" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/>
+<path d="M13.4126 10.0569C15.5231 12.2203 17.4962 14.5138 19.3201 16.9237" stroke="#949494" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/>
+<path d="M9.20264 14.1839L15.6278 20.4089" stroke="#949494" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/>
+<path d="M11.1765 21.52C16.4287 21.52 20.6865 17.2622 20.6865 12.01C20.6865 6.75777 16.4287 2.5 11.1765 2.5C5.92428 2.5 1.6665 6.75777 1.6665 12.01C1.6665 17.2622 5.92428 21.52 11.1765 21.52Z" stroke="#949494" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/>
+<path d="M18.9199 17.6211C18.9199 17.6211 18.1745 21.5755 23.0054 22.5003" stroke="#949494" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="square"/>
 </svg>
