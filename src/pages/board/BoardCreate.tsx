@@ -45,7 +45,7 @@ function BoardCreate() {
   const [imageList, setImageList] = useState<File[]>([]);
   const [imagePreview, setImagePreview] = useState<string[]>([]);
   const [imageEdit, setImageEdit] = useState<IEditImageList[]>([]);
-  const deleteImageArr: Array<number> = [];
+  const [deleteImageArr, setDeleteImageArr] = useState<number[]>([]);
 
   const { mutate: postArticleMutate } = useMutation(postArticles, {
     onSuccess: (data) => {
@@ -61,7 +61,6 @@ function BoardCreate() {
   });
 
   useEffect(() => {
-    console.log(location.state);
     if (editPagePath) {
       setImagePreview(() => {
         return location.state.images.map((image: { url: string }) => image.url);
@@ -131,9 +130,8 @@ function BoardCreate() {
     setImagePreview(imagePreview.filter((_, index) => index !== id));
     setImageList(imageList.filter((_, index) => index !== id));
     setImageEdit(imageEdit.filter((_, index) => index !== id));
-
     if (imageEdit[id].type === 'existing') {
-      deleteImageArr.push(imageEdit[id].id as number);
+      setDeleteImageArr((prev) => [...prev, imageEdit[id].id as number]);
     }
   };
 
@@ -145,7 +143,6 @@ function BoardCreate() {
         formData.append('files', file);
       }
       formData.append('articleType', location.state);
-      formData.append('liked', '0');
       formData.append('title', data.title);
       formData.append('content', data.content);
 
@@ -153,16 +150,23 @@ function BoardCreate() {
     }
 
     if (editPagePath) {
+      console.log(imageEdit);
       const formData = new FormData();
       for (const file of imageList) {
         formData.append('files', file);
       }
-      formData.append('articleType', location.state.articleType);
-      formData.append('liked', '0');
+
+      if (deleteImageArr.length === 1) {
+        formData.append('deleteImageIdList[0]', String(deleteImageArr[0]));
+      } else if (deleteImageArr.length > 1) {
+        for (const delFile of deleteImageArr) {
+          formData.append('deleteImageIdList', String(delFile));
+        }
+      }
+
       formData.append('title', data.title);
       formData.append('content', data.content);
-      formData.append('photoOrderList', `${imageEdit}`);
-      formData.append('deleteImage', `${deleteImageArr}`);
+      formData.append('photoOrderList', JSON.stringify(imageEdit));
 
       patchArticleMutate({ formData: formData, postId: location.state.id });
     }
