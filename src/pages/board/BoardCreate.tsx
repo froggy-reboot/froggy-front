@@ -11,6 +11,7 @@ import {
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { patchArticles, postArticles } from 'src/apis/boardApi';
 import { useLocation, useMatch, useNavigate } from 'react-router-dom';
+import Loader from 'src/components/loader/Loader';
 interface IFormInput {
   title: string;
   content: string;
@@ -54,10 +55,11 @@ function BoardCreate() {
     onSettled: () => queryClient.invalidateQueries({ queryKey: ['articles'] }),
   });
 
-  const { mutate: patchArticleMutate } = useMutation(patchArticles, {
+  const { mutate: patchArticleMutate, isLoading } = useMutation(patchArticles, {
     onSuccess: (data) => {
-      if (data.status === 200) console.log(data);
+      if (data.status === 200) navigate(`/board/${data.data.id}`);
     },
+    onSettled: () => queryClient.invalidateQueries({ queryKey: ['articles'] }),
   });
 
   useEffect(() => {
@@ -150,7 +152,6 @@ function BoardCreate() {
     }
 
     if (editPagePath) {
-      console.log(imageEdit);
       const formData = new FormData();
       for (const file of imageList) {
         formData.append('files', file);
@@ -171,6 +172,10 @@ function BoardCreate() {
       patchArticleMutate({ formData: formData, postId: location.state.id });
     }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="container">
