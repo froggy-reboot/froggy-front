@@ -153,7 +153,7 @@ function BoardCreate() {
 
     if (editPagePath) {
       const formData = new FormData();
-      for (const file of imageList) {
+      for (const file of imageList.reverse()) {
         formData.append('files', file);
       }
 
