@@ -11,7 +11,8 @@ import { ReactComponent as KnitActive } from 'src/assets/navbar/knitActive.svg';
 import { ReactComponent as MyPageActive } from 'src/assets/navbar/mypageActive.svg';
 
 function Navbar() {
-  const postDetailPath = useMatch('/board/:postId');
+  const boardDetailPath = useMatch('/board/:postId');
+  const boardEditPath = useMatch('/board/edit/:postId');
   const navbarIcon = [
     { id: 'Home', link: '/', fill: <HomeActive />, empty: <Home /> },
     { id: 'Knit', link: '/feed', fill: <KnitActive />, empty: <Knit /> },
@@ -50,7 +51,12 @@ function Navbar() {
 
   const showNavbar = () => {
     let result = true;
-    if (location.pathname === '/sign-in' || location.pathname === '/sign-up')
+    if (
+      location.pathname === '/sign-in' ||
+      location.pathname === '/sign-up' ||
+      location.pathname === '/board/create' ||
+      boardEditPath
+    )
       result = false;
     return result;
   };
@@ -59,7 +65,7 @@ function Navbar() {
     <>
       {showNavbar() && (
         <div className="fixed left-0 bottom-0 flex h-auto min-h-[8.3rem] w-screen items-center justify-evenly rounded-[15px_15px_0px_0px] bg-white pb-[2rem] align-middle shadow-[0px_-1px_3px_rgba(0,0,0,0.15)]">
-          {postDetailPath ? <CommandNavBar /> : navbarBtns}
+          {boardDetailPath ? <CommandNavBar /> : navbarBtns}
         </div>
       )}
     </>
