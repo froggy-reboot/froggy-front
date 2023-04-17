@@ -6,6 +6,7 @@ import CreatePostModal from 'src/components/modals/CreatePostModal';
 import ConfirmModal from 'src/components/modals/ConfirmModal';
 import RavelryConnectModal from 'src/components/modals/RavelryConnectModal';
 import ReportModal from 'src/components/modals/ReportModal';
+import ProfileUpdateModal from 'src/components/modals/ProfileUpdateModal';
 
 export const modals = {
   UpdateDeleteModal: UpdateDeleteModal as FunctionComponent<
@@ -22,6 +23,9 @@ export const modals = {
   >,
   ReportModal: ReportModal as FunctionComponent<
     ComponentProps<typeof ReportModal>
+  >,
+  ProfileUpdateModal: ProfileUpdateModal as FunctionComponent<
+    ComponentProps<typeof ProfileUpdateModal>
   >,
 };
 
