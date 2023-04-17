@@ -10,6 +10,9 @@ const PAGE_TITLE = {
     CREATE: '스레드',
     THREAD: '@사용자의 #태그명',
   },
+  PROFILE:{
+    UPDATE: '기본 정보 변경'
+  }
 } as const;
 
 export { PAGE_TITLE };

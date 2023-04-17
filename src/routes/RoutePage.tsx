@@ -8,6 +8,7 @@ import SignUp from 'src/pages/signup/SignUp';
 import OauthRedirectHandler from 'src/pages/signin/OauthRedirectHandler';
 import PrivateRoute from 'src/routes/PrivateRoute';
 import MyPage from 'src/pages/mypage/MyPage';
+import MyPageUpdate from 'src/pages/mypage/MyPageUpdate';
 import ReportPage from 'src/pages/report/ReportPage';
 import RavelryConnectHandler from 'src/pages/signin/RavelryConnectHandler';
 
@@ -26,6 +27,8 @@ export default function RoutePage() {
       <Route path="/board/create" element={<BoardCreate />} />
       <Route path="/board/edit/:postId" element={<BoardCreate />} />
       <Route path="/report" element={<ReportPage />} />
+      <Route path="/profile/update" element={<MyPageUpdate />} />
+
       <Route element={<PrivateRoute authentication={true} />}>
         {/* 비로그인이면 볼 수 없는 페이지 */}
         <Route path="/my-page" element={<MyPage />} />

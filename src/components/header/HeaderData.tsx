@@ -48,6 +48,11 @@ const HEADER_TITLE = [
     title: PAGE_TITLE.FEED.THREAD,
     isMain: false,
   },
+  {
+    route: '/profile/update',
+    title: PAGE_TITLE.PROFILE.UPDATE,
+    isMain: false,
+  },
 ];
 
 export { HEADER_TITLE };
