@@ -68,7 +68,9 @@ export default function PostList() {
                 </p>
               </div>
               <p className="mt-[0.3rem] text-Board text-black-50">
-                {page.content}
+                {page.content.length > 40
+                  ? `${page.content.slice(0, 40)}...`
+                  : page.content}
               </p>
               <div className="mt-[0.8rem] flex justify-between">
                 <div>
