@@ -48,6 +48,11 @@ const HEADER_TITLE = [
     title: PAGE_TITLE.FEED.THREAD,
     isMain: false,
   },
+  {
+    route: '/my-page/setting',
+    title: PAGE_TITLE.MY_PAGE.SETTING,
+    isMain: false,
+  },
 ];
 
 export { HEADER_TITLE };
