@@ -94,3 +94,8 @@ export async function deleteArticle(postId: number) {
   const response = await privateApi.delete(`/api/v1/articles/${postId}`);
   return response;
 }
+
+export async function postLike(postId: number) {
+  const response = await privateApi.post(`/api/v1/article-likes/${postId}`);
+  return response;
+}
