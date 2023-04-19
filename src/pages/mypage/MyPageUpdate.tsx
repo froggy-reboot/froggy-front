@@ -1,12 +1,19 @@
-import MypageProfileImage from 'src/components/mypage/MypageProfileImage'
-import React from 'react'
+import MypageProfileImage from 'src/components/mypage/MypageProfileImage';
+import React from 'react';
+import { useModal } from 'src/hooks/useModal';
+import { modals } from 'src/components/modals/Modals';
 
 function MyPageUpdate() {
+  const { openModal } = useModal();
   return (
-    <div className="container">
+    <div
+      className="container"
+      onClick={() => {
+        openModal(modals.ProfileUpdateModal);
+      }}>
       <MypageProfileImage />
-  </div>
-  )
+    </div>
+  );
 }
 
-export default MyPageUpdate
+export default MyPageUpdate;

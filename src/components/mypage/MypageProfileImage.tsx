@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getUserInfo } from 'src/apis/authApi';
 function MypageProfileImage() {
@@ -10,10 +10,9 @@ function MypageProfileImage() {
         src={data?.data.profileImg}
         alt="profile"
         className="h-[11.875rem] w-[11.875rem] rounded-full bg-[#F5F5F5] object-cover"
-        />
-
+      />
     </div>
-  )
+  );
 }
 
-export default MypageProfileImage
+export default MypageProfileImage;
