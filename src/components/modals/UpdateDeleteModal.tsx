@@ -50,7 +50,7 @@ export default function UpdateDeleteModal() {
 
   return (
     <div
-      className="items-end modal_bg"
+      className="modal_bg items-end"
       onClick={() => closeModal(modals.UpdateDeleteModal)}>
       <div className="modal_under">
         <button onClick={updateHandler}>수정하기</button>
