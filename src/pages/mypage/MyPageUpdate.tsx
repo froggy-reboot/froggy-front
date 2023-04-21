@@ -29,25 +29,36 @@ function MyPageUpdate() {
 
   return (
     <div className="container">
-      <form>
-        {/* 프로필 이미지 영역 */}
-        <input
-          accept="image/*"
-          className="hidden"
-          id="image"
-          type="file"
-          ref={fileInput}
-        />
-        <img
-          src={data?.data.profileImg}
-          alt="profile"
-          className="h-[11.875rem] w-[11.875rem] rounded-full bg-[#F5F5F5] object-cover"
-          onClick={() => {
-            if (fileInput != null) {
-              openModal(modals.ProfileUpdateModal, fileInput);
-            }
-          }}
-        />
+      <form className="w-[100%]">
+        <div className="mx-[2.5rem] flex flex-col gap-[0.5rem] px-[1rem] md:gap-[1.5rem]">
+          {/* 프로필 이미지 영역 */}
+          <input
+            accept="image/*"
+            className="hidden "
+            id="image"
+            type="file"
+            ref={fileInput}
+            name="image"
+          />
+          <img
+            src={data?.data.profileImg}
+            alt="profile"
+            className="mx-auto h-[11.875rem] w-[11.875rem] rounded-full bg-[#F5F5F5] object-cover"
+            onClick={() => {
+              if (fileInput != null) {
+                openModal(modals.ProfileUpdateModal, fileInput);
+              }
+            }}
+          />
+
+          {/* 프로필 닉네임 영역 */}
+          <div className="mt-[1.5rem] flex flex-col gap-2">
+            <p className="text-Body text-[#696969]">닉네임</p>
+            <input name="nickname" className="input" />
+          </div>
+
+          <button className="submit_btn bg-green-50">변경하기</button>
+        </div>
       </form>
     </div>
   );
