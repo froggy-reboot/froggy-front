@@ -10,6 +10,9 @@ const PAGE_TITLE = {
     CREATE: '스레드',
     THREAD: '@사용자의 #태그명',
   },
+  MY_PAGE: {
+    SETTING: '기타 설정',
+  },
 } as const;
 
 export { PAGE_TITLE };
