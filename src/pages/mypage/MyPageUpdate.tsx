@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useQuery } from '@tanstack/react-query';
 import { getUserInfo } from 'src/apis/authApi';
 import { useModal } from 'src/hooks/useModal';
@@ -37,6 +38,24 @@ function MyPageUpdate() {
       </form>
   </div>
   )
+=======
+import MypageProfileImage from 'src/components/mypage/MypageProfileImage';
+import React from 'react';
+import { useModal } from 'src/hooks/useModal';
+import { modals } from 'src/components/modals/Modals';
+
+function MyPageUpdate() {
+  const { openModal } = useModal();
+  return (
+    <div
+      className="container"
+      onClick={() => {
+        openModal(modals.ProfileUpdateModal);
+      }}>
+      <MypageProfileImage />
+    </div>
+  );
+>>>>>>> e0fdb54710c28cd7828e564daea8179ac6f16c0f
 }
 
-export default MyPageUpdate
+export default MyPageUpdate;
