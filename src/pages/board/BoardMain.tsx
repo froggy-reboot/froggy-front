@@ -17,10 +17,11 @@ interface IFormInput {
 
 export default function BoardMain() {
   const [showSearch, setShowSearch] = useState(false);
-  const [isRecent, sortToggleHandler] = useToggle(true);
+  const [isRecent, setIsRecent] = useState(true);
   const [isExpanded, articleBtnExpandHandler] = useToggle(false);
   const [ariticleType, setArticleType] = useState('전체');
   const { openModal, closeModal, showModal } = useModal();
+  const [filter, setFilter] = useState<string | null>(null);
 
   const { register, handleSubmit, reset, formState } = useForm<IFormInput>({
     mode: 'all',
@@ -38,6 +39,16 @@ export default function BoardMain() {
 
   const articleTypeHandler = (type: string) => {
     setArticleType(type);
+    setFilter(type);
+  };
+
+  const hotPostListHandler = () => {
+    setIsRecent((prev) => !prev);
+    if (isRecent) {
+      setFilter('인기');
+    } else {
+      setFilter(null);
+    }
   };
 
   return (
@@ -58,7 +69,7 @@ export default function BoardMain() {
         </form>
         {!showSearch && (
           <div className="mt-[1.8rem] flex justify-between">
-            <button onClick={sortToggleHandler} className="mini_btn">
+            <button onClick={hotPostListHandler} className="mini_btn">
               {isRecent ? '최신글' : '인기글'}
             </button>
             <div>
@@ -89,7 +100,7 @@ export default function BoardMain() {
         )}
       </nav>
       <main className="w-[100%] px-[1.6rem] pt-[11.9rem]">
-        {showSearch ? <SearchView /> : <PostList />}
+        {showSearch ? <SearchView /> : <PostList filter={filter} />}
       </main>
       {!showSearch && (
         <button

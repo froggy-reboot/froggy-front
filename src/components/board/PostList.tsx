@@ -24,21 +24,29 @@ interface IArticleData {
   commentCount: number;
 }
 
-export default function PostList() {
+export interface IFilter {
+  filter: string | null;
+}
+
+export default function PostList(filter: IFilter) {
   const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery<
     AxiosResponse,
     AxiosError,
     IArticleData
-  >(['articles'], ({ pageParam = 1 }) => getArticles({ pageParam }), {
-    getNextPageParam: (lastPage, allPages) => {
-      const nextPage = allPages.length + 1;
-      return lastPage.data.length === 0 ? undefined : nextPage;
+  >(
+    ['articles', filter],
+    ({ pageParam = 1 }) => getArticles(filter, { pageParam }),
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        const nextPage = allPages.length + 1;
+        return lastPage.data.length === 0 ? undefined : nextPage;
+      },
+      select: (data) => ({
+        pages: data?.pages.flatMap((page) => page.data),
+        pageParams: data.pageParams,
+      }),
     },
-    select: (data) => ({
-      pages: data?.pages.flatMap((page) => page.data),
-      pageParams: data.pageParams,
-    }),
-  });
+  );
 
   const { setTarget } = useIntersectionObserver({
     hasNextPage,
