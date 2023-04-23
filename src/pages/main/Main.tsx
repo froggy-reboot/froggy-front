@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 function Main() {
-  return (
-    <div>Main</div>
-  )
+  return <div>github action deploy test</div>;
 }
 
-export default Main
+export default Main;
