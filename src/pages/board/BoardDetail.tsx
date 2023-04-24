@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { ReactComponent as MenuIcon } from 'src/assets/menu.svg';
 import { ReactComponent as LikeIcon } from 'src/assets/thumb.svg';
+import { ReactComponent as LikeIconActive } from 'src/assets/thumbActive.svg';
 import { ReactComponent as ChatIcon } from 'src/assets/chat.svg';
 import Comment from 'src/components/board/Comments';
 import { useModal } from 'src/hooks/useModal';
@@ -34,6 +35,7 @@ export interface IArticleDetail {
       writerNickname: string;
       writerProfileImg: string;
     };
+    likedByUser: boolean;
   };
 }
 
@@ -124,10 +126,17 @@ export default function BoardDetail() {
               )}
             </article>
             <p className="mt-[1.2rem] text-Tag font-normal">
-              <LikeIcon
-                onClick={likeHandler}
-                className="mr-[0.3rem] inline-block h-[2.4rem] w-[2.4rem] cursor-pointer"
-              />
+              {data.data.likedByUser ? (
+                <LikeIconActive
+                  onClick={likeHandler}
+                  className="mr-[0.3rem] inline-block h-[2.4rem] w-[2.4rem] cursor-pointer"
+                />
+              ) : (
+                <LikeIcon
+                  onClick={likeHandler}
+                  className="mr-[0.3rem] inline-block h-[2.4rem] w-[2.4rem] cursor-pointer"
+                />
+              )}
               <span>{data?.data.liked}</span>
               <ChatIcon className="mr-[0.3rem] ml-[0.8rem] inline-block h-[2.4rem] w-[2.4rem] fill-black-50" />
               <span>{data?.data.commentCount}</span>
