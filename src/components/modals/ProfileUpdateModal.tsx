@@ -4,9 +4,6 @@ import { useModal } from 'src/hooks/useModal';
 import { modals } from 'src/components/modals/Modals';
 
 function ProfileUpdateModal(props: any) {
-  useEffect(() => {
-    console.log(props);
-  }, []);
   const { openModal, closeModal, showModal } = useModal();
   const updateHandler = () => {
     closeModal(modals.ProfileUpdateModal);
@@ -14,7 +11,7 @@ function ProfileUpdateModal(props: any) {
   };
   const basicHandler = () => {
     closeModal(modals.ProfileUpdateModal);
-    console.log('basic');
+    // console.log('basic');
   };
   return (
     <div

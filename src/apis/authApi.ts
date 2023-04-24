@@ -24,6 +24,11 @@ function postRefreshToken() {
   return response;
 }
 
+export async function getRandomNickname() {
+  const response = await publicApi.get('/api/v1/auth/random-nickname');
+  return response;
+}
+
 //리프레시 토큰
 privateApi.interceptors.response.use(
   (response) => {
