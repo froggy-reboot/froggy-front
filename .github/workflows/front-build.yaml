@@ -16,6 +16,10 @@ jobs:
       - name: checkout Github Action
         uses: actions/checkout@v3
 
+      - name: .env setting
+        run: |
+          echo "REACT_APP_SERVER_IP=${{ secrets.REACT_APP_SERVER_IP }}" >> .env
+
       - name: Get npm cache directory
         id: npm-cache-dir
         run: |
