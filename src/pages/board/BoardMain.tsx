@@ -21,7 +21,7 @@ export default function BoardMain() {
   const [isExpanded, articleBtnExpandHandler] = useToggle(false);
   const [postType, setPostType] = useState('전체');
   const { openModal, closeModal, showModal } = useModal();
-  const [filter, setFilter] = useState<IFilter>();
+  const [filter, setFilter] = useState<IFilter>({});
 
   const { register, handleSubmit, reset, formState } = useForm<IFormInput>({
     mode: 'all',
@@ -100,7 +100,7 @@ export default function BoardMain() {
         )}
       </nav>
       <main className="w-[100%] px-[1.6rem] pt-[11.9rem]">
-        {showSearch ? <SearchView /> : <PostList filter={filter} />}
+        {showSearch ? <SearchView /> : <PostList filterProp={filter} />}
       </main>
       {!showSearch && (
         <button

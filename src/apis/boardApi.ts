@@ -23,9 +23,9 @@ interface IPatchArticleProps {
   postId: number;
 }
 
-export async function getArticles({ filter }: IFilter, { pageParam = 1 }) {
+export async function getArticles(filterProp: IFilter, { pageParam = 1 }) {
   const response = await publicApi.get(`api/v1/articles/pages/${pageParam}`, {
-    params: filter,
+    params: filterProp,
   });
   return response;
 }

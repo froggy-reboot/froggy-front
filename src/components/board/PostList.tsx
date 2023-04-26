@@ -29,14 +29,14 @@ export interface IFilter {
   articleType?: string;
 }
 
-export default function PostList(filter: IFilter) {
+export default function PostList({ filterProp }: { filterProp: IFilter }) {
   const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery<
     AxiosResponse,
     AxiosError,
     IArticleData
   >(
-    ['articles', filter],
-    ({ pageParam = 1 }) => getArticles(filter, { pageParam }),
+    ['articles', filterProp],
+    ({ pageParam = 1 }) => getArticles(filterProp, { pageParam }),
     {
       getNextPageParam: (lastPage, allPages) => {
         const nextPage = allPages.length + 1;
