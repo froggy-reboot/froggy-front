@@ -25,7 +25,8 @@ interface IArticleData {
 }
 
 export interface IFilter {
-  filter: string | null;
+  filter?: string;
+  articleType?: string;
 }
 
 export default function PostList(filter: IFilter) {
