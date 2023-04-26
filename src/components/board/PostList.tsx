@@ -1,6 +1,7 @@
 import React from 'react';
-import { ReactComponent as LikeIcon } from 'src/assets/empty_like.svg';
 import { ReactComponent as ChatIcon } from 'src/assets/chat.svg';
+import { ReactComponent as LikeIcon } from 'src/assets/thumb.svg';
+import { ReactComponent as LikeIconActive } from 'src/assets/thumbActive.svg';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getArticles } from 'src/apis/boardApi';
 import Loader from 'src/components/loader/Loader';
@@ -22,6 +23,7 @@ interface IArticleData {
     nickname: string;
   };
   commentCount: number;
+  likedByUser: boolean;
 }
 
 export interface IFilter {
@@ -83,7 +85,11 @@ export default function PostList({ filterProp }: { filterProp: IFilter }) {
               </p>
               <div className="mt-[0.8rem] flex justify-between">
                 <div>
-                  <LikeIcon className="mr-[0.3rem] inline-block h-[1.5rem] w-[1.5rem] fill-black-50" />
+                  {page.likedByUser ? (
+                    <LikeIconActive className="mr-[0.3rem] inline-block h-[1.5rem] w-[1.5rem]" />
+                  ) : (
+                    <LikeIcon className="mr-[0.3rem] inline-block h-[1.5rem] w-[1.5rem]" />
+                  )}
                   <span>{page.liked}</span>
                   <ChatIcon className="mr-[0.3rem] ml-[0.4rem] inline-block h-[1.5rem] w-[1.5rem] fill-black-50" />
                   <span>{page.commentCount}</span>
