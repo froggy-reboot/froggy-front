@@ -26,21 +26,30 @@ interface IArticleData {
   likedByUser: boolean;
 }
 
-export default function PostList() {
+export interface IFilter {
+  filter?: string;
+  articleType?: string;
+}
+
+export default function PostList({ filterProp }: { filterProp: IFilter }) {
   const { data, isLoading, fetchNextPage, hasNextPage } = useInfiniteQuery<
     AxiosResponse,
     AxiosError,
     IArticleData
-  >(['articles'], ({ pageParam = 1 }) => getArticles({ pageParam }), {
-    getNextPageParam: (lastPage, allPages) => {
-      const nextPage = allPages.length + 1;
-      return lastPage.data.length === 0 ? undefined : nextPage;
+  >(
+    ['articles', filterProp],
+    ({ pageParam = 1 }) => getArticles(filterProp, { pageParam }),
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        const nextPage = allPages.length + 1;
+        return lastPage.data.length === 0 ? undefined : nextPage;
+      },
+      select: (data) => ({
+        pages: data?.pages.flatMap((page) => page.data),
+        pageParams: data.pageParams,
+      }),
     },
-    select: (data) => ({
-      pages: data?.pages.flatMap((page) => page.data),
-      pageParams: data.pageParams,
-    }),
-  });
+  );
 
   const { setTarget } = useIntersectionObserver({
     hasNextPage,

@@ -1,3 +1,4 @@
+import { IFilter } from 'src/components/board/PostList';
 import { privateApi, publicApi } from 'src/apis/authApi';
 
 interface IPatchCommentProps {
@@ -22,11 +23,15 @@ interface IPatchArticleProps {
   postId: number;
 }
 
-export async function getArticles({ pageParam = 1 }) {
+export async function getArticles(filterProp: IFilter, { pageParam = 1 }) {
   const isLogin = localStorage.getItem('accessToken');
   const response = isLogin
-    ? await privateApi.get(`api/v1/articles/pages/${pageParam}`)
-    : await publicApi.get(`api/v1/articles/pages/${pageParam}`);
+    ? await privateApi.get(`api/v1/articles/pages/${pageParam}`, {
+    params: filterProp,
+  })
+    : await publicApi.get(`api/v1/articles/pages/${pageParam}`, {
+    params: filterProp,
+  });
   return response;
 }
 
