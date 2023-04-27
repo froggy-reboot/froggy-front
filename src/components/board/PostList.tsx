@@ -29,6 +29,7 @@ interface IArticleData {
 export interface IFilter {
   filter?: string;
   articleType?: string;
+  search?: string;
 }
 
 export default function PostList({ filterProp }: { filterProp: IFilter }) {
