@@ -70,6 +70,7 @@ privateApi.interceptors.response.use(
               error.response?.status === 422
             ) {
               alert(LOGIN.MESSAGE.EXPIRED);
+              localStorage.clear();
               window.location.replace('/sign-in');
             } else {
               alert(LOGIN.MESSAGE.ETC);
