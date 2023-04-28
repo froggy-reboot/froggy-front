@@ -30,6 +30,13 @@ function postRefreshToken() {
 }
 
 //리프레시 토큰
+privateApi.interceptors.request.use((config) => {
+  const token = localStorage.getItem('accessToken');
+  config.headers.Authorization = 'Bearer ' + token;
+
+  return config;
+});
+
 privateApi.interceptors.response.use(
   (response) => {
     return response;
