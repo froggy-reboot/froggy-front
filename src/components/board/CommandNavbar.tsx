@@ -27,6 +27,7 @@ export default function CommandNavBar() {
   const { mutate: createMutation } = useMutation(postComment, {
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['comments'] });
+      queryClient.invalidateQueries({ queryKey: ['article', postId] });
     },
   });
 
