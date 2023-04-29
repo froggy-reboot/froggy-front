@@ -5,6 +5,8 @@ import { currentArticleId, editCommentAtom } from 'src/atoms/atom';
 import { patchComment, postComment } from 'src/apis/boardApi';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getUserInfo } from 'src/apis/authApi';
+import { modals } from 'src/components/modals/Modals';
+import { useModal } from 'src/hooks/useModal';
 
 export default function CommandNavBar() {
   const queryClient = useQueryClient();
@@ -16,7 +18,9 @@ export default function CommandNavBar() {
     comment: string;
   }>();
   const { data } = useQuery(['user'], () => getUserInfo(userId));
+  const { openModal } = useModal();
 
+  console.log(editComment);
   const { mutate: editMutation } = useMutation(patchComment, {
     onSettled: () => {
       completeEditComment();
@@ -35,6 +39,9 @@ export default function CommandNavBar() {
     setValue('comment', editComment.content);
     if (editComment.content) {
       setFocus('comment');
+    }
+    if (editComment.commentId === undefined) {
+      reset({ comment: '' });
     }
   }, [editComment]);
 
@@ -71,6 +78,10 @@ export default function CommandNavBar() {
     }
   };
 
+  const stopEditHandler = () => {
+    if (editComment.commentId) openModal(modals.StopEditModal);
+  };
+
   return (
     <>
       {data && (
@@ -84,6 +95,7 @@ export default function CommandNavBar() {
           />
           <textarea
             {...register('comment', { required: true })}
+            onBlur={stopEditHandler}
             className="h-[3rem] w-[100%] flex-1 rounded-[15px] bg-black-30 pt-[0.5rem] pl-[1.3rem] text-Tag font-normal outline-none placeholder:text-black-50 focus:h-[10rem] focus:py-[1rem]"
             placeholder="댓글을 입력해 주세요."
           />
