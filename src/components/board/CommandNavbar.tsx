@@ -96,7 +96,7 @@ export default function CommandNavBar() {
           <textarea
             {...register('comment', { required: true })}
             onBlur={stopEditHandler}
-            className="h-[3rem] w-[100%] flex-1 rounded-[15px] bg-black-30 pt-[0.5rem] pl-[1.3rem] text-Tag font-normal outline-none placeholder:text-black-50 focus:h-[10rem] focus:py-[1rem]"
+            className="h-[3.2rem] w-[100%] flex-1 rounded-[16px] bg-black-30 pt-[0.5rem] pl-[1.3rem] text-Body font-normal outline-none placeholder:text-black-50 focus:h-[10rem] focus:py-[1rem]"
             placeholder="댓글을 입력해 주세요."
           />
         </form>
