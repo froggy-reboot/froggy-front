@@ -49,6 +49,11 @@ const HEADER_TITLE = [
     isMain: false,
   },
   {
+    route: '/my-page/setting',
+    title: PAGE_TITLE.MY_PAGE.SETTING,
+    isMain: false,
+  },
+  {
     route: '/profile/update',
     title: PAGE_TITLE.PROFILE.UPDATE,
     isMain: false,

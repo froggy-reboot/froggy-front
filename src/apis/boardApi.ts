@@ -1,3 +1,4 @@
+import { IFilter } from 'src/components/board/PostList';
 import { privateApi, publicApi } from 'src/apis/authApi';
 
 interface IPatchCommentProps {
@@ -22,13 +23,23 @@ interface IPatchArticleProps {
   postId: number;
 }
 
-export async function getArticles({ pageParam = 1 }) {
-  const response = await publicApi.get(`api/v1/articles/pages/${pageParam}`);
+export async function getArticles(filterProp: IFilter, { pageParam = 1 }) {
+  const isLogin = localStorage.getItem('accessToken');
+  const response = isLogin
+    ? await privateApi.get(`api/v1/articles/pages/${pageParam}`, {
+    params: filterProp,
+  })
+    : await publicApi.get(`api/v1/articles/pages/${pageParam}`, {
+    params: filterProp,
+  });
   return response;
 }
 
 export async function getArticleDetail(postId: string) {
-  const response = await publicApi.get(`/api/v1/articles/${postId}`);
+  const isLogin = localStorage.getItem('accessToken');
+  const response = isLogin
+    ? await privateApi.get(`/api/v1/articles/${postId}`)
+    : await publicApi.get(`/api/v1/articles/${postId}`);
   return response;
 }
 
@@ -92,5 +103,10 @@ export async function deleteComment(mutationProps: IDeleteCommentProps) {
 
 export async function deleteArticle(postId: number) {
   const response = await privateApi.delete(`/api/v1/articles/${postId}`);
+  return response;
+}
+
+export async function postLike(postId: number) {
+  const response = await privateApi.post(`/api/v1/article-likes/${postId}`);
   return response;
 }

@@ -1,11 +1,16 @@
 import React from 'react';
 import { HEADER_TITLE } from 'src/components/header/HeaderData';
 import { ReactComponent as BackIcon } from 'src/assets/back.svg';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useMatch, useNavigate } from 'react-router-dom';
+import { useModal } from 'src/hooks/useModal';
+import { modals } from 'src/components/modals/Modals';
 
 export default function Header() {
   const location = useLocation();
   const navigate = useNavigate();
+  const boardEditPath = useMatch('/board/edit/:postId');
+  const boardDetailPath = useMatch('/board/:postId');
+  const { openModal } = useModal();
 
   const isMain = () => {
     let result = false;
@@ -32,6 +37,14 @@ export default function Header() {
     return result;
   };
 
+  const backBtnHandler = () => {
+    if (location.pathname === '/board/create' || boardDetailPath) {
+      navigate('/board');
+    } else if (boardEditPath) {
+      openModal(modals.StopEditModal, { isPostEdit: true });
+    } else navigate(-1);
+  };
+
   const showHeader = () => {
     let result = true;
     if (location.pathname === '/sign-in' || location.pathname === '/my-page')
@@ -49,7 +62,7 @@ export default function Header() {
           {showBackBtn() ? (
             <BackIcon
               className="m-4 h-[2.4rem] w-[2.4rem]"
-              onClick={() => navigate(-1)}
+              onClick={backBtnHandler}
             />
           ) : null}
           <h1 className="ml-[0.8rem] text-Navbar">{setPageTitle()}</h1>

@@ -17,6 +17,11 @@ export async function getUserInfo(userId: string | null) {
   return response;
 }
 
+export async function getLogout() {
+  const response = await privateApi.get('/api/v1/auth/logout');
+  return response;
+}
+
 function postRefreshToken() {
   const response = publicApi.post('/api/v1/auth/refresh', {
     refreshToken: localStorage.getItem('refreshToken'),
@@ -30,6 +35,13 @@ export async function getRandomNickname() {
 }
 
 //리프레시 토큰
+privateApi.interceptors.request.use((config) => {
+  const token = localStorage.getItem('accessToken');
+  config.headers.Authorization = 'Bearer ' + token;
+
+  return config;
+});
+
 privateApi.interceptors.response.use(
   (response) => {
     return response;
@@ -63,6 +75,7 @@ privateApi.interceptors.response.use(
               error.response?.status === 422
             ) {
               alert(LOGIN.MESSAGE.EXPIRED);
+              localStorage.clear();
               window.location.replace('/sign-in');
             } else {
               alert(LOGIN.MESSAGE.ETC);

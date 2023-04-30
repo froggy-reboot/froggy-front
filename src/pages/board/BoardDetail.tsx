@@ -1,17 +1,19 @@
 import React, { useEffect } from 'react';
 import { ReactComponent as MenuIcon } from 'src/assets/menu.svg';
-import { ReactComponent as LikeIcon } from 'src/assets/empty_like.svg';
+import { ReactComponent as LikeIcon } from 'src/assets/thumb.svg';
+import { ReactComponent as LikeIconActive } from 'src/assets/thumbActive.svg';
 import { ReactComponent as ChatIcon } from 'src/assets/chat.svg';
 import Comment from 'src/components/board/Comments';
 import { useModal } from 'src/hooks/useModal';
 import { modals } from 'src/components/modals/Modals';
 import timeConverter from 'src/utils/timeConverter/timeConverter';
-import { useQuery } from '@tanstack/react-query';
-import { getArticleDetail } from 'src/apis/boardApi';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { getArticleDetail, postLike } from 'src/apis/boardApi';
 import { useParams } from 'react-router-dom';
 import Loader from 'src/components/loader/Loader';
 import { useSetRecoilState } from 'recoil';
 import { currentArticleId } from 'src/atoms/atom';
+import { LOGIN } from 'src/pages/signin/SignInConstants';
 
 export interface IArticleDetail {
   data: {
@@ -33,10 +35,12 @@ export interface IArticleDetail {
       writerNickname: string;
       writerProfileImg: string;
     };
+    likedByUser: boolean;
   };
 }
 
 export default function BoardDetail() {
+  const queryClient = useQueryClient();
   const { openModal } = useModal();
   const { postId } = useParams() as { postId: string };
   const setPostId = useSetRecoilState(currentArticleId);
@@ -54,6 +58,18 @@ export default function BoardDetail() {
     return <Loader />;
   }
 
+  const likeHandler = async () => {
+    try {
+      const response = await postLike(Number(postId));
+      if (response.status === 201) {
+        queryClient.invalidateQueries({ queryKey: ['article', postId] });
+        queryClient.invalidateQueries({ queryKey: ['articles'] });
+      }
+    } catch (error) {
+      alert(LOGIN.MESSAGE.ETC);
+    }
+  };
+
   return (
     <>
       {data && (
@@ -62,7 +78,7 @@ export default function BoardDetail() {
             <div className="mt-[2.2rem] grid grid-cols-[50px_3fr_1fr] items-center">
               <img
                 src={data.data.user.writerProfileImg}
-                className="h-[5rem] w-[5rem] rounded-full bg-green-30"
+                className="h-[5rem] w-[5rem] rounded-full bg-green-30 object-cover"
               />
               <div className="ml-[15px]">
                 <p className="text-Body font-bold">
@@ -109,10 +125,20 @@ export default function BoardDetail() {
                 />
               )}
             </article>
-            <p className="mt-[3px] text-Callout">
-              <LikeIcon className="mr-[0.3rem] inline-block h-[1.5rem] w-[1.5rem] fill-black-50" />
+            <p className="mt-[1.2rem] text-Tag font-normal">
+              {data.data.likedByUser ? (
+                <LikeIconActive
+                  onClick={likeHandler}
+                  className="mr-[0.3rem] inline-block h-[2.4rem] w-[2.4rem] cursor-pointer"
+                />
+              ) : (
+                <LikeIcon
+                  onClick={likeHandler}
+                  className="mr-[0.3rem] inline-block h-[2.4rem] w-[2.4rem] cursor-pointer"
+                />
+              )}
               <span>{data?.data.liked}</span>
-              <ChatIcon className="mr-[0.3rem] ml-[0.4rem] inline-block h-[1.5rem] w-[1.5rem] fill-black-50" />
+              <ChatIcon className="mr-[0.3rem] ml-[0.8rem] inline-block h-[2.4rem] w-[2.4rem] fill-black-50" />
               <span>{data?.data.commentCount}</span>
             </p>
             <hr className="mt-[1.4rem] w-[100%] border-black-30" />

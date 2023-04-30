@@ -11,6 +11,7 @@ import MyPage from 'src/pages/mypage/MyPage';
 import MyPageUpdate from 'src/pages/mypage/MyPageUpdate';
 import ReportPage from 'src/pages/report/ReportPage';
 import RavelryConnectHandler from 'src/pages/signin/RavelryConnectHandler';
+import MySetting from 'src/pages/mypage/MySetting';
 
 export default function RoutePage() {
   return (
@@ -32,6 +33,7 @@ export default function RoutePage() {
       <Route element={<PrivateRoute authentication={true} />}>
         {/* 비로그인이면 볼 수 없는 페이지 */}
         <Route path="/my-page" element={<MyPage />} />
+        <Route path="/my-page/setting" element={<MySetting />} />
       </Route>
       <Route element={<PrivateRoute authentication={false} />}>
         {/* 로그인이면 볼 수 없는 페이지 */}

@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getUserInfo } from 'src/apis/authApi';
 import { useModal } from 'src/hooks/useModal';
 import RavelryConnectModal from 'src/components/modals/RavelryConnectModal';
+import { Link } from 'react-router-dom';
 
 export default function MypagePopUp() {
   const userId = JSON.parse(localStorage.getItem('userId') || '{}');
@@ -34,10 +35,10 @@ export default function MypagePopUp() {
             <AlarmIcon />
           </div>
           {isExpand[0] && (
-            <div className="mt-[1.5rem] flex w-[100%] flex-col gap-[1rem] px-[1rem] text-Tag font-normal">
+            <div className="mt-[1.5rem] flex w-[100%] flex-col gap-[1rem] px-[1rem] text-[15px] font-medium">
               <div className="flex justify-between">
                 <p>로그인 계정</p>
-                <p className="text-black-50">{data?.data.email}</p>
+                <p className="font-normal text-black-50">{data?.data.email}</p>
               </div>
               <hr className="w-[100%] text-black-10" />
               <div className="flex justify-between">
@@ -56,7 +57,9 @@ export default function MypagePopUp() {
               <hr className="w-[100%] text-black-10" />
               <div className="flex items-center justify-between">
                 <p>기타 설정</p>
-                <DownBtn stroke="#949494" className="w-[12px] -rotate-90" />
+                <Link to="/my-page/setting">
+                  <DownBtn stroke="#949494" className="w-[12px] -rotate-90" />
+                </Link>
               </div>
               {isExpand[1] && <hr className="w-[100%] text-black-10" />}
               <div
