@@ -22,30 +22,24 @@ function MyPageUpdate() {
   const { openModal } = useModal();
 
   // form 생성
-  const { handleSubmit, setValue, watch } = useForm<IProfile>({
+  const { handleSubmit, setValue, watch, register } = useForm<IProfile>({
     mode: 'all',
   });
 
   // 사진 추가를 위한 Ref 생성
   const fileInput = useRef<HTMLInputElement>(null);
 
-  const newNickname = watch('nickname');
   // 닉네임 랜덤 refresh
   const refreshHandler = async () => {
     try {
       const response = await getRandomNickname();
-      console.log(response);
       const randomNickname = response.data.nickname;
       setValue('nickname', randomNickname, { shouldDirty: true });
     } catch (error) {
       console.log(error);
     }
   };
-  useEffect(() => {
-    // console.log(newNickname);
-    setValue('nickname', newNickname);
-  }, [setValue, newNickname]);
-  // form submit
+
   const onSubmit: SubmitHandler<IProfile> = (data) => {
     console.log(data);
   };
@@ -81,13 +75,7 @@ function MyPageUpdate() {
                 className="input_eye cursor-pointer"
                 onClick={refreshHandler}
               />
-              <input
-                name="nickname"
-                className="input"
-                onChange={() => {
-                  setValue('nickname', newNickname);
-                }}
-              />
+              <input className="input" {...register('nickname')} />
             </label>
           </div>
 

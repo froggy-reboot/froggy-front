@@ -12,8 +12,6 @@ const PAGE_TITLE = {
   },
   MY_PAGE: {
     SETTING: '기타 설정',
-  },
-  PROFILE: {
     UPDATE: '기본 정보 변경',
   },
 } as const;

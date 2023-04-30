@@ -54,8 +54,8 @@ const HEADER_TITLE = [
     isMain: false,
   },
   {
-    route: '/profile/update',
-    title: PAGE_TITLE.PROFILE.UPDATE,
+    route: '/my-page/update',
+    title: PAGE_TITLE.MY_PAGE.UPDATE,
     isMain: false,
   },
 ];

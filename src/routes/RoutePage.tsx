@@ -28,7 +28,7 @@ export default function RoutePage() {
       <Route path="/board/create" element={<BoardCreate />} />
       <Route path="/board/edit/:postId" element={<BoardCreate />} />
       <Route path="/report" element={<ReportPage />} />
-      <Route path="/profile/update" element={<MyPageUpdate />} />
+      <Route path="/my-page/update" element={<MyPageUpdate />} />
 
       <Route element={<PrivateRoute authentication={true} />}>
         {/* 비로그인이면 볼 수 없는 페이지 */}
