@@ -1,6 +1,6 @@
 import { getUserInfo } from 'src/apis/authApi';
 import { modals } from 'src/components/modals/Modals';
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { ReactComponent as Refresh } from 'src/assets/refresh.svg';
 import { useModal } from 'src/hooks/useModal';
@@ -21,8 +21,11 @@ function MyPageUpdate() {
   const { data } = useQuery(['user'], () => getUserInfo(userId));
   const { openModal } = useModal();
 
+  // 이미지 주소
+  const [imgSrc, setImgSrc] = useState(data?.data.profileImg);
+
   // form 생성
-  const { handleSubmit, setValue, watch, register } = useForm<IProfile>({
+  const { handleSubmit, setValue, register } = useForm<IProfile>({
     mode: 'all',
   });
 
@@ -39,7 +42,6 @@ function MyPageUpdate() {
       console.log(error);
     }
   };
-
   const onSubmit: SubmitHandler<IProfile> = (data) => {
     console.log(data);
   };
@@ -57,12 +59,12 @@ function MyPageUpdate() {
             name="image"
           />
           <img
-            src={data?.data.profileImg}
+            src={imgSrc}
             alt="profile"
             className="mx-auto h-[11.875rem] w-[11.875rem] rounded-full bg-[#F5F5F5] object-cover"
             onClick={() => {
               if (fileInput != null) {
-                openModal(modals.ProfileUpdateModal, fileInput);
+                openModal(modals.ProfileUpdateModal, { fileInput, setImgSrc });
               }
             }}
           />
