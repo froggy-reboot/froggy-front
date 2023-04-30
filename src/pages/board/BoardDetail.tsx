@@ -78,7 +78,7 @@ export default function BoardDetail() {
             <div className="mt-[2.2rem] grid grid-cols-[50px_3fr_1fr] items-center">
               <img
                 src={data.data.user.writerProfileImg}
-                className="h-[5rem] w-[5rem] rounded-full bg-green-30"
+                className="h-[5rem] w-[5rem] rounded-full bg-green-30 object-cover"
               />
               <div className="ml-[15px]">
                 <p className="text-Body font-bold">

@@ -54,7 +54,7 @@ export default function Comment({ articleId }: { articleId: number }) {
             <li className="flex">
               <img
                 src={comment.user.profileImg}
-                className="mt-[0.5rem] h-[3.2rem] w-[3.2rem] rounded-full"
+                className="mt-[0.5rem] h-[3.2rem] w-[3.2rem] rounded-full object-cover"
               />
               <div className="ml-[0.9rem] mt-[0.9rem] flex flex-1 flex-col">
                 <div className="flex h-[1.6rem] items-center">

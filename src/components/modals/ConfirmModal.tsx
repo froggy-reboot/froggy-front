@@ -4,15 +4,19 @@ import { useModal } from 'src/hooks/useModal';
 import { modals } from 'src/components/modals/Modals';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useRecoilValue } from 'recoil';
+import { currentArticleId } from 'src/atoms/atom';
 
 export default function ConfirmModal() {
   const queryClient = useQueryClient();
+  const postId = useRecoilValue(currentArticleId);
   const { closeModal, showModal } = useModal();
   const navigate = useNavigate();
 
   const { mutate: delCommentMutation } = useMutation(deleteComment, {
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['comments'] });
+      queryClient.invalidateQueries({ queryKey: ['article', postId] });
     },
   });
 

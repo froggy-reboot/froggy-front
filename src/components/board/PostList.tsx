@@ -65,26 +65,26 @@ export default function PostList({ filterProp }: { filterProp: IFilter }) {
     <>
       <ul>
         {data?.pages.map((page) => (
-          <li key={page.id} className="mb-[0.7rem] h-[9rem] pl-[0.4rem]">
+          <li key={page.id} className="mb-[1rem] h-[10rem] pl-[0.4rem]">
             <Link to={`/board/${page.id}`}>
               <hr className="border-black-30" />
               <p className="mt-[0.6rem] text-BoardSub font-medium text-black-50">
                 {page.user.nickname}
               </p>
-              <div className="mt-[0.5rem]">
-                <span className="mini_btn inline-block h-[1.9rem] w-[3.8rem] text-center text-Board leading-[1.9rem]">
+              <div className="mt-[0.3rem] flex items-center">
+                <span className="mini_btn inline-block h-[1.9rem] w-[3.8rem] text-center text-BoardSub font-medium leading-[1.9rem]">
                   {page.articleType}
                 </span>
-                <p className="ml-[0.9rem] inline-block text-Tag">
+                <p className="ml-[0.9rem] inline-block text-Link font-medium">
                   {page.title}
                 </p>
               </div>
-              <p className="mt-[0.3rem] text-Board text-black-50">
-                {page.content.length > 40
-                  ? `${page.content.slice(0, 40)}...`
+              <p className="mt-[0.3rem] text-Callout text-black-50">
+                {page.content.length > 30
+                  ? `${page.content.slice(0, 30)}...`
                   : page.content}
               </p>
-              <div className="mt-[0.8rem] flex justify-between">
+              <div className="mt-[0.8rem] flex justify-between text-BoardSub">
                 <div>
                   {page.likedByUser ? (
                     <LikeIconActive className="mr-[0.3rem] inline-block h-[1.5rem] w-[1.5rem]" />
