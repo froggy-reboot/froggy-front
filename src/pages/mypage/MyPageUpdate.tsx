@@ -42,8 +42,26 @@ function MyPageUpdate() {
       console.log(error);
     }
   };
+
+  // 사진 preview 생성
+  const setPreviewImg = (event: any) => {
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
+      if (event.target) {
+        setImgSrc(event.target.result);
+      }
+    };
+
+    reader.readAsDataURL(event.target.files[0]);
+  };
   const onSubmit: SubmitHandler<IProfile> = (data) => {
-    console.log(data);
+    // console.log(data);
+    const submitdata = {
+      nickname: data.nickname,
+      image: imgSrc,
+    };
+    console.log(submitdata);
   };
   return (
     <div className="container">
@@ -57,6 +75,7 @@ function MyPageUpdate() {
             type="file"
             ref={fileInput}
             name="image"
+            onChange={setPreviewImg}
           />
           <img
             src={imgSrc}
