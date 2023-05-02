@@ -20,7 +20,6 @@ export default function CommandNavBar() {
   const { data } = useQuery(['user'], () => getUserInfo(userId));
   const { openModal } = useModal();
 
-  console.log(editComment);
   const { mutate: editMutation } = useMutation(patchComment, {
     onSettled: () => {
       completeEditComment();
