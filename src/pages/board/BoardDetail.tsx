@@ -9,7 +9,7 @@ import { modals } from 'src/components/modals/Modals';
 import timeConverter from 'src/utils/timeConverter/timeConverter';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getArticleDetail, postLike } from 'src/apis/boardApi';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Loader from 'src/components/loader/Loader';
 import { useSetRecoilState } from 'recoil';
 import { currentArticleId } from 'src/atoms/atom';
@@ -40,6 +40,7 @@ export interface IArticleDetail {
 }
 
 export default function BoardDetail() {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { openModal } = useModal();
   const { postId } = useParams() as { postId: string };
@@ -68,6 +69,12 @@ export default function BoardDetail() {
     } catch (error) {
       alert(LOGIN.MESSAGE.ETC);
     }
+  };
+
+  const imageDetailHandler = (imageIndex: number) => {
+    navigate(`/board/images/${postId}`, {
+      state: { images: data?.data.images, index: imageIndex },
+    });
   };
 
   return (
@@ -111,6 +118,7 @@ export default function BoardDetail() {
                 <div className="no-scrollbar my-[1.2rem] flex gap-[1rem] overflow-y-scroll">
                   {data.data.images.map((src, idx) => (
                     <img
+                      onClick={() => imageDetailHandler(idx)}
                       key={idx}
                       src={src.url}
                       className="h-[15rem] w-[15rem] rounded-[5px] object-cover"
@@ -120,6 +128,7 @@ export default function BoardDetail() {
               )}
               {data.data.images.length === 1 && (
                 <img
+                  onClick={() => imageDetailHandler(0)}
                   src={data.data.images[0].url}
                   className="h-[19.6rem] w-[100%] rounded-[5px] object-cover md:h-[35rem]"
                 />
