@@ -13,6 +13,19 @@ export default function ImagesDetail() {
   const location = useLocation();
   const imageList: IImageList = location.state;
   const [current, setCurrent] = useState(imageList.index);
+  const moveStyle: { [key: number]: string } = {
+    0: 'translate-x-0',
+    1: 'translate-x-[-100vw]',
+    2: 'translate-x-[-200vw]',
+    3: 'translate-x-[-300vw]',
+    4: 'translate-x-[-400vw]',
+    5: 'translate-x-[-500vw]',
+    6: 'translate-x-[-600vw]',
+    7: 'translate-x-[-700vw]',
+    8: 'translate-x-[-800vw]',
+    9: 'translate-x-[-900vw]',
+    10: 'translate-x-[-1000vw]',
+  };
 
   const closeBtnHandler = () => {
     navigate(-1);
@@ -39,16 +52,21 @@ export default function ImagesDetail() {
   };
 
   return (
-    <div className="relative flex h-[100vh] w-full items-center bg-black-100">
+    <div className="relative flex h-[100vh] items-center overflow-hidden bg-black-100">
       <CloseBtn
         onClick={closeBtnHandler}
         className="absolute top-10 right-10 z-[100] h-[3.5rem] w-[3.5rem] rotate-45 fill-black-10"
       />
-      <img
-        key={imageList.images[current].id}
-        src={imageList.images[current].url}
-        className="max-h-[60%] w-full object-cover"
-      />
+
+      <div
+        className={`flex max-h-[60%] items-center ${moveStyle[current]} transition`}>
+        {imageList.images.map((image) => (
+          <div key={image.id} className="w-[100vw]">
+            <img src={image.url} className="w-full object-contain" />
+          </div>
+        ))}
+      </div>
+
       <button
         onClick={nextHandler}
         className="absolute right-4 flex h-[4rem] w-[4rem] items-center justify-center rounded-full bg-black-10 opacity-50">
