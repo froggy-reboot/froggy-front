@@ -13,7 +13,7 @@
 
 @layer components {
   .container {
-    @apply flex h-[100vh] flex-col items-center bg-white pt-[6rem] pb-[8.3rem] overflow-auto no-scrollbar;
+    @apply flex h-auto min-h-[100vh] flex-col items-center bg-white pt-[6rem] pb-[8.3rem] overflow-auto no-scrollbar;
   }
   .submit_btn {
     @apply mt-[1rem] h-[5rem] w-[100%] rounded-[1rem] text-Body text-white md:mt-[2rem];
