@@ -13,6 +13,7 @@ import { ReactComponent as MyPageActive } from 'src/assets/navbar/mypageActive.s
 function Navbar() {
   const boardDetailPath = useMatch('/board/:postId');
   const boardEditPath = useMatch('/board/edit/:postId');
+  const imagesDetailPath = useMatch('/board/images/:postId');
   const navbarIcon = [
     { id: 'Home', link: '/', fill: <HomeActive />, empty: <Home /> },
     { id: 'Knit', link: '/feed', fill: <KnitActive />, empty: <Knit /> },
@@ -55,7 +56,8 @@ function Navbar() {
       location.pathname === '/sign-in' ||
       location.pathname === '/sign-up' ||
       location.pathname === '/board/create' ||
-      boardEditPath
+      boardEditPath ||
+      imagesDetailPath
     )
       result = false;
     return result;

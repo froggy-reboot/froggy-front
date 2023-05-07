@@ -10,6 +10,7 @@ export default function Header() {
   const navigate = useNavigate();
   const boardEditPath = useMatch('/board/edit/:postId');
   const boardDetailPath = useMatch('/board/:postId');
+  const imagesDetailPath = useMatch('/board/images/:postId');
   const { openModal } = useModal();
 
   const isMain = () => {
@@ -47,7 +48,11 @@ export default function Header() {
 
   const showHeader = () => {
     let result = true;
-    if (location.pathname === '/sign-in' || location.pathname === '/my-page')
+    if (
+      location.pathname === '/sign-in' ||
+      location.pathname === '/my-page' ||
+      imagesDetailPath
+    )
       result = false;
     return result;
   };
