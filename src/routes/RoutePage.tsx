@@ -28,12 +28,11 @@ export default function RoutePage() {
       <Route path="/board/create" element={<BoardCreate />} />
       <Route path="/board/edit/:postId" element={<BoardCreate />} />
       <Route path="/report" element={<ReportPage />} />
-      <Route path="/my-page/update" element={<MyPageUpdate />} />
-
       <Route element={<PrivateRoute authentication={true} />}>
         {/* 비로그인이면 볼 수 없는 페이지 */}
         <Route path="/my-page" element={<MyPage />} />
         <Route path="/my-page/setting" element={<MySetting />} />
+        <Route path="/my-page/update" element={<MyPageUpdate />} />
       </Route>
       <Route element={<PrivateRoute authentication={false} />}>
         {/* 로그인이면 볼 수 없는 페이지 */}

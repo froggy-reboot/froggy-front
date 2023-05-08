@@ -29,8 +29,20 @@ function postRefreshToken() {
   return response;
 }
 
+// 랜덤 닉네임 생성
 export async function getRandomNickname() {
   const response = await publicApi.get('/api/v1/auth/random-nickname');
+  return response;
+}
+
+// 닉네임 수정
+export async function patchUserNickname(
+  userId: string | null,
+  nickname: string,
+) {
+  const response = await privateApi.patch(`/api/v1/users/${userId}`, {
+    nickname: nickname,
+  });
   return response;
 }
 
