@@ -53,11 +53,17 @@ export default function UpdateDeleteModal() {
       className="modal_bg items-end"
       onClick={() => closeModal(modals.UpdateDeleteModal)}>
       <div className="modal_under">
-        <button onClick={updateHandler}>수정하기</button>
+        <button className="modal_under_btn" onClick={updateHandler}>
+          수정하기
+        </button>
         <hr className="w-[100%] border-black-30" />
-        <button onClick={deleteHandler}>삭제하기</button>
+        <button className="modal_under_btn" onClick={deleteHandler}>
+          삭제하기
+        </button>
         <hr className="w-[100%] border-black-30" />
-        <button onClick={() => closeModal(modals.UpdateDeleteModal)}>
+        <button
+          className="modal_under_btn"
+          onClick={() => closeModal(modals.UpdateDeleteModal)}>
           취소
         </button>
       </div>
