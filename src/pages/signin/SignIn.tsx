@@ -62,56 +62,58 @@ export default function SignIn() {
   return (
     <>
       {isLoading && <Loader />}
-      <div className="container">
-        <Logo className="mt-[20rem] h-[4.5rem] w-[16rem] fill-green-50 md:mt-[22rem] md:h-[10rem] md:w-[28rem]" />
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="mt-[6.5rem] flex w-[100%] flex-col md:mt-[7rem]">
-          <div className="mx-[2.5rem] flex flex-col gap-[0.5rem] px-[1rem] md:gap-[1.5rem]">
-            <input
-              {...register('email', {
-                required: true,
-                pattern: {
-                  value: REG_EXP.EMAIL,
-                  message: ERROR_MESSAGE.EMAIL,
-                },
-              })}
-              className="input"
-              placeholder="이메일"
-            />
-            <span className="error_message">{errors?.email?.message}</span>
-            <div className="relative">
-              {showPassword ? (
-                <OpenEye className="input_eye" onClick={onClickHandler} />
-              ) : (
-                <CloseEye className="input_eye" onClick={onClickHandler} />
-              )}
+      <div className="container h-real-screen justify-between pb-10">
+        <div className="m-auto flex w-full flex-col items-center">
+          <Logo className="h-[4.5rem] w-[16rem] fill-green-50 md:h-[10rem] md:w-[28rem]" />
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="mt-[6.5rem] flex w-[100%] flex-col md:mt-[7rem]">
+            <div className="mx-[2.5rem] flex flex-col gap-[0.5rem] px-[1rem] md:gap-[1.5rem]">
               <input
-                {...register('password', {
+                {...register('email', {
                   required: true,
                   pattern: {
-                    value: REG_EXP.PASSWORD,
-                    message: ERROR_MESSAGE.PASSWORD,
+                    value: REG_EXP.EMAIL,
+                    message: ERROR_MESSAGE.EMAIL,
                   },
                 })}
                 className="input"
-                placeholder="비밀번호"
-                type={showPassword ? 'text' : 'password'}
+                placeholder="이메일"
               />
+              <span className="error_message">{errors?.email?.message}</span>
+              <div className="relative">
+                {showPassword ? (
+                  <OpenEye className="input_eye" onClick={onClickHandler} />
+                ) : (
+                  <CloseEye className="input_eye" onClick={onClickHandler} />
+                )}
+                <input
+                  {...register('password', {
+                    required: true,
+                    pattern: {
+                      value: REG_EXP.PASSWORD,
+                      message: ERROR_MESSAGE.PASSWORD,
+                    },
+                  })}
+                  className="input"
+                  placeholder="비밀번호"
+                  type={showPassword ? 'text' : 'password'}
+                />
+              </div>
+              <span className="error_message">{errors?.password?.message}</span>
+              <button
+                type="submit"
+                className={`submit_btn mt-[2rem] ${
+                  isValid ? 'bg-green-50' : 'bg-black-30'
+                }`}>
+                {LOGIN.LOGIN}
+              </button>
+              <hr className="mt-[5rem] w-[100%] overflow-visible border-black-50 text-center text-Callout font-normal text-black-50 after:relative after:bottom-4 after:bg-white after:px-5 after:content-['sns_로그인'] md:mt-[5rem] md:after:text-Tag" />
             </div>
-            <span className="error_message">{errors?.password?.message}</span>
-            <button
-              type="submit"
-              className={`submit_btn ${
-                isValid ? 'bg-green-50' : 'bg-black-30'
-              }`}>
-              {LOGIN.LOGIN}
-            </button>
-            <hr className="mt-[5rem] w-[100%] overflow-visible border-black-50 text-center text-Callout font-normal text-black-50 after:relative after:bottom-4 after:bg-white after:px-5 after:content-['sns_로그인'] md:mt-[5rem] md:after:text-Tag" />
-          </div>
-        </form>
-        <SocialLogin />
-        <p className="absolute bottom-[4rem] my-0 mx-auto text-Callout font-normal text-black-50 md:bottom-[6rem] md:text-Tag">
+          </form>
+          <SocialLogin />
+        </div>
+        <p className="text-Callout font-normal text-black-50 md:bottom-[6rem] md:text-Tag">
           {SIGNUP.MESSAGE}
           <Link to={'/sign-up'} className="ml-2 text-green-100 md:ml-3">
             {SIGNUP.SIGNUP}
