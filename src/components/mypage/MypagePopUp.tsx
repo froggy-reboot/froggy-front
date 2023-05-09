@@ -77,8 +77,8 @@ export default function MypagePopUp() {
               </div>
               {isExpand[1] && (
                 <div className="flex flex-col gap-[1rem] pl-[1rem]">
-                  <p>내가 쓴 글</p>
-                  <p>내가 쓴 댓글</p>
+                  <Link to={'/my-page/articles'}>내가 쓴 글</Link>
+                  <Link to={'/my-page/comments'}>내가 쓴 댓글</Link>
                 </div>
               )}
             </div>

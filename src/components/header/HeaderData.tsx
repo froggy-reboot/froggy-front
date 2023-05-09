@@ -53,6 +53,16 @@ const HEADER_TITLE = [
     title: PAGE_TITLE.MY_PAGE.SETTING,
     isMain: false,
   },
+  {
+    route: '/my-page/articles',
+    title: PAGE_TITLE.MY_PAGE.ARTICLES,
+    isMain: false,
+  },
+  {
+    route: '/my-page/comments',
+    title: PAGE_TITLE.MY_PAGE.COMMENTS,
+    isMain: false,
+  },
 ];
 
 export { HEADER_TITLE };

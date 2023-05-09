@@ -12,6 +12,8 @@ import ReportPage from 'src/pages/report/ReportPage';
 import RavelryConnectHandler from 'src/pages/signin/RavelryConnectHandler';
 import MySetting from 'src/pages/mypage/MySetting';
 import ImagesDetail from 'src/components/images/ImagesDetail';
+import MyPostLog from 'src/pages/mypage/MyPostLog';
+import MyCommentLog from 'src/pages/mypage/MyCommentLog';
 
 export default function RoutePage() {
   return (
@@ -33,6 +35,8 @@ export default function RoutePage() {
         {/* 비로그인이면 볼 수 없는 페이지 */}
         <Route path="/my-page" element={<MyPage />} />
         <Route path="/my-page/setting" element={<MySetting />} />
+        <Route path="/my-page/articles" element={<MyPostLog />} />
+        <Route path="/my-page/comments" element={<MyCommentLog />} />
       </Route>
       <Route element={<PrivateRoute authentication={false} />}>
         {/* 로그인이면 볼 수 없는 페이지 */}
