@@ -10,9 +10,15 @@ export default function ReportModal() {
       className="modal_bg items-end"
       onClick={() => closeModal(modals.ReportModal)}>
       <div className="modal_under">
-        <Link to="/report">신고하기</Link>
+        <Link to="/report" className="modal_under_btn text-center">
+          신고하기
+        </Link>
         <hr className="w-[100%] border-black-30" />
-        <button onClick={() => closeModal(modals.ReportModal)}>취소</button>
+        <button
+          className="modal_under_btn"
+          onClick={() => closeModal(modals.ReportModal)}>
+          취소
+        </button>
       </div>
     </div>
   );

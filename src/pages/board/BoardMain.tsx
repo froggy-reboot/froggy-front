@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ReactComponent as SearchIcon } from 'src/assets/search.svg';
 import { ReactComponent as AlarmIcon } from 'src/assets/alarm.svg';
 import { ReactComponent as PlusIcon } from 'src/assets/plus.svg';
 import { ReactComponent as FilterIcon } from 'src/assets/filter.svg';
-import PostList from 'src/components/board/PostList';
+import PostList, { IFilter } from 'src/components/board/PostList';
 import SearchView from 'src/components/board/SearchView';
 import { articleTypeList } from 'src/pages/board/BoardConstants';
 import { useToggle } from 'src/hooks/useToggle';
@@ -17,32 +17,38 @@ interface IFormInput {
 
 export default function BoardMain() {
   const [showSearch, setShowSearch] = useState(false);
-  const [isRecent, sortToggleHandler] = useToggle(true);
+  const [isRecent, setIsRecent] = useState(true);
   const [isExpanded, articleBtnExpandHandler] = useToggle(false);
-  const [ariticleType, setArticleType] = useState('전체');
+  const [postType, setPostType] = useState('전체');
   const { openModal, closeModal, showModal } = useModal();
+  const [filter, setFilter] = useState<IFilter>({});
 
-  const { register, handleSubmit, reset, formState } = useForm<IFormInput>({
+  const { register, handleSubmit } = useForm<IFormInput>({
     mode: 'all',
   });
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data);
+    setFilter({ search: data.search });
+    (document.activeElement as HTMLElement).blur();
   };
 
-  useEffect(() => {
-    if (formState.isSubmitSuccessful) {
-      reset({ search: '' });
-    }
-  }, [formState]);
-
   const articleTypeHandler = (type: string) => {
-    setArticleType(type);
+    setPostType(type);
+    setFilter({ ...filter, articleType: type });
+  };
+
+  const hotPostListHandler = () => {
+    setIsRecent((prev) => !prev);
+    if (isRecent) {
+      setFilter({ ...filter, filter: '인기' });
+    } else {
+      setFilter({ ...filter, filter: '최신' });
+    }
   };
 
   return (
     <div className="container">
-      <nav className="fixed h-[11.9rem] bg-white px-[1.6rem] md:w-[76.8rem]">
+      <nav className="fixed h-[11.9rem] w-full max-w-[76.8rem] bg-white px-[1.6rem]">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mt-[2rem] flex items-center">
             <input
@@ -50,7 +56,7 @@ export default function BoardMain() {
               onFocus={() => setShowSearch(true)}
               onBlur={() => setShowSearch(false)}
               placeholder="검색"
-              className="input h-[3.5rem] w-[31rem] pl-[3rem] placeholder:text-black-50 focus:outline-none md:w-[100%]"
+              className="input h-[3.5rem] pl-[3rem] placeholder:text-black-50 focus:outline-none"
             />
             <SearchIcon className="absolute ml-[0.7rem] h-[2rem] w-[2rem]" />
             <AlarmIcon className="ml-[1.3rem] h-[3.5rem] w-[3.5rem] fill-white" />
@@ -58,7 +64,7 @@ export default function BoardMain() {
         </form>
         {!showSearch && (
           <div className="mt-[1.8rem] flex justify-between">
-            <button onClick={sortToggleHandler} className="mini_btn">
+            <button onClick={hotPostListHandler} className="mini_btn">
               {isRecent ? '최신글' : '인기글'}
             </button>
             <div>
@@ -66,7 +72,7 @@ export default function BoardMain() {
                 <button
                   onClick={articleBtnExpandHandler}
                   className="mini_btn flex items-center justify-center">
-                  {ariticleType}
+                  {postType}
                   <FilterIcon className="ml-[5px]" />
                 </button>
               )}
@@ -89,7 +95,7 @@ export default function BoardMain() {
         )}
       </nav>
       <main className="w-[100%] px-[1.6rem] pt-[11.9rem]">
-        {showSearch ? <SearchView /> : <PostList />}
+        {showSearch ? <SearchView /> : <PostList filterProp={filter} />}
       </main>
       {!showSearch && (
         <button

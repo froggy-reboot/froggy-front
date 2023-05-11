@@ -11,6 +11,7 @@ import MyPage from 'src/pages/mypage/MyPage';
 import ReportPage from 'src/pages/report/ReportPage';
 import RavelryConnectHandler from 'src/pages/signin/RavelryConnectHandler';
 import MySetting from 'src/pages/mypage/MySetting';
+import ImagesDetail from 'src/components/images/ImagesDetail';
 
 export default function RoutePage() {
   return (
@@ -23,10 +24,14 @@ export default function RoutePage() {
         path="/sign-in/social/:userId"
         element={<OauthRedirectHandler />}
       />
-      <Route path="/link/ravelry/:userId" element={<RavelryConnectHandler />} />
+      <Route
+        path="/sign-in/ravelry/:userId"
+        element={<RavelryConnectHandler />}
+      />
       <Route path="/board/create" element={<BoardCreate />} />
       <Route path="/board/edit/:postId" element={<BoardCreate />} />
       <Route path="/report" element={<ReportPage />} />
+      <Route path="/board/images/:postId" element={<ImagesDetail />} />
       <Route element={<PrivateRoute authentication={true} />}>
         {/* 비로그인이면 볼 수 없는 페이지 */}
         <Route path="/my-page" element={<MyPage />} />
