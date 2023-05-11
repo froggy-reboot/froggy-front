@@ -24,7 +24,10 @@ export default function RoutePage() {
         path="/sign-in/social/:userId"
         element={<OauthRedirectHandler />}
       />
-      <Route path="/link/ravelry/:userId" element={<RavelryConnectHandler />} />
+      <Route
+        path="/sign-in/ravelry/:userId"
+        element={<RavelryConnectHandler />}
+      />
       <Route path="/board/create" element={<BoardCreate />} />
       <Route path="/board/edit/:postId" element={<BoardCreate />} />
       <Route path="/report" element={<ReportPage />} />
