@@ -5,26 +5,8 @@ import { ReactComponent as LikeIcon } from 'src/assets/thumb.svg';
 import { ReactComponent as LikeIconActive } from 'src/assets/thumbActive.svg';
 import timeConverter from 'src/utils/timeConverter/timeConverter';
 
-export interface IArticleData {
-  pages: {
-    id: number;
-    writerId: number;
-    articleType: string;
-    liked: number;
-    title: string;
-    content: string;
-    createdAt: string;
-    deletedAt: null | string;
-    user: {
-      nickname: string;
-    };
-    commentCount: number;
-    likedByUser: boolean;
-  }[];
-}
-
 interface IPostListProp {
-  data: IArticleData;
+  data: any;
   setTarget: React.Dispatch<
     React.SetStateAction<HTMLDivElement | null | undefined>
   >;
@@ -35,19 +17,27 @@ export default function PostList({ props }: { props: IPostListProp }) {
   return (
     <>
       <ul>
-        {props.data?.pages.map((page) => (
-          <li key={page.id} className="mb-[1rem] h-[10rem] pl-[0.4rem]">
+        {props.data?.pages.map((page: any) => (
+          <li
+            key={page.id}
+            className={`mb-[1rem] pl-[0.4rem] ${
+              props.isMyList ? 'h-[7.7rem]' : ' h-[10rem]'
+            }`}>
             <Link to={`/board/${page.id}`}>
               <hr className="border-black-30" />
-              <p className="mt-[0.6rem] text-BoardSub font-medium text-black-50">
-                {page.user.nickname}
-              </p>
+              {!props.isMyList && (
+                <p className="mt-[0.6rem] text-BoardSub font-medium text-black-50">
+                  {page.user.nickname}
+                </p>
+              )}
               <div className="mt-[0.3rem] flex items-center">
                 <span className="mini_btn inline-block h-[1.9rem] w-[3.8rem] text-center text-BoardSub font-medium leading-[1.9rem]">
                   {page.articleType}
                 </span>
                 <p className="ml-[0.9rem] inline-block text-Link font-medium">
-                  {page.title}
+                  {page.title.length > 24
+                    ? `${page.title.slice(0, 24)}...`
+                    : page.title}
                 </p>
               </div>
               <p className="mt-[0.3rem] text-Callout text-black-50">

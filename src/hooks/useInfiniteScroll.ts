@@ -4,14 +4,14 @@ import { useIntersectionObserver } from 'src/hooks/useIntersectionObserver';
 import { IFilter } from 'src/pages/board/BoardMain';
 
 interface IInfiniteScrollProps {
-  filter: IFilter;
+  filter?: IFilter;
   getApi: (
-    filter: IFilter,
     {
       pageParam,
     }: {
       pageParam?: number | undefined;
     },
+    filter?: IFilter,
   ) => Promise<AxiosResponse>;
 }
 
@@ -21,7 +21,7 @@ export const useInfiniteScroll = ({ getApi, filter }: IInfiniteScrollProps) => {
     AxiosError
   >(
     ['articles', filter],
-    ({ pageParam = 1 }) => getApi(filter, { pageParam }),
+    ({ pageParam = 1 }) => getApi({ pageParam }, filter),
     {
       getNextPageParam: (lastPage, allPages) => {
         const nextPage = allPages.length + 1;
