@@ -30,6 +30,13 @@ function postRefreshToken() {
 }
 
 //리프레시 토큰
+privateApi.interceptors.request.use((config) => {
+  const token = localStorage.getItem('accessToken');
+  config.headers.Authorization = 'Bearer ' + token;
+
+  return config;
+});
+
 privateApi.interceptors.response.use(
   (response) => {
     return response;
@@ -63,6 +70,7 @@ privateApi.interceptors.response.use(
               error.response?.status === 422
             ) {
               alert(LOGIN.MESSAGE.EXPIRED);
+              localStorage.clear();
               window.location.replace('/sign-in');
             } else {
               alert(LOGIN.MESSAGE.ETC);

@@ -39,7 +39,10 @@ module.exports = {
       Callout: ['13px', { fontWeight: '400', letterSpacing: '-0.3px' }],
       Caption: ['13px', { fontWeight: '300' }],
       Board: ['11px', { fontWeight: '400' }],
-      BoardSub: ['10px', { fontWeight: '400' }],
+      BoardSub: ['12px', { fontWeight: '400' }],
+    },
+    minHeight: {
+      'real-screen': 'calc(var(--vh) * 100)',
     },
     minHeight: {
       'real-screen': 'calc(var(--vh) * 100)',

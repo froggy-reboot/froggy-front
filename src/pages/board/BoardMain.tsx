@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ReactComponent as SearchIcon } from 'src/assets/search.svg';
 import { ReactComponent as AlarmIcon } from 'src/assets/alarm.svg';
@@ -23,19 +23,14 @@ export default function BoardMain() {
   const { openModal, closeModal, showModal } = useModal();
   const [filter, setFilter] = useState<IFilter>({});
 
-  const { register, handleSubmit, reset, formState } = useForm<IFormInput>({
+  const { register, handleSubmit } = useForm<IFormInput>({
     mode: 'all',
   });
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data);
+    setFilter({ search: data.search });
+    (document.activeElement as HTMLElement).blur();
   };
-
-  useEffect(() => {
-    if (formState.isSubmitSuccessful) {
-      reset({ search: '' });
-    }
-  }, [formState]);
 
   const articleTypeHandler = (type: string) => {
     setPostType(type);
