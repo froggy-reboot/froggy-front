@@ -1,4 +1,4 @@
-import { IFilter } from 'src/components/board/PostList';
+import { IFilter } from 'src/pages/board/BoardMain';
 import { privateApi, publicApi } from 'src/apis/authApi';
 
 interface IPatchCommentProps {
@@ -27,11 +27,11 @@ export async function getArticles(filterProp: IFilter, { pageParam = 1 }) {
   const isLogin = localStorage.getItem('accessToken');
   const response = isLogin
     ? await privateApi.get(`api/v1/articles/pages/${pageParam}`, {
-    params: filterProp,
-  })
+        params: filterProp,
+      })
     : await publicApi.get(`api/v1/articles/pages/${pageParam}`, {
-    params: filterProp,
-  });
+        params: filterProp,
+      });
   return response;
 }
 
