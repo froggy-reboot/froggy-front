@@ -44,6 +44,9 @@ module.exports = {
     minHeight: {
       'real-screen': 'calc(var(--vh) * 100)',
     },
+    minHeight: {
+      'real-screen': 'calc(var(--vh) * 100)',
+    },
   },
   plugins: [],
 };

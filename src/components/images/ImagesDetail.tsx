@@ -52,7 +52,7 @@ export default function ImagesDetail() {
   };
 
   return (
-    <div className="relative flex h-[100vh] items-center overflow-hidden bg-black-100">
+    <div className="relative flex h-real-screen items-center overflow-hidden bg-black-100">
       <CloseBtn
         onClick={closeBtnHandler}
         className="absolute top-10 right-10 z-[100] h-[3.5rem] w-[3.5rem] rotate-45 fill-black-10"
