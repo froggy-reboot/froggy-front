@@ -7,6 +7,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getUserInfo } from 'src/apis/authApi';
 import { modals } from 'src/components/modals/Modals';
 import { useModal } from 'src/hooks/useModal';
+import defaultProfile from 'src/assets/frog_image.png';
 
 export default function CommandNavBar() {
   const queryClient = useQueryClient();
@@ -83,23 +84,23 @@ export default function CommandNavBar() {
 
   return (
     <>
-      {data && (
-        <form
-          onKeyDown={enterSubmitController}
-          className="flex w-[100%] px-[2.5rem] py-[1.5rem]">
-          <img
-            src={data.data.profileImg}
-            alt="프로필"
-            className="mr-[1rem] h-[3.2rem] w-[3.2rem] rounded-full bg-green-10 object-cover"
-          />
-          <textarea
-            {...register('comment', { required: true })}
-            onBlur={stopEditHandler}
-            className="h-[3.2rem] w-[100%] flex-1 rounded-[16px] bg-black-30 pt-[0.5rem] pl-[1.3rem] text-Body font-normal outline-none placeholder:text-black-50 focus:h-[10rem] focus:py-[1rem]"
-            placeholder="댓글을 입력해 주세요."
-          />
-        </form>
-      )}
+      <form
+        onKeyDown={enterSubmitController}
+        className="flex w-[100%] px-[2.5rem] py-[1.5rem]">
+        <img
+          src={data ? data.data.profileImg : defaultProfile}
+          alt="프로필"
+          className="mr-[1rem] h-[3.2rem] w-[3.2rem] rounded-full bg-black-30 object-cover"
+        />
+        <textarea
+          {...register('comment', { required: true })}
+          onBlur={stopEditHandler}
+          className="h-[3.2rem] w-[100%] flex-1 rounded-[16px] bg-black-30 pt-[0.5rem] pl-[1.3rem] text-Body font-normal outline-none placeholder:text-black-50 focus:h-[10rem] focus:py-[1rem]"
+          placeholder={
+            data ? '댓글을 입력해 주세요.' : '로그인 후 이용하실 수 있습니다.'
+          }
+        />
+      </form>
     </>
   );
 }
