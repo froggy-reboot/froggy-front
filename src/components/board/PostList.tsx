@@ -4,9 +4,11 @@ import { ReactComponent as ChatIcon } from 'src/assets/chat.svg';
 import { ReactComponent as LikeIcon } from 'src/assets/thumb.svg';
 import { ReactComponent as LikeIconActive } from 'src/assets/thumbActive.svg';
 import timeConverter from 'src/utils/timeConverter/timeConverter';
+import { AxiosResponse } from 'axios';
+import { InfiniteData } from '@tanstack/react-query';
 
 interface IPostListProp {
-  data: any;
+  data: InfiniteData<AxiosResponse>;
   setTarget: React.Dispatch<
     React.SetStateAction<HTMLDivElement | null | undefined>
   >;
@@ -17,6 +19,7 @@ export default function PostList({ props }: { props: IPostListProp }) {
   return (
     <>
       <ul>
+        {/* eslint-disable-next-line  @typescript-eslint/no-explicit-any */}
         {props.data?.pages.map((page: any) => (
           <li
             key={page.id}

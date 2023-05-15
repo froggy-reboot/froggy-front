@@ -14,9 +14,11 @@ export default function MyPostLog() {
   }
   return (
     <div className="container">
-      <main className="w-[100%] px-[1.6rem] pt-[1rem]">
-        <PostList props={{ data, setTarget, isMyList: true }} />
-      </main>
+      {data && (
+        <main className="w-[100%] px-[1.6rem] pt-[1rem]">
+          <PostList props={{ data, setTarget, isMyList: true }} />
+        </main>
+      )}
     </div>
   );
 }
