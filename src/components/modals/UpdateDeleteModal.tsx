@@ -50,7 +50,7 @@ export default function UpdateDeleteModal() {
 
   return (
     <div
-      className="modal_bg items-end"
+      className="modal_bg h-real-screen items-end"
       onClick={() => closeModal(modals.UpdateDeleteModal)}>
       <div className="modal_under">
         <button className="modal_under_btn" onClick={updateHandler}>

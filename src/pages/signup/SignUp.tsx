@@ -46,6 +46,7 @@ function SignUp() {
             alert(
               '이메일인증 후 회원가입이 완료됩니다! 이메일을 확인해주세요.',
             );
+            navigate('/sign-in');
           } else {
             alert(LOGIN.MESSAGE.ETC);
           }

@@ -7,7 +7,7 @@ export default function ReportModal() {
   const { closeModal } = useModal();
   return (
     <div
-      className="modal_bg items-end"
+      className="modal_bg h-real-screen items-end"
       onClick={() => closeModal(modals.ReportModal)}>
       <div className="modal_under">
         <Link to="/report" className="modal_under_btn text-center">
