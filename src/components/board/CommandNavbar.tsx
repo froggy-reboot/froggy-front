@@ -15,9 +15,10 @@ export default function CommandNavBar() {
   const userId = JSON.parse(localStorage.getItem('userId') || '{}');
   const editComment = useRecoilValue(editCommentAtom);
   const completeEditComment = useResetRecoilState(editCommentAtom);
-  const { register, handleSubmit, reset, setValue, setFocus } = useForm<{
-    comment: string;
-  }>();
+  const { register, handleSubmit, reset, setValue, setFocus, getValues } =
+    useForm<{
+      comment: string;
+    }>();
   const { data } = useQuery(['user'], () => getUserInfo(userId));
   const { openModal } = useModal();
 
@@ -46,8 +47,8 @@ export default function CommandNavBar() {
   }, [editComment]);
 
   const onSubmit: SubmitHandler<{ comment: string }> = async (data) => {
-    (document.activeElement as HTMLElement).blur();
     reset({ comment: '' });
+    (document.activeElement as HTMLElement).blur();
 
     //댓글 수정
     if (editComment.commentId) {
@@ -79,7 +80,9 @@ export default function CommandNavBar() {
   };
 
   const stopEditHandler = () => {
-    if (editComment.commentId) openModal(modals.StopEditModal);
+    if (editComment.commentId && getValues('comment')) {
+      openModal(modals.StopEditModal);
+    }
   };
 
   return (
