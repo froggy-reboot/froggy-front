@@ -46,6 +46,20 @@ export async function patchUserNickname(
   return response;
 }
 
+// 프로필이미지 변경
+export async function patchUserProfileImage(
+  userId: string | null,
+  nickname: any,
+) {
+  const response = await privateApi.patch(
+    `/api/v1/articles/user/photo/${userId}`,
+    {
+      nickname: nickname,
+    },
+  );
+  return response;
+}
+
 //리프레시 토큰
 privateApi.interceptors.request.use((config) => {
   const token = localStorage.getItem('accessToken');

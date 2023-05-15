@@ -1,4 +1,8 @@
-import { getUserInfo } from 'src/apis/authApi';
+import {
+  getUserInfo,
+  patchUserNickname,
+  patchUserProfileImage,
+} from 'src/apis/authApi';
 import { modals } from 'src/components/modals/Modals';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -66,12 +70,20 @@ function MypageUpdateForm() {
 
     reader.readAsDataURL(event.target.files[0]);
   };
-  const onSubmit: SubmitHandler<IProfile> = (data) => {
-    const submitdata = {
-      nickname: data.nickname,
-      image: imgSrc,
-    };
-    console.log(submitdata);
+  const onSubmit: SubmitHandler<IProfile> = async (data) => {
+    const formData = new FormData();
+    formData.append('photo', imgSrc);
+
+    try {
+      const response = await patchUserNickname(userId, data.nickname);
+      const imageResponse = await patchUserProfileImage(userId, formData);
+      if (response.status === 200) {
+        alert('닉네임이 변경되었습니다.');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    // console.log(submitdata);
   };
   return (
     <div className="container">
