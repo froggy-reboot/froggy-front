@@ -18,5 +18,7 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint'],
   ignorePatterns: ['.eslintrc.js', 'tailwind.config.js'],
-  rules: {},
+  rules: {
+    'react/prop-types': 'off',
+  },
 };

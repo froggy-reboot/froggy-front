@@ -193,7 +193,7 @@ function BoardCreate() {
               : `${location.state}글`}
           </button>
           <input
-            {...register('title', { required: true })}
+            {...register('title', { required: true, maxLength: 28 })}
             placeholder="게시글 제목"
             className="input h-[3.6rem] w-full pl-[1rem] text-[15px] font-bold placeholder:text-black-50 focus:outline-none"
           />

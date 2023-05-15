@@ -12,6 +12,8 @@ const PAGE_TITLE = {
   },
   MY_PAGE: {
     SETTING: '기타 설정',
+    ARTICLES: '내가 쓴 글',
+    COMMENTS: '내가 쓴 댓글',
   },
 } as const;
 
