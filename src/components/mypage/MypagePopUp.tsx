@@ -6,12 +6,13 @@ import { getUserInfo } from 'src/apis/authApi';
 import { useModal } from 'src/hooks/useModal';
 import RavelryConnectModal from 'src/components/modals/RavelryConnectModal';
 import { Link } from 'react-router-dom';
+import defaultProfile from 'src/assets/frog_image.png';
 
 export default function MypagePopUp() {
   const userId = JSON.parse(localStorage.getItem('userId') || '{}');
   const { data } = useQuery(['user'], () => getUserInfo(userId));
   const { openModal } = useModal();
-  const [isExpand, setIsExpand] = useState(false);
+  const [isExpand, setIsExpand] = useState(true);
 
   const openPopUPHandler = () => {
     setIsExpand(!isExpand);
@@ -26,9 +27,9 @@ export default function MypagePopUp() {
           } items-start rounded-[0px_0px_10px_10px] bg-white px-[3rem] py-[1.5rem] shadow-[0px_1px_3px_rgba(0,0,0,0.25)]`}>
           <div className="flex w-[100%] items-center gap-[15px]">
             <img
-              src={data?.data.profileImg}
+              src={data ? data.data.profileImg : defaultProfile}
               alt="profile"
-              className="h-[5rem] w-[5rem] rounded-full bg-green-10 object-cover"
+              className="h-[5rem] w-[5rem] rounded-full bg-black-30 object-cover"
             />
             <p className="flex-1 text-Body font-bold">{data?.data.nickname}</p>
             <AlarmIcon />
