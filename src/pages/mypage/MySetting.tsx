@@ -1,13 +1,20 @@
 import React, { Fragment, useState } from 'react';
 import { MENULIST } from 'src/pages/mypage/MypageConstants';
-import { getLogout } from 'src/apis/authApi';
 import { useNavigate } from 'react-router-dom';
 import { LOGIN } from 'src/pages/signin/SignInConstants';
 import Loader from 'src/components/loader/Loader';
+import { getLogout } from 'src/apis/mypageApi';
+import { useModal } from 'src/hooks/useModal';
+import { modals } from 'src/components/modals/Modals';
+import { useQuery } from '@tanstack/react-query';
+import { getUserInfo } from 'src/apis/authApi';
 
 export default function MySetting() {
+  const userId = JSON.parse(localStorage.getItem('userId') || '{}');
+  const { data } = useQuery(['user'], () => getUserInfo(userId));
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const { openModal } = useModal();
 
   const logoutHandler = async () => {
     try {
@@ -24,10 +31,22 @@ export default function MySetting() {
     }
   };
 
+  const withdrawHandler = () => {
+    if (data?.data.enrollType === 'local') {
+      openModal(modals.WithdrawModal);
+    } else {
+      openModal(modals.WithdrawConfirmModal);
+    }
+  };
+
   const menuClickHandler = (menu: string) => {
     switch (menu) {
       case '로그아웃':
         logoutHandler();
+        break;
+      case '탈퇴하기':
+        withdrawHandler();
+        break;
     }
   };
 
@@ -37,12 +56,12 @@ export default function MySetting() {
 
   return (
     <div className="container">
-      <ul className="flex w-full flex-col gap-[2px] p-[3.5rem]">
+      <ul className="flex w-full flex-col gap-[2px] p-[2.5rem]">
         {MENULIST.map((menu, idx) => (
           <Fragment key={idx}>
             <li
               onClick={() => menuClickHandler(menu)}
-              className="cursor-pointer p-[10px] pl-[8px] text-[15px] font-medium">
+              className="cursor-pointer p-[14px] pl-[8px] text-Body font-medium">
               {menu}
             </li>
             {idx !== MENULIST.length - 1 && (

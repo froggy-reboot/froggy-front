@@ -14,6 +14,7 @@ import Loader from 'src/components/loader/Loader';
 import { useSetRecoilState } from 'recoil';
 import { currentArticleId } from 'src/atoms/atom';
 import { LOGIN } from 'src/pages/signin/SignInConstants';
+import defaultProfile from 'src/assets/frog_image.png';
 
 export interface IArticleDetail {
   data: {
@@ -84,8 +85,8 @@ export default function BoardDetail() {
           <main className="w-[100%] px-[2rem]">
             <div className="mt-[2.2rem] grid grid-cols-[50px_3fr_1fr] items-center">
               <img
-                src={data.data.user.writerProfileImg}
-                className="h-[5rem] w-[5rem] rounded-full bg-green-30 object-cover"
+                src={data ? data.data.user.writerProfileImg : defaultProfile}
+                className="h-[5rem] w-[5rem] rounded-full bg-black-30 object-cover"
               />
               <div className="ml-[15px]">
                 <p className="text-Body font-bold">
