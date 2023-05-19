@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useModal } from 'src/hooks/useModal';
 
 import { modals } from 'src/components/modals/Modals';
 import frogImage from 'src/assets/frog_image.png';
 
+// eslint-disable-next-line
 function ProfileUpdateModal(props: any) {
-  const { openModal, closeModal, showModal } = useModal();
+  const { closeModal } = useModal();
   const updateHandler = () => {
     closeModal(modals.ProfileUpdateModal);
     props.fileInput.current.click();
@@ -16,7 +17,7 @@ function ProfileUpdateModal(props: any) {
   };
   return (
     <div
-      className="modal_bg items-end"
+      className="items-end modal_bg"
       onClick={() => closeModal(modals.ProfileUpdateModal)}>
       <div className="modal_under">
         <button onClick={updateHandler}>앨범에서 선택</button>

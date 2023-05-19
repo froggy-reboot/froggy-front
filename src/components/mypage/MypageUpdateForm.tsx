@@ -1,8 +1,4 @@
-import {
-  getUserInfo,
-  patchUserNickname,
-  patchUserProfileImage,
-} from 'src/apis/authApi';
+import { getUserInfo, patchUserProfileImage } from 'src/apis/authApi';
 import { modals } from 'src/components/modals/Modals';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -12,7 +8,6 @@ import { useQuery } from '@tanstack/react-query';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import ProfileUpdateModal from 'src/components/modals/ProfileUpdateModal';
 import { getRandomNickname } from 'src/apis/authApi';
 
 interface IProfile {
@@ -71,12 +66,9 @@ function MypageUpdateForm() {
 
     reader.readAsDataURL(event.target.files[0]);
   };
-  const onSubmit: SubmitHandler<IProfile> = async (data) => {
-    // const formData = new FormData();
-    // formData.append('photo', imgSrc);
 
+  const onSubmit: SubmitHandler<IProfile> = async (data) => {
     try {
-      // const response = await patchUserNickname(userId, data.nickname);
       const response = await patchUserProfileImage(
         userId,
         imgSrc,
