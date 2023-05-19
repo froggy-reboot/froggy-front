@@ -31,7 +31,7 @@ export default function MypagePopUp() {
               alt="profile"
               className="h-[5rem] w-[5rem] rounded-full bg-black-30 object-cover"
             />
-            <p className="flex-1 text-Body font-bold">{data?.data.nickname}</p>
+            <p className="flex-1 font-bold text-Body">{data?.data.nickname}</p>
             <AlarmIcon />
           </div>
           {isExpand && (

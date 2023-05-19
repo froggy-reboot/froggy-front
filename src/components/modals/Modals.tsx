@@ -9,6 +9,7 @@ import ReportModal from 'src/components/modals/ReportModal';
 import StopEditModal from 'src/components/modals/StopEditModal';
 import WithdrawModal from 'src/components/modals/WithdrawModal';
 import WithdrawConfirmModal from 'src/components/modals/WithdrawConfirmModal';
+import ProfileUpdateModal from 'src/components/modals/ProfileUpdateModal';
 
 export const modals = {
   UpdateDeleteModal: UpdateDeleteModal as FunctionComponent<
@@ -34,6 +35,9 @@ export const modals = {
   >,
   WithdrawConfirmModal: WithdrawConfirmModal as FunctionComponent<
     ComponentProps<typeof WithdrawConfirmModal>
+  >,
+  ProfileUpdateModal: ProfileUpdateModal as FunctionComponent<
+    ComponentProps<typeof ProfileUpdateModal>
   >,
 };
 
