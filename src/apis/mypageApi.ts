@@ -7,6 +7,13 @@ export async function getMyPostLog({ pageParam = 1 }) {
   return response;
 }
 
+export async function getMyCommentLog({ pageParam = 1 }) {
+  const response = await privateApi.get(
+    `/api/v1/comments/my-comments/pages/${pageParam}`,
+  );
+  return response;
+}
+
 export async function getLogout() {
   const response = await privateApi.get('/api/v1/auth/logout');
   return response;
