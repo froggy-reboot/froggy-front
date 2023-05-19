@@ -25,7 +25,7 @@ export default function MypagePopUp() {
           className={`relative flex flex-col ${
             isExpand ? 'h-auto' : 'h-[8rem]'
           } items-start rounded-[0px_0px_10px_10px] bg-white px-[3rem] py-[1.5rem] shadow-[0px_1px_3px_rgba(0,0,0,0.25)]`}>
-          <div className="flex w-[100%] items-center gap-[15px]">
+          <div className="mx-auto flex w-[100%] max-w-[76.8rem] items-center gap-[15px] md:px-[2rem]">
             <img
               src={data ? data.data.profileImg : defaultProfile}
               alt="profile"
@@ -35,7 +35,7 @@ export default function MypagePopUp() {
             <AlarmIcon />
           </div>
           {isExpand && (
-            <div className="mt-[1.5rem] flex w-[100%] flex-col gap-[0.5rem] px-[1rem] text-[15px] font-medium">
+            <div className="mx-auto mt-[1.5rem] flex w-[100%] max-w-[76.8rem] flex-col gap-[0.5rem] px-[1rem] text-[15px] font-medium md:p-[2rem]">
               <div className="flex justify-between py-[0.5rem]">
                 <p>로그인 계정</p>
                 <p className="font-normal text-black-50">{data?.data.email}</p>
