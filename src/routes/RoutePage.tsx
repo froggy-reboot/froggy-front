@@ -20,7 +20,7 @@ export default function RoutePage() {
   return (
     <Routes>
       {/* 인증과 관계없는 페이지 */}
-      <Route path="/board" element={<BoardMain />} />
+      <Route path="/" element={<BoardMain />} />
       <Route path="/board/:postId" element={<BoardDetail />} />
       <Route path="/board/create" element={<BoardCreate />} />
       <Route
