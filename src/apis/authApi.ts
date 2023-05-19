@@ -49,12 +49,14 @@ export async function patchUserNickname(
 // 프로필이미지 변경
 export async function patchUserProfileImage(
   userId: string | null,
-  nickname: any,
+  profileImg: string,
+  nickname?: string,
 ) {
   const response = await privateApi.patch(
     `/api/v1/articles/user/photo/${userId}`,
     {
       nickname: nickname,
+      profileImg: profileImg,
     },
   );
   return response;

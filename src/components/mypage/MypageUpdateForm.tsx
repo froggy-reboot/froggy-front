@@ -59,6 +59,7 @@ function MypageUpdateForm() {
   };
 
   // 사진 preview 생성
+  // eslint-disable-next-line
   const setPreviewImg = (event: any) => {
     const reader = new FileReader();
 
@@ -71,19 +72,22 @@ function MypageUpdateForm() {
     reader.readAsDataURL(event.target.files[0]);
   };
   const onSubmit: SubmitHandler<IProfile> = async (data) => {
-    const formData = new FormData();
-    formData.append('photo', imgSrc);
+    // const formData = new FormData();
+    // formData.append('photo', imgSrc);
 
     try {
-      const response = await patchUserNickname(userId, data.nickname);
-      const imageResponse = await patchUserProfileImage(userId, formData);
+      // const response = await patchUserNickname(userId, data.nickname);
+      const response = await patchUserProfileImage(
+        userId,
+        imgSrc,
+        data.nickname,
+      );
       if (response.status === 200) {
-        alert('닉네임이 변경되었습니다.');
+        alert('프로필이 변경되었습니다.');
       }
     } catch (error) {
       console.log(error);
     }
-    // console.log(submitdata);
   };
   return (
     <div className="container">
@@ -115,7 +119,7 @@ function MypageUpdateForm() {
             <p className="text-Body text-[#696969]">닉네임</p>
             <label className="relative">
               <Refresh
-                className="input_eye cursor-pointer"
+                className="cursor-pointer input_eye"
                 onClick={refreshHandler}
               />
               <input className="input" {...register('nickname')} />
