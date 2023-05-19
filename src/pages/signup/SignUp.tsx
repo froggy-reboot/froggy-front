@@ -46,6 +46,7 @@ function SignUp() {
             alert(
               '이메일인증 후 회원가입이 완료됩니다! 이메일을 확인해주세요.',
             );
+            navigate('/sign-in');
           } else {
             alert(LOGIN.MESSAGE.ETC);
           }
@@ -60,10 +61,10 @@ function SignUp() {
   };
 
   return (
-    <div className="container">
+    <div className="container h-real-screen pb-4">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="mt-[4rem] flex h-[100vh] w-[100%] flex-col justify-between px-[3rem] md:gap-[1.5rem]">
+        className="mt-[4rem] flex h-full w-[100%] flex-col justify-between px-[3rem] md:gap-[1.5rem]">
         <div className="flex flex-col gap-[3px]">
           <p className="mb-[8px] pl-[4px] text-Body text-[#696969]">기본정보</p>
           <input

@@ -9,11 +9,12 @@ import { modals } from 'src/components/modals/Modals';
 import timeConverter from 'src/utils/timeConverter/timeConverter';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getArticleDetail, postLike } from 'src/apis/boardApi';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Loader from 'src/components/loader/Loader';
 import { useSetRecoilState } from 'recoil';
 import { currentArticleId } from 'src/atoms/atom';
 import { LOGIN } from 'src/pages/signin/SignInConstants';
+import defaultProfile from 'src/assets/frog_image.png';
 
 export interface IArticleDetail {
   data: {
@@ -40,6 +41,7 @@ export interface IArticleDetail {
 }
 
 export default function BoardDetail() {
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { openModal } = useModal();
   const { postId } = useParams() as { postId: string };
@@ -70,6 +72,12 @@ export default function BoardDetail() {
     }
   };
 
+  const imageDetailHandler = (imageIndex: number) => {
+    navigate(`/board/images/${postId}`, {
+      state: { images: data?.data.images, index: imageIndex },
+    });
+  };
+
   return (
     <>
       {data && (
@@ -77,8 +85,8 @@ export default function BoardDetail() {
           <main className="w-[100%] px-[2rem]">
             <div className="mt-[2.2rem] grid grid-cols-[50px_3fr_1fr] items-center">
               <img
-                src={data.data.user.writerProfileImg}
-                className="h-[5rem] w-[5rem] rounded-full bg-green-30 object-cover"
+                src={data ? data.data.user.writerProfileImg : defaultProfile}
+                className="h-[5rem] w-[5rem] rounded-full bg-black-30 object-cover"
               />
               <div className="ml-[15px]">
                 <p className="text-Body font-bold">
@@ -111,6 +119,7 @@ export default function BoardDetail() {
                 <div className="no-scrollbar my-[1.2rem] flex gap-[1rem] overflow-y-scroll">
                   {data.data.images.map((src, idx) => (
                     <img
+                      onClick={() => imageDetailHandler(idx)}
                       key={idx}
                       src={src.url}
                       className="h-[15rem] w-[15rem] rounded-[5px] object-cover"
@@ -120,6 +129,7 @@ export default function BoardDetail() {
               )}
               {data.data.images.length === 1 && (
                 <img
+                  onClick={() => imageDetailHandler(0)}
                   src={data.data.images[0].url}
                   className="h-[19.6rem] w-[100%] rounded-[5px] object-cover md:h-[35rem]"
                 />

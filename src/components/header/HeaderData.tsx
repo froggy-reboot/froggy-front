@@ -54,6 +54,16 @@ const HEADER_TITLE = [
     isMain: false,
   },
   {
+    route: '/my-page/articles',
+    title: PAGE_TITLE.MY_PAGE.ARTICLES,
+    isMain: false,
+  },
+  {
+    route: '/my-page/comments',
+    title: PAGE_TITLE.MY_PAGE.COMMENTS,
+    isMain: false,
+  },
+  {
     route: '/my-page/update',
     title: PAGE_TITLE.MY_PAGE.UPDATE,
     isMain: false,
