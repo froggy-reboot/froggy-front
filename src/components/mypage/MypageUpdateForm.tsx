@@ -1,21 +1,17 @@
+import React, { useEffect, useRef, useState } from 'react';
 import { getUserInfo, patchUserProfileImage } from 'src/apis/authApi';
 import { modals } from 'src/components/modals/Modals';
-import React, { useEffect, useRef, useState } from 'react';
-
 import { ReactComponent as Refresh } from 'src/assets/refresh.svg';
 import { useModal } from 'src/hooks/useModal';
 import { useQuery } from '@tanstack/react-query';
-
 import { SubmitHandler, useForm } from 'react-hook-form';
-
 import { getRandomNickname } from 'src/apis/authApi';
-
 interface IProfile {
   image: string;
   nickname: string;
 }
 
-function MypageUpdateForm() {
+function MypageUpdate() {
   const userId = JSON.parse(localStorage.getItem('userId') || '{}');
   const { data } = useQuery(['user'], () => getUserInfo(userId));
   const { openModal } = useModal();
@@ -82,9 +78,11 @@ function MypageUpdateForm() {
     }
   };
   return (
-    <div className="container">
-      <form className="w-[100%]" onSubmit={handleSubmit(onSubmit)}>
-        <div className="mx-[2.5rem] flex flex-col gap-[0.5rem] px-[1rem] md:gap-[1.5rem]">
+    <div className="container h-real-screen">
+      <form
+        className="mt-[6rem] flex h-full w-[100%] flex-col justify-between px-[3rem] md:mt-[10rem]"
+        onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-col gap-[0.5rem] md:gap-[1.5rem]">
           {/* 프로필 이미지 영역 */}
           <input
             accept="image/*"
@@ -98,31 +96,29 @@ function MypageUpdateForm() {
           <img
             src={imgSrc}
             alt="profile"
-            className="mx-auto h-[11.875rem] w-[11.875rem] rounded-full bg-[#F5F5F5] object-cover"
+            className="mx-auto h-[17rem] w-[17rem] rounded-full bg-black-10 object-cover"
             onClick={() => {
               if (fileInput != null) {
                 openModal(modals.ProfileUpdateModal, { fileInput, setImgSrc });
               }
             }}
           />
-
           {/* 프로필 닉네임 영역 */}
-          <div className="mt-[1.5rem] flex flex-col gap-2">
-            <p className="text-Body text-[#696969]">닉네임</p>
+          <div className="mt-[2.5rem] flex flex-col gap-2">
+            <p className="ml-[0.4rem] text-Body text-[#696969]">닉네임</p>
             <label className="relative">
               <Refresh
-                className="cursor-pointer input_eye"
+                className="input_eye cursor-pointer"
                 onClick={refreshHandler}
               />
               <input className="input" {...register('nickname')} />
             </label>
           </div>
-
-          <button className="submit_btn bg-green-50">변경하기</button>
         </div>
+        <button className="submit_btn bg-green-50">변경하기</button>
       </form>
     </div>
   );
 }
 
-export default MypageUpdateForm;
+export default MypageUpdate;
