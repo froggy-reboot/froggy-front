@@ -14,7 +14,7 @@ import MySetting from 'src/pages/mypage/MySetting';
 import ImagesDetail from 'src/components/images/ImagesDetail';
 import MyPostLog from 'src/pages/mypage/MyPostLog';
 import MyCommentLog from 'src/pages/mypage/MyCommentLog';
-import MypageUpdate from 'src/components/mypage/MypageUpdateForm';
+import MypageUpdate from 'src/pages/mypage/MypageUpdateForm';
 
 export default function RoutePage() {
   return (
