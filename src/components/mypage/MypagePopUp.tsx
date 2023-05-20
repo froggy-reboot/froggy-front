@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ReactComponent as DownBtn } from 'src/assets/down_btn.svg';
 import { ReactComponent as AlarmIcon } from 'src/assets/alarm.svg';
+import { ReactComponent as EditIcon } from 'src/assets/edit.svg';
 import { useQuery } from '@tanstack/react-query';
 import { getUserInfo } from 'src/apis/authApi';
 import { useModal } from 'src/hooks/useModal';
@@ -31,7 +32,14 @@ export default function MypagePopUp() {
               alt="profile"
               className="h-[5rem] w-[5rem] rounded-full bg-black-30 object-cover"
             />
-            <p className="flex-1 font-bold text-Body">{data?.data.nickname}</p>
+
+            <Link
+              to={'/my-page/update'}
+              className="flex flex-1 gap-[1rem] p-[0.8rem] text-Body font-bold">
+              {data?.data.nickname}
+              <EditIcon />
+            </Link>
+
             <AlarmIcon />
           </div>
           {isExpand && (
