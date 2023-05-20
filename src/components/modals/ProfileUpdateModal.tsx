@@ -1,6 +1,5 @@
 import React from 'react';
 import { useModal } from 'src/hooks/useModal';
-
 import { modals } from 'src/components/modals/Modals';
 import frogImage from 'src/assets/frog_image.png';
 
@@ -17,14 +16,20 @@ function ProfileUpdateModal(props: any) {
   };
   return (
     <div
-      className="items-end modal_bg"
+      className="modal_bg h-real-screen items-end"
       onClick={() => closeModal(modals.ProfileUpdateModal)}>
       <div className="modal_under">
-        <button onClick={updateHandler}>앨범에서 선택</button>
+        <button className="modal_under_btn" onClick={updateHandler}>
+          앨범에서 선택
+        </button>
         <hr className="w-[100%] border-black-30" />
-        <button onClick={basicHandler}>기본 이미지로 변경</button>
+        <button className="modal_under_btn" onClick={basicHandler}>
+          기본 이미지로 변경
+        </button>
         <hr className="w-[100%] border-black-30" />
-        <button onClick={() => closeModal(modals.ProfileUpdateModal)}>
+        <button
+          className="modal_under_btn"
+          onClick={() => closeModal(modals.ProfileUpdateModal)}>
           취소
         </button>
       </div>
