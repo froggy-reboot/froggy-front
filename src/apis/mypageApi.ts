@@ -1,4 +1,26 @@
-import { privateApi } from 'src/apis/authApi';
+import { privateApi, publicApi } from 'src/apis/authApi';
+
+// 랜덤 닉네임 생성
+export async function getRandomNickname() {
+  const response = await publicApi.get('/api/v1/auth/random-nickname');
+  return response;
+}
+
+// 프로필이미지 변경
+export async function patchUserProfile(
+  userId: string | null,
+  profileImg: string,
+  nickname?: string,
+) {
+  const response = await privateApi.patch(
+    `/api/v1/articles/user/photo/${userId}`,
+    {
+      nickname: nickname,
+      profileImg: profileImg,
+    },
+  );
+  return response;
+}
 
 export async function getMyPostLog({ pageParam = 1 }) {
   const response = await privateApi.get(

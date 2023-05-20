@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { getUserInfo, patchUserProfileImage } from 'src/apis/authApi';
+import { getUserInfo } from 'src/apis/authApi';
 import { modals } from 'src/components/modals/Modals';
 import { ReactComponent as Refresh } from 'src/assets/refresh.svg';
 import { useModal } from 'src/hooks/useModal';
 import { useQuery } from '@tanstack/react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { getRandomNickname } from 'src/apis/authApi';
+import { getRandomNickname, patchUserProfile } from 'src/apis/mypageApi';
 interface IProfile {
   image: string;
   nickname: string;
@@ -65,11 +65,7 @@ function MypageUpdate() {
 
   const onSubmit: SubmitHandler<IProfile> = async (data) => {
     try {
-      const response = await patchUserProfileImage(
-        userId,
-        imgSrc,
-        data.nickname,
-      );
+      const response = await patchUserProfile(userId, imgSrc, data.nickname);
       if (response.status === 200) {
         alert('프로필이 변경되었습니다.');
       }

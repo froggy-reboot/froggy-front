@@ -24,39 +24,6 @@ function postRefreshToken() {
   return response;
 }
 
-// 랜덤 닉네임 생성
-export async function getRandomNickname() {
-  const response = await publicApi.get('/api/v1/auth/random-nickname');
-  return response;
-}
-
-// 닉네임 수정
-export async function patchUserNickname(
-  userId: string | null,
-  nickname: string,
-) {
-  const response = await privateApi.patch(`/api/v1/users/${userId}`, {
-    nickname: nickname,
-  });
-  return response;
-}
-
-// 프로필이미지 변경
-export async function patchUserProfileImage(
-  userId: string | null,
-  profileImg: string,
-  nickname?: string,
-) {
-  const response = await privateApi.patch(
-    `/api/v1/articles/user/photo/${userId}`,
-    {
-      nickname: nickname,
-      profileImg: profileImg,
-    },
-  );
-  return response;
-}
-
 //리프레시 토큰
 privateApi.interceptors.request.use((config) => {
   const token = localStorage.getItem('accessToken');
