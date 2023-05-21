@@ -3,7 +3,7 @@ import { getUserInfo } from 'src/apis/authApi';
 import { modals } from 'src/components/modals/Modals';
 import { ReactComponent as Refresh } from 'src/assets/refresh.svg';
 import { useModal } from 'src/hooks/useModal';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { getRandomNickname, patchUserProfile } from 'src/apis/mypageApi';
 import { useNavigate } from 'react-router-dom';
@@ -19,6 +19,7 @@ function MypageUpdate() {
   const { openModal } = useModal();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const queryClient = useQueryClient();
 
   // 이미지 주소
   const [imagePreview, setImagePreview] = useState(data?.data.profileImg);
@@ -82,7 +83,8 @@ function MypageUpdate() {
       });
       if (response.status === 200) {
         alert('프로필이 변경되었습니다.');
-        navigate('/my-page');
+        queryClient.invalidateQueries({ queryKey: ['user'] }),
+          navigate('/my-page');
       }
     } catch (error) {
       console.log(error);
