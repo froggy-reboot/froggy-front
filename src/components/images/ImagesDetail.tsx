@@ -13,19 +13,6 @@ export default function ImagesDetail() {
   const location = useLocation();
   const imageList: IImageList = location.state;
   const [current, setCurrent] = useState(imageList.index);
-  const moveStyle: { [key: number]: string } = {
-    0: 'translate-x-0',
-    1: 'translate-x-[-100vw]',
-    2: 'translate-x-[-200vw]',
-    3: 'translate-x-[-300vw]',
-    4: 'translate-x-[-400vw]',
-    5: 'translate-x-[-500vw]',
-    6: 'translate-x-[-600vw]',
-    7: 'translate-x-[-700vw]',
-    8: 'translate-x-[-800vw]',
-    9: 'translate-x-[-900vw]',
-    10: 'translate-x-[-1000vw]',
-  };
 
   const closeBtnHandler = () => {
     navigate(-1);
@@ -59,10 +46,15 @@ export default function ImagesDetail() {
       />
 
       <div
-        className={`flex max-h-[60%] items-center ${moveStyle[current]} transition`}>
+        style={{
+          transform: `translateX(${
+            (-100 / imageList.images.length) * current
+          }%)`,
+        }}
+        className="flex max-h-[60%] items-center transition duration-500">
         {imageList.images.map((image) => (
-          <div key={image.id} className="w-[100vw]">
-            <img src={image.url} className="w-full object-contain" />
+          <div key={image.id} className="w-[100vw] max-w-[76.8rem]">
+            <img src={image.url} className="w-screen object-contain" />
           </div>
         ))}
       </div>

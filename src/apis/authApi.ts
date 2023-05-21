@@ -17,11 +17,6 @@ export async function getUserInfo(userId: string | null) {
   return response;
 }
 
-export async function getLogout() {
-  const response = await privateApi.get('/api/v1/auth/logout');
-  return response;
-}
-
 function postRefreshToken() {
   const response = publicApi.post('/api/v1/auth/refresh', {
     refreshToken: localStorage.getItem('refreshToken'),

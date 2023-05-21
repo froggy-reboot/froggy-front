@@ -63,6 +63,11 @@ const HEADER_TITLE = [
     title: PAGE_TITLE.MY_PAGE.COMMENTS,
     isMain: false,
   },
+  {
+    route: '/my-page/update',
+    title: PAGE_TITLE.MY_PAGE.UPDATE,
+    isMain: false,
+  },
 ];
 
 export { HEADER_TITLE };

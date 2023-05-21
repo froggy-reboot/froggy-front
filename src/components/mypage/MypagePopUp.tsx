@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import { ReactComponent as DownBtn } from 'src/assets/down_btn.svg';
-import { ReactComponent as AlarmIcon } from 'src/assets/alarm.svg';
+/* import { ReactComponent as AlarmIcon } from 'src/assets/alarm.svg'; */
+import { ReactComponent as EditIcon } from 'src/assets/edit.svg';
 import { useQuery } from '@tanstack/react-query';
 import { getUserInfo } from 'src/apis/authApi';
 import { useModal } from 'src/hooks/useModal';
 import RavelryConnectModal from 'src/components/modals/RavelryConnectModal';
 import { Link } from 'react-router-dom';
+import defaultProfile from 'src/assets/frog_image.png';
 
 export default function MypagePopUp() {
   const userId = JSON.parse(localStorage.getItem('userId') || '{}');
   const { data } = useQuery(['user'], () => getUserInfo(userId));
   const { openModal } = useModal();
-  const [isExpand, setIsExpand] = useState(false);
+  const [isExpand, setIsExpand] = useState(true);
 
   const openPopUPHandler = () => {
     setIsExpand(!isExpand);
@@ -24,17 +26,23 @@ export default function MypagePopUp() {
           className={`relative flex flex-col ${
             isExpand ? 'h-auto' : 'h-[8rem]'
           } items-start rounded-[0px_0px_10px_10px] bg-white px-[3rem] py-[1.5rem] shadow-[0px_1px_3px_rgba(0,0,0,0.25)]`}>
-          <div className="flex w-[100%] items-center gap-[15px]">
+          <div className="mx-auto flex w-[100%] max-w-[76.8rem] items-center gap-[15px] md:px-[2rem]">
             <img
-              src={data?.data.profileImg}
+              src={data ? data.data.profileImg : defaultProfile}
               alt="profile"
-              className="h-[5rem] w-[5rem] rounded-full bg-green-10 object-cover"
+              className="h-[5rem] w-[5rem] rounded-full bg-black-30 object-cover"
             />
-            <p className="flex-1 text-Body font-bold">{data?.data.nickname}</p>
-            <AlarmIcon />
+
+            <Link
+              to={'/my-page/update'}
+              className="flex flex-1 gap-[1rem] p-[0.8rem] text-Body font-bold">
+              {data?.data.nickname}
+              <EditIcon />
+            </Link>
+            {/*             <AlarmIcon /> */}
           </div>
           {isExpand && (
-            <div className="mt-[1.5rem] flex w-[100%] flex-col gap-[0.5rem] px-[1rem] text-[15px] font-medium">
+            <div className="mx-auto mt-[1.5rem] flex w-[100%] max-w-[76.8rem] flex-col gap-[0.5rem] px-[1rem] text-[15px] font-medium md:p-[2rem]">
               <div className="flex justify-between py-[0.5rem]">
                 <p>로그인 계정</p>
                 <p className="font-normal text-black-50">{data?.data.email}</p>

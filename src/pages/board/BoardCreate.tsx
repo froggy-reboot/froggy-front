@@ -48,19 +48,27 @@ function BoardCreate() {
   const [imageEdit, setImageEdit] = useState<IEditImageList[]>([]);
   const [deleteImageArr, setDeleteImageArr] = useState<number[]>([]);
 
-  const { mutate: postArticleMutate } = useMutation(postArticles, {
-    onSuccess: (data) => {
-      if (data.status === 201) navigate(`/board/${data.data.id}`);
+  const { mutate: postArticleMutate, isLoading: postLoading } = useMutation(
+    postArticles,
+    {
+      onSuccess: (data) => {
+        if (data.status === 201) navigate(`/board/${data.data.id}`);
+      },
+      onSettled: () =>
+        queryClient.invalidateQueries({ queryKey: ['articles'] }),
     },
-    onSettled: () => queryClient.invalidateQueries({ queryKey: ['articles'] }),
-  });
+  );
 
-  const { mutate: patchArticleMutate, isLoading } = useMutation(patchArticles, {
-    onSuccess: (data) => {
-      if (data.status === 200) navigate(`/board/${data.data.id}`);
+  const { mutate: patchArticleMutate, isLoading: patchLoading } = useMutation(
+    patchArticles,
+    {
+      onSuccess: (data) => {
+        if (data.status === 200) navigate(`/board/${data.data.id}`);
+      },
+      onSettled: () =>
+        queryClient.invalidateQueries({ queryKey: ['articles'] }),
     },
-    onSettled: () => queryClient.invalidateQueries({ queryKey: ['articles'] }),
-  });
+  );
 
   useEffect(() => {
     if (editPagePath) {
@@ -173,7 +181,7 @@ function BoardCreate() {
     }
   };
 
-  if (isLoading) {
+  if (postLoading || patchLoading) {
     return <Loader />;
   }
 

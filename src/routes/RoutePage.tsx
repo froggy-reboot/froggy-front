@@ -14,11 +14,13 @@ import MySetting from 'src/pages/mypage/MySetting';
 import ImagesDetail from 'src/components/images/ImagesDetail';
 import MyPostLog from 'src/pages/mypage/MyPostLog';
 import MyCommentLog from 'src/pages/mypage/MyCommentLog';
+import MypageUpdate from 'src/pages/mypage/MypageUpdateForm';
 
 export default function RoutePage() {
   return (
     <Routes>
       {/* 인증과 관계없는 페이지 */}
+      <Route path="/" element={<BoardMain />} />
       <Route path="/board" element={<BoardMain />} />
       <Route path="/board/:postId" element={<BoardDetail />} />
       <Route path="/board/create" element={<BoardCreate />} />
@@ -38,6 +40,7 @@ export default function RoutePage() {
         {/* 비로그인이면 볼 수 없는 페이지 */}
         <Route path="/my-page" element={<MyPage />} />
         <Route path="/my-page/setting" element={<MySetting />} />
+        <Route path="/my-page/update" element={<MypageUpdate />} />
         <Route path="/my-page/articles" element={<MyPostLog />} />
         <Route path="/my-page/comments" element={<MyCommentLog />} />
       </Route>

@@ -91,7 +91,7 @@ export default function CommandNavBar() {
         onKeyDown={enterSubmitController}
         className="flex w-[100%] px-[2.5rem] py-[1.5rem]">
         <img
-          src={data ? data.data.profileImg : defaultProfile}
+          src={data?.data.profileImg ? data.data.profileImg : defaultProfile}
           alt="프로필"
           className="mr-[1rem] h-[3.2rem] w-[3.2rem] rounded-full bg-black-30 object-cover"
         />

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ReactComponent as SearchIcon } from 'src/assets/search.svg';
-import { ReactComponent as AlarmIcon } from 'src/assets/alarm.svg';
+/* import { ReactComponent as AlarmIcon } from 'src/assets/alarm.svg'; */
 import { ReactComponent as PlusIcon } from 'src/assets/plus.svg';
 import { ReactComponent as FilterIcon } from 'src/assets/filter.svg';
 import PostList from 'src/components/board/PostList';
@@ -78,7 +78,7 @@ export default function BoardMain() {
                   className="input h-[3.5rem] pl-[3rem] placeholder:text-black-50 focus:outline-none"
                 />
                 <SearchIcon className="absolute ml-[0.7rem] h-[2rem] w-[2rem]" />
-                <AlarmIcon className="ml-[1.3rem] h-[3.5rem] w-[3.5rem] fill-white" />
+                {/*                 <AlarmIcon className="ml-[1.3rem] h-[3.5rem] w-[3.5rem] fill-white" /> */}
               </div>
             </form>
             {!showSearch && (

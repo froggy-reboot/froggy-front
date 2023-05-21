@@ -113,12 +113,17 @@ export default function SignIn() {
           </form>
           <SocialLogin />
         </div>
-        <p className="text-Callout font-normal text-black-50 md:bottom-[6rem] md:text-Tag">
+        <p className="mb-[3rem] text-Tag font-normal text-black-50 md:bottom-[6rem] md:text-Link">
           {SIGNUP.MESSAGE}
           <Link to={'/sign-up'} className="ml-2 text-green-100 md:ml-3">
             {SIGNUP.SIGNUP}
           </Link>
         </p>
+        <Link
+          to={'/'}
+          className="ml-2 text-Callout font-normal text-black-50 md:bottom-[6rem] md:ml-3 md:text-Tag">
+          회원가입 없이 둘러보기
+        </Link>
       </div>
     </>
   );
