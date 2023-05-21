@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ReactComponent as DownBtn } from 'src/assets/down_btn.svg';
-import { ReactComponent as AlarmIcon } from 'src/assets/alarm.svg';
+/* import { ReactComponent as AlarmIcon } from 'src/assets/alarm.svg'; */
 import { ReactComponent as EditIcon } from 'src/assets/edit.svg';
 import { useQuery } from '@tanstack/react-query';
 import { getUserInfo } from 'src/apis/authApi';
@@ -39,8 +39,7 @@ export default function MypagePopUp() {
               {data?.data.nickname}
               <EditIcon />
             </Link>
-
-            <AlarmIcon />
+            {/*             <AlarmIcon /> */}
           </div>
           {isExpand && (
             <div className="mx-auto mt-[1.5rem] flex w-[100%] max-w-[76.8rem] flex-col gap-[0.5rem] px-[1rem] text-[15px] font-medium md:p-[2rem]">
