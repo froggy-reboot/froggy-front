@@ -6,6 +6,8 @@ import { useModal } from 'src/hooks/useModal';
 import { useQuery } from '@tanstack/react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { getRandomNickname, patchUserProfile } from 'src/apis/mypageApi';
+import { useNavigate } from 'react-router-dom';
+import Loader from 'src/components/loader/Loader';
 interface IProfile {
   image: string;
   nickname: string;
@@ -15,6 +17,8 @@ function MypageUpdate() {
   const userId = JSON.parse(localStorage.getItem('userId') || '{}');
   const { data } = useQuery(['user'], () => getUserInfo(userId));
   const { openModal } = useModal();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   // 이미지 주소
   const [imgSrc, setImgSrc] = useState(data?.data.profileImg);
@@ -41,11 +45,14 @@ function MypageUpdate() {
   // 닉네임 랜덤 refresh
   const refreshHandler = async () => {
     try {
+      setIsLoading(true);
       const response = await getRandomNickname();
       const randomNickname = response.data.nickname;
       setValue('nickname', randomNickname, { shouldDirty: true });
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -68,11 +75,17 @@ function MypageUpdate() {
       const response = await patchUserProfile(userId, imgSrc, data.nickname);
       if (response.status === 200) {
         alert('프로필이 변경되었습니다.');
+        navigate('/my-page');
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <div className="container h-real-screen">
       <form
