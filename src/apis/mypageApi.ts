@@ -1,5 +1,10 @@
 import { privateApi, publicApi } from 'src/apis/authApi';
 
+interface IPatchProfileProps {
+  userId: string | null;
+  formData: FormData;
+}
+
 // 랜덤 닉네임 생성
 export async function getRandomNickname() {
   const response = await publicApi.get('/api/v1/auth/random-nickname');
@@ -7,17 +12,10 @@ export async function getRandomNickname() {
 }
 
 // 프로필이미지 변경
-export async function patchUserProfile(
-  userId: string | null,
-  profileImg: string,
-  nickname?: string,
-) {
+export async function patchUserProfile(patchProfileProps: IPatchProfileProps) {
   const response = await privateApi.patch(
-    `/api/v1/articles/user/photo/${userId}`,
-    {
-      nickname: nickname,
-      profileImg: profileImg,
-    },
+    `/api/v1/articles/user/photo/${patchProfileProps.userId}`,
+    patchProfileProps.formData,
   );
   return response;
 }

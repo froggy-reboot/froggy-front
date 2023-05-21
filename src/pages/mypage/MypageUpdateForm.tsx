@@ -21,7 +21,8 @@ function MypageUpdate() {
   const [isLoading, setIsLoading] = useState(false);
 
   // 이미지 주소
-  const [imgSrc, setImgSrc] = useState(data?.data.profileImg);
+  const [imagePreview, setImagePreview] = useState(data?.data.profileImg);
+  const [imageFile, setImageFile] = useState(data?.data.profileImg);
 
   // form 생성
   const { handleSubmit, setValue, register, reset } = useForm<IProfile>({
@@ -34,7 +35,7 @@ function MypageUpdate() {
 
   // default Values 추가
   useEffect(() => {
-    setImgSrc(data?.data.profileImg);
+    setImagePreview(data?.data.profileImg);
     reset({
       nickname: data?.data.nickname,
     });
@@ -56,29 +57,37 @@ function MypageUpdate() {
     }
   };
 
-  // 사진 preview 생성
   // eslint-disable-next-line
-  const setPreviewImg = (event: any) => {
+  const imageHandler = (event: any) => {
     const reader = new FileReader();
 
     reader.onload = function (event) {
       if (event.target) {
-        setImgSrc(event.target.result);
+        setImagePreview(event.target.result);
       }
     };
-
+    setImageFile(event.target.files[0]);
     reader.readAsDataURL(event.target.files[0]);
   };
 
   const onSubmit: SubmitHandler<IProfile> = async (data) => {
+    const formData = new FormData();
+    formData.append('file', imageFile);
+    formData.append('nickname', data.nickname);
     try {
-      const response = await patchUserProfile(userId, imgSrc, data.nickname);
+      setIsLoading(true);
+      const response = await patchUserProfile({
+        formData: formData,
+        userId: userId,
+      });
       if (response.status === 200) {
         alert('프로필이 변경되었습니다.');
         navigate('/my-page');
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -100,15 +109,18 @@ function MypageUpdate() {
             type="file"
             ref={fileInput}
             name="image"
-            onChange={setPreviewImg}
+            onChange={imageHandler}
           />
           <img
-            src={imgSrc}
+            src={imagePreview}
             alt="profile"
             className="mx-auto h-[17rem] w-[17rem] rounded-full bg-black-10 object-cover"
             onClick={() => {
               if (fileInput != null) {
-                openModal(modals.ProfileUpdateModal, { fileInput, setImgSrc });
+                openModal(modals.ProfileUpdateModal, {
+                  fileInput,
+                  setImagePreview,
+                });
               }
             }}
           />
