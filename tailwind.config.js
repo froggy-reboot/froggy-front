@@ -6,6 +6,15 @@ module.exports = {
       height: {
         'real-screen': 'calc(var(--vh) * 100)',
       },
+      keyframes: {
+        toast: {
+          '0%': { transform: 'translateY(30px)' },
+          '100%': { transform: 'translateY(-30px)' },
+        },
+      },
+      animation: {
+        toast: 'toast 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both',
+      },
     },
     colors: {
       green: {
