@@ -98,7 +98,7 @@ function MypageUpdate() {
   }
 
   return (
-    <div className="container h-real-screen">
+    <div className="container h-real-screen pb-4">
       <form
         className="mt-[6rem] flex h-full w-[100%] flex-col justify-between px-[3rem] md:mt-[10rem]"
         onSubmit={handleSubmit(onSubmit)}>
@@ -138,7 +138,7 @@ function MypageUpdate() {
             </label>
           </div>
         </div>
-        <button className="submit_btn bg-green-50">변경하기</button>
+        <button className="submit_btn mb-[2rem] bg-green-50">변경하기</button>
       </form>
     </div>
   );

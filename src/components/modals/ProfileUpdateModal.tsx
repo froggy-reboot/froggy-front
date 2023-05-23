@@ -16,7 +16,7 @@ function ProfileUpdateModal(props: any) {
   };
   return (
     <div
-      className="modal_bg h-real-screen items-end"
+      className="modal_bg items-end"
       onClick={() => closeModal(modals.ProfileUpdateModal)}>
       <div className="modal_under">
         <button className="modal_under_btn" onClick={updateHandler}>
