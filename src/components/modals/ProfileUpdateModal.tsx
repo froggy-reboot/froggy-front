@@ -12,7 +12,7 @@ function ProfileUpdateModal(props: any) {
   };
   const basicHandler = () => {
     closeModal(modals.ProfileUpdateModal);
-    props.setImgSrc(frogImage);
+    props.setImagePreview(frogImage);
   };
   return (
     <div
