@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { currentArticleId, editCommentAtom } from 'src/atoms/atom';
@@ -8,6 +8,7 @@ import { getUserInfo } from 'src/apis/authApi';
 import { modals } from 'src/components/modals/Modals';
 import { useModal } from 'src/hooks/useModal';
 import defaultProfile from 'src/assets/frog_image.png';
+import ToastPopup from 'src/components/toastPopup/ToastPopup';
 
 export default function CommandNavBar() {
   const queryClient = useQueryClient();
@@ -15,12 +16,20 @@ export default function CommandNavBar() {
   const userId = JSON.parse(localStorage.getItem('userId') || '{}');
   const editComment = useRecoilValue(editCommentAtom);
   const completeEditComment = useResetRecoilState(editCommentAtom);
-  const { register, handleSubmit, reset, setValue, setFocus, getValues } =
-    useForm<{
-      comment: string;
-    }>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    setFocus,
+    getValues,
+    setError,
+  } = useForm<{
+    comment: string;
+  }>();
   const { data } = useQuery(['user'], () => getUserInfo(userId));
   const { openModal } = useModal();
+  const [toast, setToast] = useState(false);
 
   const { mutate: editMutation } = useMutation(patchComment, {
     onSettled: () => {
@@ -47,6 +56,12 @@ export default function CommandNavBar() {
   }, [editComment]);
 
   const onSubmit: SubmitHandler<{ comment: string }> = async (data) => {
+    if (!data.comment.trim()) {
+      setError('comment', { type: 'trim' });
+      setToast(true);
+      return;
+    }
+
     reset({ comment: '' });
     (document.activeElement as HTMLElement).blur();
 
@@ -104,6 +119,13 @@ export default function CommandNavBar() {
           }
         />
       </form>
+      {toast && (
+        <ToastPopup
+          setToast={setToast}
+          message={'⚠️ 공백으로만 입력할 수 없습니다.'}
+          position="top"
+        />
+      )}
     </>
   );
 }

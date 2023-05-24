@@ -7,13 +7,23 @@ module.exports = {
         'real-screen': 'calc(var(--vh) * 100)',
       },
       keyframes: {
-        toast: {
-          '0%': { transform: 'translateY(30px)' },
-          '100%': { transform: 'translateY(-30px)' },
+        'toast-bottom': {
+          '0%': { transform: 'translateY(30px)', bottom: '3rem' },
+          '100%': {
+            transform: 'translateY(-30px)',
+            bottom: '3rem',
+          },
+        },
+        'toast-top': {
+          '0%': { transform: 'translateY(-30px)', top: '4rem' },
+          '100%': { transform: 'translateY(30px)', top: '4rem' },
         },
       },
       animation: {
-        toast: 'toast 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both',
+        'toast-bottom':
+          'toast-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both',
+        'toast-top':
+          'toast-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both',
       },
     },
     colors: {
