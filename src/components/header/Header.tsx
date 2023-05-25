@@ -9,7 +9,6 @@ export default function Header() {
   const location = useLocation();
   const navigate = useNavigate();
   const boardEditPath = useMatch('/board/edit/:postId');
-  const boardDetailPath = useMatch('/board/:postId');
   const imagesDetailPath = useMatch('/board/images/:postId');
   const { openModal } = useModal();
 
@@ -39,7 +38,7 @@ export default function Header() {
   };
 
   const backBtnHandler = () => {
-    if (location.pathname === '/board/create' || boardDetailPath) {
+    if (location.pathname === '/board/create') {
       navigate('/board');
     } else if (boardEditPath) {
       openModal(modals.StopEditModal, { isPostEdit: true });

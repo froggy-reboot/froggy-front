@@ -21,7 +21,7 @@ export default function MyCommentLog() {
           {/* eslint-disable-next-line  @typescript-eslint/no-explicit-any */}
           {data?.pages.map((page: any) => (
             <li key={page.id}>
-              <Link to={`/board/${page.id}`}>
+              <Link to={`/board/${page.articleId}`}>
                 <hr className="border-black-30" />
                 <p className="mt-[0.7rem] text-Body font-normal">
                   {page.content.length > 64
