@@ -12,6 +12,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { patchArticles, postArticles } from 'src/apis/boardApi';
 import { useLocation, useMatch, useNavigate } from 'react-router-dom';
 import Loader from 'src/components/loader/Loader';
+import ToastPopup from 'src/components/toastPopup/ToastPopup';
 interface IFormInput {
   title: string;
   content: string;
@@ -40,13 +41,14 @@ function BoardCreate() {
   const navigate = useNavigate();
   const location = useLocation();
   const editPagePath = useMatch('/board/edit/:postId');
-  const { register, handleSubmit, setValue } = useForm<IFormInput>({
+  const { register, handleSubmit, setValue, setError } = useForm<IFormInput>({
     mode: 'all',
   });
   const [imageList, setImageList] = useState<File[]>([]);
   const [imagePreview, setImagePreview] = useState<string[]>([]);
   const [imageEdit, setImageEdit] = useState<IEditImageList[]>([]);
   const [deleteImageArr, setDeleteImageArr] = useState<number[]>([]);
+  const [toast, setToast] = useState(false);
 
   const { mutate: postArticleMutate, isLoading: postLoading } = useMutation(
     postArticles,
@@ -146,6 +148,13 @@ function BoardCreate() {
   };
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    // white space validation
+    if (!data.title.trim() || !data.content.trim()) {
+      setError('title', { type: 'trim' });
+      setToast(true);
+      return;
+    }
+
     if (!editPagePath) {
       const formData = new FormData();
 
@@ -187,21 +196,18 @@ function BoardCreate() {
 
   return (
     <div className="container">
-      <button
-        className="mini_btn fixed right-[12px] top-[12.5px] z-[10] h-[3.5rem] w-[7.6rem] rounded-[2rem] text-Body"
-        onClick={handleSubmit(onSubmit)}>
-        {editPagePath ? '수정하기' : '업로드'}
-      </button>
-
       <form onSubmit={handleSubmit(onSubmit)} className="w-full px-[2rem]">
         <div className="mt-[2rem] flex items-center gap-[1rem]">
-          <button className="tag h-[3.6rem] w-[6rem] shrink-0 rounded-[2rem] py-[0.5rem] text-[15px]">
+          <div className="tag h-[3.6rem] w-[6rem] shrink-0 rounded-[2rem] py-[0.5rem] text-[15px] leading-[2.6rem]">
             {editPagePath
               ? `${location.state.articleType}글`
               : `${location.state}글`}
-          </button>
+          </div>
           <input
-            {...register('title', { required: true, maxLength: 28 })}
+            {...register('title', {
+              required: true,
+              maxLength: 28,
+            })}
             placeholder="게시글 제목"
             className="input h-[3.6rem] w-full pl-[1rem] text-Body font-bold placeholder:text-black-50 focus:outline-none"
           />
@@ -215,6 +221,9 @@ function BoardCreate() {
             placeholder="최대 15000자까지 입력할 수 있습니다."
             className="input min-h-[17.5rem] w-full resize-none pl-[1rem] pt-[1rem] text-Body font-medium placeholder:text-black-50 focus:outline-none"
           />
+          <button className="mini_btn fixed right-[12px] top-[12.5px] z-[10] h-[3.5rem] w-[7.6rem] rounded-[2rem] text-Body">
+            {editPagePath ? '수정하기' : '업로드'}
+          </button>
           <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId="imageList" direction="horizontal">
               {(droppableProvided) => (
@@ -262,6 +271,13 @@ function BoardCreate() {
           </DragDropContext>
         </div>
       </form>
+      {toast && (
+        <ToastPopup
+          setToast={setToast}
+          message={'⚠️ 공백으로만 입력할 수 없습니다.'}
+          position="bottom"
+        />
+      )}
     </div>
   );
 }

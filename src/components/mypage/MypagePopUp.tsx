@@ -35,7 +35,7 @@ export default function MypagePopUp() {
 
             <Link
               to={'/my-page/update'}
-              className="flex flex-1 gap-[1rem] p-[0.8rem] text-Body font-bold">
+              className="flex flex-1 items-center gap-[1rem] p-[0.8rem] text-Body font-bold">
               {data?.data.nickname}
               <EditIcon />
             </Link>

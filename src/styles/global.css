@@ -7,13 +7,13 @@
     @apply text-[62.5%];
   }
   body {
-    @apply max-w-[76.8rem] my-0 mx-auto bg-[#f2f2f2];
+    @apply my-0 bg-[#f2f2f2];
   }
 }
 
 @layer components {
   .container {
-    @apply flex h-auto min-h-real-screen flex-col items-center bg-white pt-[6rem] pb-[8.3rem] overflow-auto no-scrollbar;
+    @apply flex h-auto min-h-real-screen flex-col items-center bg-white pt-[6rem] pb-[8.3rem] overflow-auto no-scrollbar max-w-[76.8rem] mx-auto;
   }
   .submit_btn {
     @apply mt-[1rem] h-[5rem] w-[100%] rounded-[1rem] text-Body text-white md:mt-[2rem];
@@ -37,7 +37,7 @@
     @apply mini_btn inline-block h-[2rem] w-[4rem] text-center text-Callout leading-[2rem];
   }
   .modal_bg {
-    @apply fixed top-0 right-0 flex h-[100vh] w-[100vw] items-center justify-center bg-[rgba(0,0,0,0.2)] z-10;
+    @apply fixed h-real-screen top-0 right-0 flex w-[100vw] items-center justify-center bg-[rgba(0,0,0,0.2)] z-10;
   }
   .modal_normal {
     @apply flex h-[12.5rem] w-[32rem] flex-col items-center justify-center gap-[15px] rounded-[10px] bg-white text-Link shadow-[1px_2px_5px_rgba(0,0,0,0.2)];
