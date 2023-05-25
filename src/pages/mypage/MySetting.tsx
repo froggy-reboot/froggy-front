@@ -6,7 +6,7 @@ import Loader from 'src/components/loader/Loader';
 import { getLogout } from 'src/apis/mypageApi';
 import { useModal } from 'src/hooks/useModal';
 import { modals } from 'src/components/modals/Modals';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getUserInfo } from 'src/apis/authApi';
 
 export default function MySetting() {
@@ -15,6 +15,7 @@ export default function MySetting() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const { openModal } = useModal();
+  const queryClient = useQueryClient();
 
   const logoutHandler = async () => {
     try {
@@ -22,6 +23,7 @@ export default function MySetting() {
       const response = await getLogout();
       if (response.status === 200) {
         localStorage.clear();
+        queryClient.clear();
         navigate('/sign-in');
       }
     } catch (error) {
@@ -46,6 +48,15 @@ export default function MySetting() {
         break;
       case '탈퇴하기':
         withdrawHandler();
+        break;
+      case '알림설정':
+        alert('기능을 준비 중 입니다.');
+        break;
+      case '문의하기':
+        alert('기능을 준비 중 입니다.');
+        break;
+      case '이용약관':
+        alert('기능을 준비 중 입니다.');
         break;
     }
   };

@@ -6,11 +6,13 @@ import { postWithdraw } from 'src/apis/mypageApi';
 import Loader from 'src/components/loader/Loader';
 import axios from 'axios';
 import { LOGIN } from 'src/pages/signin/SignInConstants';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function WithdrawConfirmModal() {
   const { closeModal, showModal } = useModal();
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const deleteConfirmHandler = async () => {
     try {
@@ -18,6 +20,7 @@ export default function WithdrawConfirmModal() {
       const response = await postWithdraw(showModal[0].props.password);
       if (response.status === 200) {
         localStorage.clear();
+        queryClient.clear();
         alert('탈퇴가 완료되었습니다.');
         navigate('/sign-in');
       }
