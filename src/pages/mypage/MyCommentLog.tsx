@@ -35,8 +35,8 @@ export default function MyCommentLog() {
                     </span>
                     <p className="ml-[0.6rem] inline-block text-Tag font-normal text-black-50">
                       {page.article.title.length > 22
-                        ? `${page.title.slice(0, 22)}...`
-                        : page.title}
+                        ? `${page.article.title.slice(0, 22)}...`
+                        : page.article.title}
                     </p>
                   </div>
                   <p className="pr-[0.8rem] text-Board text-black-50">
