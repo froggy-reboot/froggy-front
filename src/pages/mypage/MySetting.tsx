@@ -49,6 +49,15 @@ export default function MySetting() {
       case '탈퇴하기':
         withdrawHandler();
         break;
+      case '알림설정':
+        alert('기능을 준비 중 입니다.');
+        break;
+      case '문의하기':
+        alert('기능을 준비 중 입니다.');
+        break;
+      case '이용약관':
+        alert('기능을 준비 중 입니다.');
+        break;
     }
   };
 
