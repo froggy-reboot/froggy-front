@@ -39,22 +39,24 @@ export default function ImagesDetail() {
   };
 
   return (
-    <div className="relative flex h-real-screen items-center overflow-hidden bg-black-100">
+    <div className="relative mx-auto flex h-real-screen max-w-[76.8rem] items-center overflow-hidden bg-black-100">
       <CloseBtn
         onClick={closeBtnHandler}
         className="absolute top-10 right-10 z-[100] h-[3.5rem] w-[3.5rem] rotate-45 fill-black-10"
       />
-
       <div
         style={{
           transform: `translateX(${
             (-100 / imageList.images.length) * current
           }%)`,
         }}
-        className="flex max-h-[60%] items-center transition duration-500">
+        className="flex items-center transition duration-500 ">
         {imageList.images.map((image) => (
           <div key={image.id} className="w-[100vw] max-w-[76.8rem]">
-            <img src={image.url} className="w-screen object-contain" />
+            <img
+              src={image.url}
+              className="max-h-[80vh] w-screen object-contain"
+            />
           </div>
         ))}
       </div>
