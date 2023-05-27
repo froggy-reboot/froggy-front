@@ -16,6 +16,7 @@ const PAGE_TITLE = {
     ARTICLES: '내가 쓴 글',
     COMMENTS: '내가 쓴 댓글',
   },
+  REPORT: '신고하기',
 } as const;
 
 export { PAGE_TITLE };
