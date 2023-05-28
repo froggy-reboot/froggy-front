@@ -68,6 +68,11 @@ const HEADER_TITLE = [
     title: PAGE_TITLE.MY_PAGE.UPDATE,
     isMain: false,
   },
+  {
+    route: '/report',
+    title: PAGE_TITLE.REPORT,
+    isMain: false,
+  },
 ];
 
 export { HEADER_TITLE };

@@ -102,7 +102,7 @@ export default function BoardDetail() {
                     ? openModal(modals.UpdateDeleteModal, {
                         postId: Number(postId),
                       })
-                    : openModal(modals.ReportModal)
+                    : openModal(modals.ReportModal, { postId: Number(postId) })
                 }
                 className="h-[2rem] w-[2rem] justify-self-end fill-black-100"
               />
