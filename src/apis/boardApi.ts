@@ -23,6 +23,12 @@ interface IPatchArticleProps {
   postId: number;
 }
 
+interface IPostReportProps {
+  postId: number;
+  commentId?: number;
+  content: string;
+}
+
 export async function getArticles({ pageParam = 1 }, filter?: IFilter) {
   const isLogin = localStorage.getItem('accessToken');
   const response = isLogin
@@ -108,5 +114,28 @@ export async function deleteArticle(postId: number) {
 
 export async function postLike(postId: number) {
   const response = await privateApi.post(`/api/v1/article-likes/${postId}`);
+  return response;
+}
+
+export async function postReportArticle({ postId, content }: IPostReportProps) {
+  const response = await privateApi.post('/api/v1/articles/report', {
+    articleId: postId,
+    reason: content,
+  });
+  return response;
+}
+
+export async function postReportComment({
+  postId,
+  commentId,
+  content,
+}: IPostReportProps) {
+  const response = await privateApi.post(
+    `/api/v1/articles/${postId}/comments/report`,
+    {
+      commentId: commentId,
+      reason: content,
+    },
+  );
   return response;
 }

@@ -1,15 +1,59 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { postReportArticle, postReportComment } from 'src/apis/boardApi';
+import axios from 'axios';
+
+interface IReportFromInput {
+  content: string;
+}
 
 export default function ReportPage() {
+  const reportData = useLocation().state;
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { isValid },
-  } = useForm({ mode: 'all' });
+  } = useForm<IReportFromInput>({ mode: 'all' });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<IReportFromInput> = async (data) => {
+    try {
+      //댓글 신고
+      if (reportData.commentId) {
+        const response = await postReportComment({
+          postId: reportData.postId,
+          commentId: reportData.commentId,
+          content: data.content,
+        });
+        if (response.status === 201) {
+          alert('신고가 접수되었습니다.');
+          navigate(`/board/${reportData.postId}`);
+        }
+      }
+      //글신고
+      if (!reportData.commentId) {
+        const response = await postReportArticle({
+          postId: reportData.postId,
+          content: data.content,
+        });
+        if (response.status === 201) {
+          alert('신고가 접수되었습니다.');
+          navigate(`/board/${reportData.postId}`);
+        }
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 404) {
+          if (reportData.commentId) {
+            alert('신고할 댓글이 존재하지 않습니다.');
+          } else {
+            alert('신고할 게시글이 존재하지 않습니다.');
+          }
+        }
+      }
+    }
   };
 
   return (
