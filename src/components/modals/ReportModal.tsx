@@ -4,13 +4,17 @@ import { modals } from 'src/components/modals/Modals';
 import { Link } from 'react-router-dom';
 
 export default function ReportModal() {
-  const { closeModal } = useModal();
+  const { closeModal, showModal } = useModal();
+
   return (
     <div
       className="modal_bg items-end"
       onClick={() => closeModal(modals.ReportModal)}>
       <div className="modal_under">
-        <Link to="/report" className="modal_under_btn text-center">
+        <Link
+          to="/report"
+          state={showModal[0].props}
+          className="modal_under_btn text-center">
           신고하기
         </Link>
         <hr className="w-[100%] border-black-30" />

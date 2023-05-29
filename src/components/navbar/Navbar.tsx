@@ -61,6 +61,7 @@ function Navbar() {
       location.pathname === '/sign-up' ||
       location.pathname === '/board/create' ||
       location.pathname === '/my-page/update' ||
+      location.pathname === '/report' ||
       boardEditPath ||
       imagesDetailPath
     )

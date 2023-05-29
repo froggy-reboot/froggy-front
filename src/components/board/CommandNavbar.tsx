@@ -9,6 +9,7 @@ import { modals } from 'src/components/modals/Modals';
 import { useModal } from 'src/hooks/useModal';
 import defaultProfile from 'src/assets/frog_image.png';
 import ToastPopup from 'src/components/toastPopup/ToastPopup';
+import { ReactComponent as SendIcon } from 'src/assets/send.svg';
 
 export default function CommandNavBar() {
   const queryClient = useQueryClient();
@@ -24,6 +25,7 @@ export default function CommandNavBar() {
     setFocus,
     getValues,
     setError,
+    formState: { isValid },
   } = useForm<{
     comment: string;
   }>();
@@ -104,19 +106,26 @@ export default function CommandNavBar() {
     <>
       <form
         onKeyDown={enterSubmitController}
-        className="flex w-[100%] px-[2.5rem] py-[1.5rem]">
+        className="flex w-[100%] items-end px-[2.5rem] py-[1.5rem]">
         <img
           src={data?.data.profileImg ? data.data.profileImg : defaultProfile}
           alt="프로필"
           className="mr-[1rem] h-[3.2rem] w-[3.2rem] rounded-full bg-black-30 object-cover"
         />
         <textarea
-          {...register('comment', { required: true })}
+          {...register('comment', {
+            required: true,
+          })}
           onBlur={stopEditHandler}
           className="h-[3.2rem] w-[100%] flex-1 rounded-[16px] bg-black-30 pt-[0.5rem] pl-[1.3rem] text-Body font-normal outline-none placeholder:text-black-50 focus:h-[10rem] focus:py-[1rem]"
           placeholder={
             data ? '댓글을 입력해 주세요.' : '로그인 후 이용하실 수 있습니다.'
           }
+        />
+        <SendIcon
+          onClick={() => handleSubmit(onSubmit)()}
+          fill={`${isValid ? '#65D4A5' : '#E7E7E7'}`}
+          className="mt-[1.2rem] mb-[0.4rem] ml-[1rem] p-[0.2rem]"
         />
       </form>
       {toast && (

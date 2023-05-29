@@ -68,10 +68,13 @@ export default function Comment({ articleId }: { articleId: number }) {
                     onClick={() =>
                       Number(userId) === comment.user.id
                         ? openModal(modals.UpdateDeleteModal, {
-                            postId: postId,
+                            postId: Number(postId),
                             commentId: comment.id,
                           })
-                        : openModal(modals.ReportModal)
+                        : openModal(modals.ReportModal, {
+                            postId: Number(postId),
+                            commentId: comment.id,
+                          })
                     }
                     className="h-[1.6rem] w-[1.6rem] fill-black-50"
                   />
