@@ -104,7 +104,7 @@ export default function BoardDetail() {
                       })
                     : openModal(modals.ReportModal, { postId: Number(postId) })
                 }
-                className="h-[2rem] w-[2rem] justify-self-end fill-black-100"
+                className="h-[4rem] w-[4rem] cursor-pointer justify-self-end fill-black-100 p-[1rem]"
               />
             </div>
             <article className="mt-[1.3rem]">
@@ -122,7 +122,7 @@ export default function BoardDetail() {
                       onClick={() => imageDetailHandler(idx)}
                       key={idx}
                       src={src.url}
-                      className="h-[15rem] w-[15rem] rounded-[5px] object-cover"
+                      className="h-[15rem] w-[15rem] cursor-pointer rounded-[5px] object-cover"
                     />
                   ))}
                 </div>
@@ -131,7 +131,7 @@ export default function BoardDetail() {
                 <img
                   onClick={() => imageDetailHandler(0)}
                   src={data.data.images[0].url}
-                  className="h-[19.6rem] w-[100%] rounded-[5px] object-cover md:h-[35rem]"
+                  className="h-[19.6rem] w-[100%] cursor-pointer rounded-[5px] object-cover md:h-[35rem]"
                 />
               )}
             </article>

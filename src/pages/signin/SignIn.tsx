@@ -83,9 +83,15 @@ export default function SignIn() {
               <span className="error_message">{errors?.email?.message}</span>
               <div className="relative">
                 {showPassword ? (
-                  <OpenEye className="input_eye" onClick={onClickHandler} />
+                  <OpenEye
+                    className="input_eye cursor-pointer"
+                    onClick={onClickHandler}
+                  />
                 ) : (
-                  <CloseEye className="input_eye" onClick={onClickHandler} />
+                  <CloseEye
+                    className="input_eye cursor-pointer"
+                    onClick={onClickHandler}
+                  />
                 )}
                 <input
                   {...register('password', {

@@ -106,7 +106,7 @@ function MypageUpdate() {
           {/* 프로필 이미지 영역 */}
           <input
             accept="image/*"
-            className="hidden "
+            className="hidden"
             id="image"
             type="file"
             ref={fileInput}
@@ -116,7 +116,7 @@ function MypageUpdate() {
           <img
             src={imagePreview}
             alt="profile"
-            className="mx-auto h-[17rem] w-[17rem] rounded-full bg-black-10 object-cover"
+            className="mx-auto h-[17rem] w-[17rem] cursor-pointer rounded-full bg-black-10 object-cover"
             onClick={() => {
               if (fileInput != null) {
                 openModal(modals.ProfileUpdateModal, {
@@ -131,10 +131,10 @@ function MypageUpdate() {
             <p className="ml-[0.4rem] text-Body text-[#696969]">닉네임</p>
             <label className="relative">
               <Refresh
-                className="input_eye cursor-pointer"
+                className="input_eye right-[0.6rem] h-[4.4rem] w-[4.4rem] cursor-pointer p-[1rem]"
                 onClick={refreshHandler}
               />
-              <input className="input" {...register('nickname')} />
+              <input className="input pr-0" {...register('nickname')} />
             </label>
           </div>
         </div>

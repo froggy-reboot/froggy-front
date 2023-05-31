@@ -76,7 +76,7 @@ export default function Comment({ articleId }: { articleId: number }) {
                             commentId: comment.id,
                           })
                     }
-                    className="h-[1.6rem] w-[1.6rem] fill-black-50"
+                    className="h-[2.6rem] w-[2.6rem] cursor-pointer fill-black-50 p-[0.5rem]"
                   />
                 </div>
                 <p className="mt-[1rem] mb-[0.6rem] whitespace-pre-line text-Tag font-normal">
