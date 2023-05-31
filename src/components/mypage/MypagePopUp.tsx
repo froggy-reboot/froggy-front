@@ -45,7 +45,11 @@ export default function MypagePopUp() {
             <div className="mx-auto mt-[1.5rem] flex w-[100%] max-w-[76.8rem] flex-col gap-[0.5rem] px-[1rem] text-[15px] font-medium md:p-[2rem]">
               <div className="flex justify-between py-[0.5rem]">
                 <p>로그인 계정</p>
-                <p className="font-normal text-black-50">{data?.data.email}</p>
+                <p className="font-normal text-black-50">
+                  {data?.data.enrollType === 'local'
+                    ? data?.data.email
+                    : '소셜 로그인'}
+                </p>
               </div>
               <hr className="w-[100%] text-black-10" />
               <div className="flex justify-between py-[0.5rem]">
