@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ReactComponent as PlusIcon } from 'src/assets/plus.svg';
 import { ReactComponent as Delete } from 'src/assets/delete.svg';
@@ -50,6 +50,7 @@ function BoardCreate() {
   const [deleteImageArr, setDeleteImageArr] = useState<number[]>([]);
   const [spaceToast, setSpaceToast] = useState(false);
   const [imgToast, setImgToast] = useState(false);
+  const imageEndRef = useRef<HTMLDivElement | null>(null);
 
   const { mutate: postArticleMutate, isLoading: postLoading } = useMutation(
     postArticles,
@@ -91,6 +92,10 @@ function BoardCreate() {
       setValue('content', location.state.content);
     }
   }, []);
+
+  useEffect(() => {
+    imageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [imagePreview]);
 
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
@@ -263,7 +268,9 @@ function BoardCreate() {
                       accept="image/*"
                       onChange={handleAddImages}
                     />
-                    <div className="flex h-[7rem] w-[7rem] items-center justify-center rounded-[1rem] bg-black-10">
+                    <div
+                      ref={imageEndRef}
+                      className="flex h-[7rem] w-[7rem] items-center justify-center rounded-[1rem] bg-black-10">
                       <PlusIcon className=" fill-white" />
                     </div>
                   </label>
