@@ -38,9 +38,7 @@ export default function Header() {
   };
 
   const backBtnHandler = () => {
-    if (location.pathname === '/board/create') {
-      navigate('/board');
-    } else if (boardEditPath) {
+    if (boardEditPath) {
       openModal(modals.StopEditModal, { isPostEdit: true });
     } else navigate(-1);
   };
