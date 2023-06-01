@@ -56,7 +56,8 @@ function BoardCreate() {
     postArticles,
     {
       onSuccess: (data) => {
-        if (data.status === 201) navigate(`/board/${data.data.id}`);
+        if (data.status === 201)
+          navigate(`/board/${data.data.id}`, { replace: true });
       },
       onSettled: () =>
         queryClient.invalidateQueries({ queryKey: ['articles'] }),
@@ -67,7 +68,8 @@ function BoardCreate() {
     patchArticles,
     {
       onSuccess: (data) => {
-        if (data.status === 200) navigate(`/board/${data.data.id}`);
+        if (data.status === 200)
+          navigate(`/board/${data.data.id}`, { replace: true });
       },
       onSettled: () =>
         queryClient.invalidateQueries({ queryKey: ['articles'] }),
