@@ -8,6 +8,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { getRandomNickname, patchUserProfile } from 'src/apis/mypageApi';
 import { useNavigate } from 'react-router-dom';
 import Loader from 'src/components/loader/Loader';
+import { useRecoilState } from 'recoil';
+import { isProfileAtom } from 'src/atoms/atom';
 interface IProfile {
   image: string;
   nickname: string;
@@ -20,6 +22,7 @@ function MypageUpdate() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const queryClient = useQueryClient();
+  const [isProfile, setIsProfile] = useRecoilState(isProfileAtom);
 
   // 이미지 주소
   const [imagePreview, setImagePreview] = useState(data?.data.profileImg);
@@ -43,6 +46,14 @@ function MypageUpdate() {
   }, [reset, data]);
   // 사진 추가를 위한 Ref 생성
   const fileInput = useRef<HTMLInputElement>(null);
+
+  // 모달에서 프로필 이미지 선택 클릭 시
+  useEffect(() => {
+    if (isProfile) {
+      fileInput.current?.click();
+      setIsProfile(false);
+    }
+  }, [isProfile]);
 
   // 닉네임 랜덤 refresh
   const refreshHandler = async () => {
@@ -120,7 +131,6 @@ function MypageUpdate() {
             onClick={() => {
               if (fileInput != null) {
                 openModal(modals.ProfileUpdateModal, {
-                  fileInput,
                   setImagePreview,
                 });
               }
