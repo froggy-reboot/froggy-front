@@ -17,6 +17,7 @@ const PAGE_TITLE = {
     COMMENTS: '내가 쓴 댓글',
   },
   REPORT: '신고하기',
+  RESET_PASSWARD: '비밀번호 재설정',
 } as const;
 
 export { PAGE_TITLE };

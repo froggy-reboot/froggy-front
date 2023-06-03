@@ -53,3 +53,10 @@ export async function postWithdraw(password?: string) {
   }
   return response;
 }
+
+export async function patchPassward() {
+  const response = await privateApi.patch('/api/v1/auth/email/reset-password', {
+    email: email,
+  });
+  return response;
+}
