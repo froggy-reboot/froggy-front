@@ -74,8 +74,8 @@ const HEADER_TITLE = [
     isMain: false,
   },
   {
-    route: '/reset-passward',
-    title: PAGE_TITLE.RESET_PASSWARD,
+    route: '/reset-password',
+    title: PAGE_TITLE.RESET_PASSWORD,
     isMain: false,
   },
 ];

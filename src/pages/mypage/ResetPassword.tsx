@@ -1,21 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { ERROR_MESSAGE, REG_EXP } from '../signin/SignInConstants';
+import {
+  ERROR_MESSAGE,
+  LOGIN,
+  REG_EXP,
+} from 'src/pages/signin/SignInConstants';
+import { postPassword } from 'src/apis/mypageApi';
+import Loader from 'src/components/loader/Loader';
+import axios from 'axios';
 
 interface IFormInput {
   email: string;
 }
 
-export default function ResetPassward() {
+export default function ResetPassword() {
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { isValid, errors },
   } = useForm<IFormInput>({ mode: 'all' });
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    try {
+      setIsLoading(true);
+      const response = await postPassword(data.email);
+      if (response.status === 200) {
+        alert('비밀번호 재설정을 위한 이메일 전송이 완료되었습니다.');
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 422) {
+          alert('존재하지 않는 이메일입니다.');
+        }
+        if (error.response?.status === 404) {
+          alert(LOGIN.MESSAGE.ETC);
+        }
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="container h-real-screen px-[3rem] pb-4">

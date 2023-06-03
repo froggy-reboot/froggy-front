@@ -49,10 +49,10 @@ export default function MySetting() {
       case '탈퇴하기':
         withdrawHandler();
         break;
-      case '알림설정':
-        alert('기능을 준비 중 입니다.');
+      case '비밀번호 변경':
+        navigate('/reset-password');
         break;
-      case '문의하기':
+      case '알림설정':
         alert('기능을 준비 중 입니다.');
         break;
       case '이용약관':
