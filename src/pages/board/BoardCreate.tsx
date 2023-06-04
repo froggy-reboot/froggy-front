@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ReactComponent as PlusIcon } from 'src/assets/plus.svg';
 import { ReactComponent as Delete } from 'src/assets/delete.svg';
@@ -48,13 +48,16 @@ function BoardCreate() {
   const [imagePreview, setImagePreview] = useState<string[]>([]);
   const [imageEdit, setImageEdit] = useState<IEditImageList[]>([]);
   const [deleteImageArr, setDeleteImageArr] = useState<number[]>([]);
-  const [toast, setToast] = useState(false);
+  const [spaceToast, setSpaceToast] = useState(false);
+  const [imgToast, setImgToast] = useState(false);
+  const imageEndRef = useRef<HTMLDivElement | null>(null);
 
   const { mutate: postArticleMutate, isLoading: postLoading } = useMutation(
     postArticles,
     {
       onSuccess: (data) => {
-        if (data.status === 201) navigate(`/board/${data.data.id}`);
+        if (data.status === 201)
+          navigate(`/board/${data.data.id}`, { replace: true });
       },
       onSettled: () =>
         queryClient.invalidateQueries({ queryKey: ['articles'] }),
@@ -65,7 +68,8 @@ function BoardCreate() {
     patchArticles,
     {
       onSuccess: (data) => {
-        if (data.status === 200) navigate(`/board/${data.data.id}`);
+        if (data.status === 200)
+          navigate(`/board/${data.data.id}`, { replace: true });
       },
       onSettled: () =>
         queryClient.invalidateQueries({ queryKey: ['articles'] }),
@@ -90,6 +94,10 @@ function BoardCreate() {
       setValue('content', location.state.content);
     }
   }, []);
+
+  useEffect(() => {
+    imageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [imagePreview]);
 
   const onDragEnd = (result: DropResult) => {
     const { source, destination } = result;
@@ -130,6 +138,7 @@ function BoardCreate() {
 
       //사진은 10개까지 추가가능
       if (imageUrlLists.length > 10) {
+        setImgToast(true);
         imageUrlLists = imageUrlLists.slice(0, 10);
       }
       setImagePreview(imageUrlLists);
@@ -151,7 +160,7 @@ function BoardCreate() {
     // white space validation
     if (!data.title.trim() || !data.content.trim()) {
       setError('title', { type: 'trim' });
-      setToast(true);
+      setSpaceToast(true);
       return;
     }
 
@@ -228,7 +237,7 @@ function BoardCreate() {
             <Droppable droppableId="imageList" direction="horizontal">
               {(droppableProvided) => (
                 <div
-                  className="no-scrollbar mt-[1rem] flex w-auto gap-[2rem] overflow-auto"
+                  className="mt-[1rem] flex w-auto gap-[2rem] overflow-auto"
                   ref={droppableProvided.innerRef}
                   {...droppableProvided.droppableProps}>
                   {imagePreview &&
@@ -261,7 +270,9 @@ function BoardCreate() {
                       accept="image/*"
                       onChange={handleAddImages}
                     />
-                    <div className="flex h-[7rem] w-[7rem] items-center justify-center rounded-[1rem] bg-black-10">
+                    <div
+                      ref={imageEndRef}
+                      className="flex h-[7rem] w-[7rem] items-center justify-center rounded-[1rem] bg-black-10">
                       <PlusIcon className=" fill-white" />
                     </div>
                   </label>
@@ -271,10 +282,17 @@ function BoardCreate() {
           </DragDropContext>
         </div>
       </form>
-      {toast && (
+      {spaceToast && (
         <ToastPopup
-          setToast={setToast}
+          setToast={setSpaceToast}
           message={'⚠️ 공백으로만 입력할 수 없습니다.'}
+          position="bottom"
+        />
+      )}
+      {imgToast && (
+        <ToastPopup
+          setToast={setImgToast}
+          message={'⚠️ 이미지는 10개까지 첨부할 수 있습니다.'}
           position="bottom"
         />
       )}

@@ -15,6 +15,7 @@ import ImagesDetail from 'src/components/images/ImagesDetail';
 import MyPostLog from 'src/pages/mypage/MyPostLog';
 import MyCommentLog from 'src/pages/mypage/MyCommentLog';
 import MypageUpdate from 'src/pages/mypage/MypageUpdateForm';
+import ResetPassword from 'src/pages/mypage/ResetPassword';
 
 export default function RoutePage() {
   return (
@@ -36,6 +37,7 @@ export default function RoutePage() {
       <Route path="/board/edit/:postId" element={<BoardCreate />} />
       <Route path="/report" element={<ReportPage />} />
       <Route path="/board/images/:postId" element={<ImagesDetail />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
       <Route element={<PrivateRoute authentication={true} />}>
         {/* 비로그인이면 볼 수 없는 페이지 */}
         <Route path="/my-page" element={<MyPage />} />

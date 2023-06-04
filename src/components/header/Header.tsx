@@ -38,9 +38,7 @@ export default function Header() {
   };
 
   const backBtnHandler = () => {
-    if (location.pathname === '/board/create') {
-      navigate('/board');
-    } else if (boardEditPath) {
+    if (boardEditPath) {
       openModal(modals.StopEditModal, { isPostEdit: true });
     } else navigate(-1);
   };
@@ -66,7 +64,7 @@ export default function Header() {
             }`}>
             {showBackBtn() ? (
               <BackIcon
-                className="m-4 h-[2.4rem] w-[2.4rem]"
+                className="h-[4.4rem] w-[4.4rem] cursor-pointer p-4"
                 onClick={backBtnHandler}
               />
             ) : null}

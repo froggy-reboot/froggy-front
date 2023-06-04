@@ -8,6 +8,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { getRandomNickname, patchUserProfile } from 'src/apis/mypageApi';
 import { useNavigate } from 'react-router-dom';
 import Loader from 'src/components/loader/Loader';
+import { useRecoilState } from 'recoil';
+import { isProfileAtom } from 'src/atoms/atom';
 interface IProfile {
   image: string;
   nickname: string;
@@ -20,6 +22,7 @@ function MypageUpdate() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const queryClient = useQueryClient();
+  const [isProfile, setIsProfile] = useRecoilState(isProfileAtom);
 
   // 이미지 주소
   const [imagePreview, setImagePreview] = useState(data?.data.profileImg);
@@ -43,6 +46,14 @@ function MypageUpdate() {
   }, [reset, data]);
   // 사진 추가를 위한 Ref 생성
   const fileInput = useRef<HTMLInputElement>(null);
+
+  // 모달에서 프로필 이미지 선택 클릭 시
+  useEffect(() => {
+    if (isProfile) {
+      fileInput.current?.click();
+      setIsProfile(false);
+    }
+  }, [isProfile]);
 
   // 닉네임 랜덤 refresh
   const refreshHandler = async () => {
@@ -106,7 +117,7 @@ function MypageUpdate() {
           {/* 프로필 이미지 영역 */}
           <input
             accept="image/*"
-            className="hidden "
+            className="hidden"
             id="image"
             type="file"
             ref={fileInput}
@@ -116,11 +127,10 @@ function MypageUpdate() {
           <img
             src={imagePreview}
             alt="profile"
-            className="mx-auto h-[17rem] w-[17rem] rounded-full bg-black-10 object-cover"
+            className="mx-auto h-[17rem] w-[17rem] cursor-pointer rounded-full bg-black-10 object-cover"
             onClick={() => {
               if (fileInput != null) {
                 openModal(modals.ProfileUpdateModal, {
-                  fileInput,
                   setImagePreview,
                 });
               }
@@ -131,10 +141,10 @@ function MypageUpdate() {
             <p className="ml-[0.4rem] text-Body text-[#696969]">닉네임</p>
             <label className="relative">
               <Refresh
-                className="input_eye cursor-pointer"
+                className="input_eye right-[0.6rem] h-[4.4rem] w-[4.4rem] cursor-pointer p-[1rem]"
                 onClick={refreshHandler}
               />
-              <input className="input" {...register('nickname')} />
+              <input className="input pr-0" {...register('nickname')} />
             </label>
           </div>
         </div>

@@ -2,18 +2,23 @@ import React from 'react';
 import { useModal } from 'src/hooks/useModal';
 import { modals } from 'src/components/modals/Modals';
 import frogImage from 'src/assets/frog_image.png';
+import { useSetRecoilState } from 'recoil';
+import { isProfileAtom } from 'src/atoms/atom';
 
 // eslint-disable-next-line
 function ProfileUpdateModal(props: any) {
   const { closeModal } = useModal();
+  const setIsProfile = useSetRecoilState(isProfileAtom);
+
   const updateHandler = () => {
     closeModal(modals.ProfileUpdateModal);
-    props.fileInput.current.click();
+    setIsProfile(true);
   };
   const basicHandler = () => {
     closeModal(modals.ProfileUpdateModal);
     props.setImagePreview(frogImage);
   };
+
   return (
     <div
       className="modal_bg items-end"

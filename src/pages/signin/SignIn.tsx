@@ -83,9 +83,15 @@ export default function SignIn() {
               <span className="error_message">{errors?.email?.message}</span>
               <div className="relative">
                 {showPassword ? (
-                  <OpenEye className="input_eye" onClick={onClickHandler} />
+                  <OpenEye
+                    className="input_eye cursor-pointer"
+                    onClick={onClickHandler}
+                  />
                 ) : (
-                  <CloseEye className="input_eye" onClick={onClickHandler} />
+                  <CloseEye
+                    className="input_eye cursor-pointer"
+                    onClick={onClickHandler}
+                  />
                 )}
                 <input
                   {...register('password', {
@@ -113,16 +119,16 @@ export default function SignIn() {
           </form>
           <SocialLogin />
         </div>
-        <p className="mb-[3rem] text-Tag font-normal text-black-50 md:bottom-[6rem] md:text-Link">
+        <p className="mb-[2rem] text-Tag font-normal text-black-50 md:bottom-[6rem] md:text-Link">
           {SIGNUP.MESSAGE}
           <Link to={'/sign-up'} className="ml-2 text-green-100 md:ml-3">
             {SIGNUP.SIGNUP}
           </Link>
         </p>
         <Link
-          to={'/'}
+          to={'/reset-passward'}
           className="ml-2 text-Callout font-normal text-black-50 md:bottom-[6rem] md:ml-3 md:text-Tag">
-          회원가입 없이 둘러보기
+          비밀번호를 잊으셨나요?
         </Link>
       </div>
     </>
