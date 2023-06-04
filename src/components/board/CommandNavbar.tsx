@@ -125,7 +125,7 @@ export default function CommandNavBar() {
         <SendIcon
           onClick={() => handleSubmit(onSubmit)()}
           fill={`${isValid ? '#65D4A5' : '#E7E7E7'}`}
-          className="mt-[1.2rem] mb-[0.4rem] ml-[1rem] p-[0.2rem]"
+          className="mt-[1.2rem] mb-[0.4rem] ml-[1rem] cursor-pointer p-[0.2rem]"
         />
       </form>
       {toast && (

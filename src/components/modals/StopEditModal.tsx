@@ -3,19 +3,18 @@ import { useModal } from 'src/hooks/useModal';
 import { modals } from 'src/components/modals/Modals';
 import { useResetRecoilState } from 'recoil';
 import { editCommentAtom } from 'src/atoms/atom';
-import { useMatch, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function StopEditModal() {
   const navigate = useNavigate();
   const { closeModal, showModal } = useModal();
   const completeEditComment = useResetRecoilState(editCommentAtom);
-  const boardEditPath = useMatch('/board/edit/:postId');
 
   const stopEditHandler = () => {
     completeEditComment();
     closeModal(modals.StopEditModal);
     if (showModal[0].props.isPostEdit) {
-      navigate(`/board/${boardEditPath?.params.postId}`);
+      navigate(-1);
     }
   };
 

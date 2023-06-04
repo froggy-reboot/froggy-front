@@ -20,3 +20,8 @@ export const editCommentAtom = atom({
   key: 'editComment',
   default: { content: '', commentId: undefined },
 });
+
+export const isProfileAtom = atom({
+  key: 'isProfile',
+  default: false,
+});

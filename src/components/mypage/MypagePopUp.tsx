@@ -45,26 +45,30 @@ export default function MypagePopUp() {
             <div className="mx-auto mt-[1.5rem] flex w-[100%] max-w-[76.8rem] flex-col gap-[0.5rem] px-[1rem] text-[15px] font-medium md:p-[2rem]">
               <div className="flex justify-between py-[0.5rem]">
                 <p>로그인 계정</p>
-                <p className="font-normal text-black-50">{data?.data.email}</p>
+                <p className="font-normal text-black-50">
+                  {data?.data.enrollType === 'local'
+                    ? data?.data.email
+                    : '소셜 로그인'}
+                </p>
               </div>
               <hr className="w-[100%] text-black-10" />
               <div className="flex justify-between py-[0.5rem]">
                 <p>레이블리 연동</p>
-                <p
+                <button
                   onClick={() =>
                     data?.data.isRavelryIntegrated === 'N' &&
                     openModal(RavelryConnectModal)
                   }
-                  className={`mini_btn inline-block h-[1.9rem] w-[3.8rem] text-center text-Board leading-[1.9rem] ${
+                  className={`mini_btn inline-block h-[2rem] w-[4rem] text-center text-Board leading-[1.9rem] ${
                     data?.data.isRavelryIntegrated === 'N' && 'bg-black-30'
                   }`}>
                   {data?.data.isRavelryIntegrated === 'N' ? '미완료' : '완료'}
-                </p>
+                </button>
               </div>
               <hr className="w-[100%] text-black-10" />
               <div className="flex items-center justify-between py-[0.5rem]">
                 <p>기타 설정</p>
-                <Link to="/my-page/setting" className="p-2.5">
+                <Link to="/my-page/setting" className="p-2.5 pl-[1.5rem]">
                   <DownBtn stroke="#949494" className="w-[12px] -rotate-90" />
                 </Link>
               </div>

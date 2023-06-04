@@ -73,6 +73,11 @@ const HEADER_TITLE = [
     title: PAGE_TITLE.REPORT,
     isMain: false,
   },
+  {
+    route: '/reset-password',
+    title: PAGE_TITLE.RESET_PASSWORD,
+    isMain: false,
+  },
 ];
 
 export { HEADER_TITLE };
