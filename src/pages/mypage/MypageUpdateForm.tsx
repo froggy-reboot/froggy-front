@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import Loader from 'src/components/loader/Loader';
 import { useRecoilState } from 'recoil';
 import { isProfileAtom } from 'src/atoms/atom';
+import { profile } from 'console';
 interface IProfile {
   image: string;
   nickname: string;
@@ -51,7 +52,6 @@ function MypageUpdate() {
   useEffect(() => {
     if (isProfile) {
       fileInput.current?.click();
-      setIsProfile(false);
     }
   }, [isProfile]);
 
@@ -83,9 +83,11 @@ function MypageUpdate() {
   };
 
   const onSubmit: SubmitHandler<IProfile> = async (data) => {
+    console.log(isProfile);
     const formData = new FormData();
     formData.append('file', imageFile);
     formData.append('nickname', data.nickname);
+    formData.append('defaultImage', isProfile ? 'N' : 'Y');
     try {
       setIsLoading(true);
       const response = await patchUserProfile({

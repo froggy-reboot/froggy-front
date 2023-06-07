@@ -17,6 +17,7 @@ function ProfileUpdateModal(props: any) {
   const basicHandler = () => {
     closeModal(modals.ProfileUpdateModal);
     props.setImagePreview(frogImage);
+    setIsProfile(false);
   };
 
   return (
