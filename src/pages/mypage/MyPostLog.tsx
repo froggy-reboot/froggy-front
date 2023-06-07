@@ -7,18 +7,21 @@ import Loader from 'src/components/loader/Loader';
 export default function MyPostLog() {
   const { data, isLoading, setTarget } = useInfiniteScroll({
     getApi: getMyPostLog,
+    queryKey: 'my-post',
   });
 
   if (isLoading) {
     return <Loader />;
   }
   return (
-    <div className="container">
+    <>
       {data && (
-        <main className="w-[100%] px-[1.6rem] pt-[1rem]">
-          <PostList props={{ data, setTarget, isMyList: true }} />
-        </main>
+        <div className="container">
+          <main className="w-[100%] px-[1.6rem] pt-[1rem]">
+            <PostList props={{ data, setTarget, isMyList: true }} />
+          </main>
+        </div>
       )}
-    </div>
+    </>
   );
 }

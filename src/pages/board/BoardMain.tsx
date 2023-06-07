@@ -38,6 +38,7 @@ export default function BoardMain() {
   const { data, isLoading, setTarget } = useInfiniteScroll({
     getApi: getArticles,
     filter,
+    queryKey: 'articles',
   });
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {

@@ -8,6 +8,7 @@ import Loader from 'src/components/loader/Loader';
 export default function MyCommentLog() {
   const { data, isLoading, setTarget } = useInfiniteScroll({
     getApi: getMyCommentLog,
+    queryKey: 'my-comment',
   });
 
   if (isLoading) {
