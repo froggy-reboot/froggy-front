@@ -8,9 +8,9 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { getRandomNickname, patchUserProfile } from 'src/apis/mypageApi';
 import { useNavigate } from 'react-router-dom';
 import Loader from 'src/components/loader/Loader';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { isProfileAtom } from 'src/atoms/atom';
-import { profile } from 'console';
+
 interface IProfile {
   image: string;
   nickname: string;
@@ -23,7 +23,7 @@ function MypageUpdate() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const queryClient = useQueryClient();
-  const [isProfile, setIsProfile] = useRecoilState(isProfileAtom);
+  const isProfile = useRecoilValue(isProfileAtom);
 
   // 이미지 주소
   const [imagePreview, setImagePreview] = useState(data?.data.profileImg);
