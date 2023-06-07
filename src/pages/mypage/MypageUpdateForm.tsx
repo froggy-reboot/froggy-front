@@ -86,6 +86,7 @@ function MypageUpdate() {
     const formData = new FormData();
     formData.append('file', imageFile);
     formData.append('nickname', data.nickname);
+    formData.append('defaultImage', isProfile ? 'N' : 'Y');
     try {
       setIsLoading(true);
       const response = await patchUserProfile({
