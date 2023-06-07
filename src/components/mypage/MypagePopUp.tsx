@@ -46,7 +46,8 @@ export default function MypagePopUp() {
               <div className="flex justify-between py-[0.5rem]">
                 <p>로그인 계정</p>
                 <p className="font-normal text-black-50">
-                  {data?.data.enrollType === 'local'
+                  {data?.data.enrollType === 'local' ||
+                  data?.data.enrollType === 'naver'
                     ? data?.data.email
                     : '소셜 로그인'}
                 </p>
