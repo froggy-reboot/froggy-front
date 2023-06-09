@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import Loader from 'src/components/loader/Loader';
 import { useRecoilValue } from 'recoil';
 import { isProfileAtom } from 'src/atoms/atom';
+import { useDidUpdateEffect } from 'src/hooks/useDidUpdateEffect';
 
 interface IProfile {
   image: string;
@@ -49,7 +50,7 @@ function MypageUpdate() {
   const fileInput = useRef<HTMLInputElement>(null);
 
   // 모달에서 프로필 이미지 선택 클릭 시
-  useEffect(() => {
+  useDidUpdateEffect(() => {
     if (isProfile.isCustom) {
       fileInput.current?.click();
     }
