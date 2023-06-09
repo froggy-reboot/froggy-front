@@ -50,7 +50,7 @@ function MypageUpdate() {
 
   // 모달에서 프로필 이미지 선택 클릭 시
   useEffect(() => {
-    if (isProfile) {
+    if (isProfile.isCustom) {
       fileInput.current?.click();
     }
   }, [isProfile]);
@@ -83,11 +83,10 @@ function MypageUpdate() {
   };
 
   const onSubmit: SubmitHandler<IProfile> = async (data) => {
-    console.log(isProfile);
     const formData = new FormData();
     formData.append('file', imageFile);
     formData.append('nickname', data.nickname);
-    formData.append('defaultImage', isProfile ? 'N' : 'Y');
+    formData.append('defaultImage', isProfile.isDefault ? 'Y' : 'N');
     try {
       setIsLoading(true);
       const response = await patchUserProfile({
