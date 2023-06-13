@@ -15,6 +15,7 @@ const PAGE_TITLE = {
     UPDATE: '기본 정보 변경',
     ARTICLES: '내가 쓴 글',
     COMMENTS: '내가 쓴 댓글',
+    NOTIFICATION: '알림',
   },
   REPORT: '신고하기',
   RESET_PASSWORD: '비밀번호 재설정',

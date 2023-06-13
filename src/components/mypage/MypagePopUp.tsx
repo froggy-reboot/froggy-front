@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ReactComponent as DownBtn } from 'src/assets/down_btn.svg';
-/* import { ReactComponent as AlarmIcon } from 'src/assets/alarm.svg'; */
+import { ReactComponent as AlarmIcon } from 'src/assets/alarm.svg';
 import { ReactComponent as EditIcon } from 'src/assets/edit.svg';
 import { useQuery } from '@tanstack/react-query';
 import { getUserInfo } from 'src/apis/authApi';
@@ -8,12 +8,17 @@ import { useModal } from 'src/hooks/useModal';
 import RavelryConnectModal from 'src/components/modals/RavelryConnectModal';
 import { Link } from 'react-router-dom';
 import defaultProfile from 'src/assets/frog_image.png';
+/* import { getMyNotification } from 'src/apis/mypageApi'; */
 
 export default function MypagePopUp() {
   const userId = JSON.parse(localStorage.getItem('userId') || '{}');
   const { data } = useQuery(['user'], () => getUserInfo(userId));
   const { openModal } = useModal();
   const [isExpand, setIsExpand] = useState(true);
+  /*   const { data: unreadNotificationData } = useQuery(
+    ['notification', 'unread'],
+    getMyNotification,
+  ); */
 
   const openPopUPHandler = () => {
     setIsExpand(!isExpand);
@@ -32,14 +37,13 @@ export default function MypagePopUp() {
               alt="profile"
               className="h-[5rem] w-[5rem] rounded-full bg-black-30 object-cover"
             />
-
             <Link
               to={'/my-page/update'}
               className="flex flex-1 items-center gap-[1rem] p-[0.8rem] text-Body font-bold">
               {data?.data.nickname}
               <EditIcon />
             </Link>
-            {/*             <AlarmIcon /> */}
+            <AlarmIcon className="fill-green-50" />
           </div>
           {isExpand && (
             <div className="mx-auto mt-[1.5rem] flex w-[100%] max-w-[76.8rem] flex-col gap-[0.5rem] px-[1rem] text-[15px] font-medium md:p-[2rem]">

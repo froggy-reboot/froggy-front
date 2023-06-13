@@ -69,6 +69,11 @@ const HEADER_TITLE = [
     isMain: false,
   },
   {
+    route: '/my-page/notification',
+    title: PAGE_TITLE.MY_PAGE.NOTIFICATION,
+    isMain: false,
+  },
+  {
     route: '/report',
     title: PAGE_TITLE.REPORT,
     isMain: false,
