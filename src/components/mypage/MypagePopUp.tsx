@@ -8,22 +8,23 @@ import { useModal } from 'src/hooks/useModal';
 import RavelryConnectModal from 'src/components/modals/RavelryConnectModal';
 import { Link } from 'react-router-dom';
 import defaultProfile from 'src/assets/frog_image.png';
-/* import { getMyNotification } from 'src/apis/mypageApi'; */
+import { getMyUnreadNotification } from 'src/apis/mypageApi';
 
 export default function MypagePopUp() {
   const userId = JSON.parse(localStorage.getItem('userId') || '{}');
-  const { data } = useQuery(['user'], () => getUserInfo(userId));
   const { openModal } = useModal();
+  const { data } = useQuery(['user'], () => getUserInfo(userId));
   const [isExpand, setIsExpand] = useState(true);
-  /*   const { data: unreadNotificationData } = useQuery(
-    ['notification', 'unread'],
-    getMyNotification,
-  ); */
+  const { data: newAlarmCount } = useQuery(
+    ['notification', 'new'],
+    getMyUnreadNotification,
+  );
 
   const openPopUPHandler = () => {
     setIsExpand(!isExpand);
   };
 
+  console.log(newAlarmCount);
   return (
     <div>
       <div className="fixed inset-x-0 top-0">
@@ -31,7 +32,7 @@ export default function MypagePopUp() {
           className={`relative flex flex-col ${
             isExpand ? 'h-auto' : 'h-[8rem]'
           } items-start rounded-[0px_0px_10px_10px] bg-white px-[3rem] py-[1.5rem] shadow-[0px_1px_3px_rgba(0,0,0,0.25)]`}>
-          <div className="mx-auto flex w-[100%] max-w-[76.8rem] items-center gap-[15px] md:px-[2rem]">
+          <div className="mx-auto flex w-[100%] max-w-[76.8rem] items-center gap-[1rem] md:px-[2rem]">
             <img
               src={data ? data.data.profileImg : defaultProfile}
               alt="profile"
@@ -39,11 +40,20 @@ export default function MypagePopUp() {
             />
             <Link
               to={'/my-page/update'}
-              className="flex flex-1 items-center gap-[1rem] p-[0.8rem] text-Body font-bold">
+              className="mr-auto flex items-center gap-[1rem] p-[1rem] text-Body font-bold">
               {data?.data.nickname}
               <EditIcon />
             </Link>
-            <AlarmIcon className="fill-green-50" />
+            <Link to={'/my-page/notification'} className="relative">
+              <AlarmIcon
+                className={`h-[3.2rem] w-[5.2rem] ${
+                  newAlarmCount && 'fill-green-50'
+                }  pl-[1rem]`}
+              />
+              {newAlarmCount && (
+                <div className="absolute right-[0.4rem] top-0 h-[0.8rem] w-[0.8rem] rounded-full bg-green-50" />
+              )}
+            </Link>
           </div>
           {isExpand && (
             <div className="mx-auto mt-[1.5rem] flex w-[100%] max-w-[76.8rem] flex-col gap-[0.5rem] px-[1rem] text-[15px] font-medium md:p-[2rem]">
