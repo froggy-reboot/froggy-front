@@ -112,7 +112,7 @@ export default function BoardDetail() {
                 <span className="tag mr-[7px]">{data?.data.articleType}</span>
                 {data?.data.title}
               </h1>
-              <p className="my-[0.5rem] whitespace-pre-line text-Tag font-normal">
+              <p className="my-[0.5rem] whitespace-pre-line break-all text-Tag font-normal">
                 {data?.data.content}
               </p>
               {data.data.images.length > 1 && (
