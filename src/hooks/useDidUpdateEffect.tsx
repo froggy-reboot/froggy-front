@@ -1,9 +1,4 @@
-import React, {
-  DependencyList,
-  EffectCallback,
-  useEffect,
-  useRef,
-} from 'react';
+import { DependencyList, EffectCallback, useEffect, useRef } from 'react';
 
 export const useDidUpdateEffect = (
   callback: EffectCallback,
