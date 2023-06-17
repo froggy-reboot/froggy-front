@@ -126,7 +126,7 @@ export default function SignIn() {
           </Link>
         </p>
         <Link
-          to={'/reset-passward'}
+          to={'/reset-password'}
           className="ml-2 text-Callout font-normal text-black-50 md:bottom-[6rem] md:ml-3 md:text-Tag">
           비밀번호를 잊으셨나요?
         </Link>
