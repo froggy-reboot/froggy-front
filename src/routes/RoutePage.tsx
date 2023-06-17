@@ -16,6 +16,7 @@ import MyPostLog from 'src/pages/mypage/MyPostLog';
 import MyCommentLog from 'src/pages/mypage/MyCommentLog';
 import MypageUpdate from 'src/pages/mypage/MypageUpdateForm';
 import ResetPassword from 'src/pages/mypage/ResetPassword';
+import MyNorification from 'src/pages/mypage/MyNotification';
 
 export default function RoutePage() {
   return (
@@ -45,6 +46,7 @@ export default function RoutePage() {
         <Route path="/my-page/update" element={<MypageUpdate />} />
         <Route path="/my-page/articles" element={<MyPostLog />} />
         <Route path="/my-page/comments" element={<MyCommentLog />} />
+        <Route path="/my-page/notification" element={<MyNorification />} />
       </Route>
       <Route element={<PrivateRoute authentication={false} />}>
         {/* 로그인이면 볼 수 없는 페이지 */}

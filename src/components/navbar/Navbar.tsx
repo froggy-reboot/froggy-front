@@ -63,6 +63,7 @@ function Navbar() {
       location.pathname === '/my-page/update' ||
       location.pathname === '/report' ||
       location.pathname === '/reset-passward' ||
+      location.pathname === '/my-page/notification' ||
       boardEditPath ||
       imagesDetailPath
     )

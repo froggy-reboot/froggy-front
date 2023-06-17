@@ -60,3 +60,20 @@ export async function postPassword(email: string) {
   });
   return response;
 }
+
+export async function getMyNotification({ pageParam = 1 }) {
+  const response = await privateApi.get(
+    `/api/v1/notifications/pages/${pageParam}`,
+  );
+  return response;
+}
+
+export async function getMyUnreadNotification() {
+  const response = await privateApi.get('/api/v1/notifications/unread-count');
+  return response;
+}
+
+export async function patchReadNotification(id: number) {
+  const response = await privateApi.patch(`/api/v1/notifications/${id}`);
+  return response;
+}
