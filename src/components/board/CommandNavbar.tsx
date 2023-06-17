@@ -117,7 +117,7 @@ export default function CommandNavBar() {
             required: true,
           })}
           onBlur={stopEditHandler}
-          className="h-[3.2rem] w-[100%] flex-1 rounded-[16px] bg-black-30 pt-[0.5rem] pl-[1.3rem] text-Body font-normal outline-none placeholder:text-black-50 focus:h-[10rem] focus:py-[1rem]"
+          className="h-[3.2rem] w-[100%] flex-1 rounded-[16px] bg-black-30 px-[1.3rem] pt-[0.5rem] text-Body font-normal outline-none placeholder:text-black-50 focus:h-[10rem] focus:py-[1rem]"
           placeholder={
             data ? '댓글을 입력해 주세요.' : '로그인 후 이용하실 수 있습니다.'
           }

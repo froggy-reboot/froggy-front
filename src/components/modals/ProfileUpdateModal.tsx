@@ -12,12 +12,19 @@ function ProfileUpdateModal(props: any) {
 
   const updateHandler = () => {
     closeModal(modals.ProfileUpdateModal);
-    setIsProfile(true);
+    setIsProfile({
+      isCustom: true,
+      isDefault: false,
+    });
   };
+
   const basicHandler = () => {
     closeModal(modals.ProfileUpdateModal);
     props.setImagePreview(frogImage);
-    setIsProfile(false);
+    setIsProfile({
+      isCustom: false,
+      isDefault: true,
+    });
   };
 
   return (

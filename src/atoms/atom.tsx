@@ -23,5 +23,8 @@ export const editCommentAtom = atom({
 
 export const isProfileAtom = atom({
   key: 'isProfile',
-  default: false,
+  default: {
+    isCustom: false,
+    isDefault: false,
+  },
 });

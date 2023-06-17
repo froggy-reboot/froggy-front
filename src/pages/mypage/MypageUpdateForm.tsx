@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import Loader from 'src/components/loader/Loader';
 import { useRecoilValue } from 'recoil';
 import { isProfileAtom } from 'src/atoms/atom';
+import { useDidUpdateEffect } from 'src/hooks/useDidUpdateEffect';
 
 interface IProfile {
   image: string;
@@ -49,8 +50,8 @@ function MypageUpdate() {
   const fileInput = useRef<HTMLInputElement>(null);
 
   // 모달에서 프로필 이미지 선택 클릭 시
-  useEffect(() => {
-    if (isProfile) {
+  useDidUpdateEffect(() => {
+    if (isProfile.isCustom) {
       fileInput.current?.click();
     }
   }, [isProfile]);
@@ -83,11 +84,10 @@ function MypageUpdate() {
   };
 
   const onSubmit: SubmitHandler<IProfile> = async (data) => {
-    console.log(isProfile);
     const formData = new FormData();
     formData.append('file', imageFile);
     formData.append('nickname', data.nickname);
-    formData.append('defaultImage', isProfile ? 'N' : 'Y');
+    formData.append('defaultImage', isProfile.isDefault ? 'Y' : 'N');
     try {
       setIsLoading(true);
       const response = await patchUserProfile({
