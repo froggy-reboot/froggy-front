@@ -1,14 +1,32 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { getMyNotification } from 'src/apis/mypageApi';
 import Loader from 'src/components/loader/Loader';
 import { useInfiniteScroll } from 'src/hooks/useInfiniteScroll';
 import timeConverter from 'src/utils/timeConverter/timeConverter';
+import { useNavigate } from 'react-router-dom';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { patchReadNotification } from 'src/apis/mypageApi';
 
 export default function MyNotification() {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { data, isLoading, setTarget } = useInfiniteScroll({
     getApi: getMyNotification,
     queryKey: 'notification',
   });
+
+  const { mutateAsync: alarmMutate } = useMutation(patchReadNotification, {
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['notification'] });
+    },
+  });
+
+  const onClickHandler = async (postId: number, alramId: number) => {
+    const response = await alarmMutate(alramId);
+    if (response.status === 200) {
+      navigate(`/board/${postId}`);
+    }
+  };
 
   if (isLoading) {
     return <Loader />;
@@ -20,11 +38,15 @@ export default function MyNotification() {
         <ul className="flex h-full w-full flex-col">
           {/* eslint-disable-next-line  @typescript-eslint/no-explicit-any */}
           {data?.pages.map((page: any, index) => (
-            <Fragment key={page.id}>
+            <>
               <li
+                key={page.id}
+                onClick={() =>
+                  onClickHandler(Number(page.targetPostId), Number(page.id))
+                }
                 className={`flex w-full ${
                   page.isRead === 'Y' ? 'bg-black-10' : 'bg-white'
-                } py-[0.8rem] px-[2rem]`}>
+                } cursor-pointer py-[0.8rem] px-[2rem] hover:bg-[#fafafa]`}>
                 <img
                   src={page.writerUser.profileImg}
                   className="mt-[0.5rem] h-[3.2rem] w-[3.2rem] rounded-full bg-black-30 object-cover"
@@ -59,7 +81,7 @@ export default function MyNotification() {
               {index !== data?.pages.length - 1 && (
                 <hr className="w-[100%] border-black-30" />
               )}
-            </Fragment>
+            </>
           ))}
         </ul>
       </main>

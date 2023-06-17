@@ -23,8 +23,6 @@ export default function MypagePopUp() {
   const openPopUPHandler = () => {
     setIsExpand(!isExpand);
   };
-
-  console.log(newAlarmCount);
   return (
     <div>
       <div className="fixed inset-x-0 top-0">
@@ -47,12 +45,14 @@ export default function MypagePopUp() {
             <Link to={'/my-page/notification'} className="relative">
               <AlarmIcon
                 className={`h-[3.2rem] w-[5.2rem] ${
-                  newAlarmCount && 'fill-green-50'
+                  newAlarmCount?.data && 'fill-green-50'
                 }  pl-[1rem]`}
               />
-              {newAlarmCount && (
-                <div className="absolute right-[0.4rem] top-0 h-[0.8rem] w-[0.8rem] rounded-full bg-green-50" />
-              )}
+              <div
+                className={`${
+                  newAlarmCount?.data ? 'visible' : 'invisible'
+                } absolute right-[0.4rem] top-0 h-[0.8rem] w-[0.8rem] rounded-full bg-green-50`}
+              />
             </Link>
           </div>
           {isExpand && (
