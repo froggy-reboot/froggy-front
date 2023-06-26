@@ -17,7 +17,7 @@ export default function NotificationModal({
     <div
       className="modal_bg"
       onClick={() => closeModal(modals.NotificationModal)}>
-      <div className="min-w-[300px] w-[18.75rem] min-h-[230px] h-[14.375rem] bg-white rounded-[0.625rem] flex-col align-center justify-center text-center">
+      <div className="min-w-[300px] w-[18.75rem] min-h-[230px] h-[14.375rem] bg-white rounded-[0.625rem] flex-col align-center justify-center text-center shadow-[1px 2px 5px 1px rgba(0, 0, 0, 0.20)]">
         <div className="pt-2 pr-2 flex justify-end">
           <Close onClick={() => closeModal(modals.NotificationModal)} />
         </div>
