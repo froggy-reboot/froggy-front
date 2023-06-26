@@ -6,7 +6,7 @@ import { useSetRecoilState } from 'recoil';
 import { isProfileAtom } from 'src/atoms/atom';
 
 // eslint-disable-next-line
-function ProfileUpdateModal(props: any) {
+export default function ProfileUpdateModal(props: any) {
   const { closeModal } = useModal();
   const setIsProfile = useSetRecoilState(isProfileAtom);
 
@@ -49,5 +49,3 @@ function ProfileUpdateModal(props: any) {
     </div>
   );
 }
-
-export default ProfileUpdateModal;

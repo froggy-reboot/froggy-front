@@ -10,6 +10,7 @@ import StopEditModal from 'src/components/modals/StopEditModal';
 import WithdrawModal from 'src/components/modals/WithdrawModal';
 import WithdrawConfirmModal from 'src/components/modals/WithdrawConfirmModal';
 import ProfileUpdateModal from 'src/components/modals/ProfileUpdateModal';
+import NotificationModal from 'src/components/modals/NotificationModal';
 
 export const modals = {
   UpdateDeleteModal: UpdateDeleteModal as FunctionComponent<
@@ -38,6 +39,9 @@ export const modals = {
   >,
   ProfileUpdateModal: ProfileUpdateModal as FunctionComponent<
     ComponentProps<typeof ProfileUpdateModal>
+  >,
+  NotificationModal: NotificationModal as FunctionComponent<
+    ComponentProps<typeof NotificationModal>
   >,
 };
 
