@@ -11,23 +11,22 @@ export default function NotificationModal({
   title: string;
   content: string;
 }) {
-  const { openModal, closeModal, showModal } = useModal();
+  const { closeModal } = useModal();
   return (
-    // modal 배경
     <div
       className="modal_bg"
       onClick={() => closeModal(modals.NotificationModal)}>
-      <div className="min-w-[300px] w-[18.75rem] min-h-[230px] h-[14.375rem] bg-white rounded-[0.625rem] flex-col align-center justify-center text-center shadow-[1px 2px 5px 1px rgba(0, 0, 0, 0.20)]">
-        <div className="pt-2 pr-2 flex justify-end">
+      <div className="h-[14.375rem] min-h-[230px] w-[18.75rem] min-w-[300px] flex-col justify-center rounded-[0.625rem] bg-white text-center shadow-[1px_2px_5px_1px_rgba(0,0,0,0.20)]">
+        <div className="flex justify-end pt-2 pr-2">
           <Close onClick={() => closeModal(modals.NotificationModal)} />
         </div>
         <div className="flex justify-center">
-          <div className="min-w-[85px] min-h-[85px] w-[5.3rem] h-[5.3rem]">
+          <div className="h-[5.3rem] min-h-[85px] w-[5.3rem] min-w-[85px]">
             <img src={frogImage} />
           </div>
         </div>
-        <div className="text-Body font-bold pb-4">{title}</div>
-        <div className="text-[14px] tracking-[0.42px] whitespace-pre-line">
+        <div className="pb-4 text-Body font-bold">{title}</div>
+        <div className="whitespace-pre-line text-[14px] tracking-[0.42px]">
           {content}
         </div>
       </div>
