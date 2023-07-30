@@ -76,7 +76,9 @@ export default function PostList({ props }: { props: IPostListProp }) {
               {page.images.length > 0 && (
                 <img
                   src={page.images[0].url}
-                  className="mt-[15px] mr-[6px] h-[8rem] w-[8rem] rounded-[5px] object-cover"
+                  className={`mt-[15px] mr-[6px] ${
+                    props.isMyList ? 'h-[6rem] w-[6rem]' : 'h-[8rem] w-[8rem]'
+                  } rounded-[5px] object-cover`}
                 />
               )}
             </Link>
